@@ -22,5 +22,5 @@ ShipTest >> testWhenAShipMovesForwardTwoSquaresThenItLandsAtSquareThree [
 
 	aShip moveForward: 2.
 
-	self assert: (aShip isLocatedAt: 3) equals: true
+	self assert: (aShip isLocatedAt: 3)
 ]

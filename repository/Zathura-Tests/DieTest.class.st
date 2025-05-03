@@ -1,0 +1,47 @@
+Class {
+	#name : 'DieTest',
+	#superclass : 'TestCase',
+	#category : 'Zathura-Tests',
+	#package : 'Zathura-Tests'
+}
+
+{ #category : 'asserting' }
+DieTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ]
+]
+
+{ #category : 'tests' }
+DieTest >> testWhenADieHasOneFaceThenAlwaysReturnsOne [
+
+	| aDie value |
+	aDie := Die withFaces: 1.
+	value := aDie roll.
+	
+	self assert: value equals: 1
+]
+
+{ #category : 'tests' }
+DieTest >> testWhenADieHasZeroFacesThenCreationFails [
+
+	self
+		should: [ Die withFaces: 0 ]
+		raise: Error
+		withMessageText: 'Invalid number of faces'
+
+]
+
+{ #category : 'tests' }
+DieTest >> testWhenADieRollItFallsOnAValidNumber [
+
+	| aDie value |
+	aDie := Die withFaces: 6.
+	value := aDie roll.
+
+	self assert:
+		(value between: 1 and: 6)
+]
