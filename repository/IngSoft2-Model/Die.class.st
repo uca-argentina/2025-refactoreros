@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : 'initialization' }
+Die class >> withFaces: aNumber [
+	^ self new initializeWithFaces: aNumber
+]
+
+{ #category : 'initialization' }
 Die >> initializeWithFaces: aNumber [
 
 	(aNumber isInteger and: [ aNumber > 0 ]) ifFalse: [ self error: 'Invalid number of faces' ].
