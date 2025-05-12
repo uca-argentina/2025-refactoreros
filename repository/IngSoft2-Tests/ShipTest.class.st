@@ -6,12 +6,36 @@ Class {
 }
 
 { #category : 'tests' }
+ShipTest >> testWhenAShipAtSquare5MovesBackwards3StepsThenLandsAtSquare2 [
+
+	| aShip |
+	aShip := Ship newPlayer.
+
+	aShip moveForward: 4.
+	aShip moveBackwards: 3.
+
+	self assert: (aShip isLocatedAt: 2)
+]
+
+{ #category : 'tests' }
 ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 
 	| aShip |
 	aShip := Ship newPlayer.
 
 	self assert: (aShip isLocatedAt: 1)
+]
+
+{ #category : 'tests' }
+ShipTest >> testWhenAShipMovesForwardOneStepTwiceThenLandsAtSquareThree [
+
+	| aShip |
+	aShip := Ship newPlayer.
+
+	aShip moveOneStepForward.
+	aShip moveOneStepForward.
+
+	self assert: (aShip isLocatedAt: 3)
 ]
 
 { #category : 'tests' }

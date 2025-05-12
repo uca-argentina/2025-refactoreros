@@ -30,7 +30,19 @@ Ship >> isLocatedAt: aSquare [
 ]
 
 { #category : 'actions' }
+Ship >> moveBackwards: aNumberOfSquares [
+
+	position := position - aNumberOfSquares
+]
+
+{ #category : 'actions' }
 Ship >> moveForward: aNumberOfSquares [
 
 	position := position + aNumberOfSquares
+]
+
+{ #category : 'actions' }
+Ship >> moveOneStepForward [
+
+	position := position + 1
 ]
