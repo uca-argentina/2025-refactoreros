@@ -22,17 +22,17 @@ BoardTest >> testWhenBoardIsCreatedWithShipCountBelowOneThenItFails [
 	aDiceCollection  := TwoDiceWithSixFaces new createCollection.
 
 	self
-		should: [ Board gameWithPlayerCount: 0 andDice: aDiceCollection ]
+		should: [ Board gameWithPlayerCount: 0 andDice: aDiceCollection andSquareCount: 10]
 		raise: Error
 		withMessageText: 'Player count should be equal or higher than 1'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithShipCountOfTwoAndTwoValidDiceThenValid [
+BoardTest >> testWhenBoardIsCreatedWithShipCountOfTwoAndTwoValidDiceAndValidSquareCountThenValid [
 
 	| aBoard aDiceCollection |
 	aDiceCollection := TwoDiceWithSixFaces new createCollection.
-	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: 10
 ]
 
 { #category : 'tests' }
@@ -42,7 +42,19 @@ BoardTest >> testWhenBoardIsCreatedWithZeroDieThenFails [
 	aDiceCollection := OrderedCollection new.
 
 	self
-		should: [ Board gameWithPlayerCount: 1 andDice: aDiceCollection ]
+		should: [ Board gameWithPlayerCount: 1 andDice: aDiceCollection andSquareCount: 10]
 		raise: Error
 		withMessageText: 'At least one die is required'
+]
+
+{ #category : 'tests' }
+BoardTest >> testWhenBoardIsCreatedWithZeroSquaresThenFail [
+
+	| aDiceCollection |
+	aDiceCollection := TwoDiceWithSixFaces new createCollection.
+
+	self
+		should: [ Board gameWithPlayerCount: 1 andDice: aDiceCollection andSquareCount: 0]
+		raise: Error
+		withMessageText: 'Square count should be equal or higher than 2'
 ]
