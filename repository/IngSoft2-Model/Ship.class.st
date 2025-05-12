@@ -1,5 +1,5 @@
 "
-Esta es la clase de la nave, el objeto con el cual se juega el Zathura
+A ship represents a player in the Board Game. It knows its position, and so it's responsible for moving accross the board itself.
 "
 Class {
 	#name : 'Ship',
@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'position'
 	],
-	#category : 'Zathura-Model',
-	#package : 'Zathura-Model'
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
 }
 
 { #category : 'instance creation' }
@@ -30,7 +30,19 @@ Ship >> isLocatedAt: aSquare [
 ]
 
 { #category : 'actions' }
+Ship >> moveBackwards: aNumberOfSquares [
+
+	position := position - aNumberOfSquares
+]
+
+{ #category : 'actions' }
 Ship >> moveForward: aNumberOfSquares [
 
 	position := position + aNumberOfSquares
+]
+
+{ #category : 'actions' }
+Ship >> moveOneStepForward [
+
+	position := position + 1
 ]

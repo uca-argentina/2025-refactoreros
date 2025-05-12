@@ -1,8 +1,8 @@
 Class {
 	#name : 'DieTest',
 	#superclass : 'TestCase',
-	#category : 'Zathura-Tests',
-	#package : 'Zathura-Tests'
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
