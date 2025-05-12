@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : 'argument validation' }
+Board class >> checkValidDiceCollection: aDiceCollection [ 
+	(aDiceCollection isNotEmpty ) ifFalse: [ Error signal:  'At least one die is required' ]
+]
+
+{ #category : 'argument validation' }
 Board class >> checkValidPlayerCount: aPlayerCount [
 	aPlayerCount >= 1 ifFalse: [ Error signal: 'Player count should be equal or higher than 1' ]
 ]
