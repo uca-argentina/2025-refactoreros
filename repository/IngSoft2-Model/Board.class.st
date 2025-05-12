@@ -18,15 +18,9 @@ Board class >> checkValidPlayerCount: aPlayerCount [
 ]
 
 { #category : 'intialization' }
-Board class >> gameWithPlayerCount: aPlayerCount [
-	self checkValidPlayerCount: aPlayerCount.
-	^ self new newGameWithPlayerCount: aPlayerCount 
-
-]
-
-{ #category : 'intialization' }
 Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection [
 	self checkValidPlayerCount: aPlayerCount.
+	self checkValidDiceCollection: aDiceCollection .
 	^ self new newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection
 
 ]

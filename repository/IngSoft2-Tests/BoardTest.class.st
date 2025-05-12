@@ -28,7 +28,7 @@ BoardTest >> testWhenBoardIsCreatedWithShipCountBelowOneThenItFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithShipCountOfTwoThenDoesntFail [
+BoardTest >> testWhenBoardIsCreatedWithShipCountOfTwoAndTwoValidDiceThenValid [
 
 	| aBoard aDiceCollection |
 	aDiceCollection := TwoDiceWithSixFaces new createCollection.
@@ -36,9 +36,13 @@ BoardTest >> testWhenBoardIsCreatedWithShipCountOfTwoThenDoesntFail [
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithShipCountOfTwoThenValid [
+BoardTest >> testWhenBoardIsCreatedWithZeroDieThenFails [
 
-	| aBoard aDiceCollection |
-	aDiceCollection := TwoDiceWithSixFaces new createCollection.
-	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection
+	| aDiceCollection |
+	aDiceCollection := OrderedCollection new.
+
+	self
+		should: [ Board gameWithPlayerCount: 1 andDice: aDiceCollection ]
+		raise: Error
+		withMessageText: 'At least one die is required'
 ]
