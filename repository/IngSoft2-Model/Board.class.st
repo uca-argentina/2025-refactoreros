@@ -122,6 +122,6 @@ Board >> startGame [
 			gameFinished ifFalse: [
 				randomForwardValue := self generateRandomNumberFromDiceCollection.
 				player moveForward: randomForwardValue withLimit: squareCount.
-				"WORMHOLE TRANSFORMATION HERE"
+				player transformIfLandedAt: wormhole.
 				self checkIfPlayerWon: player ] ] ]
 ]
