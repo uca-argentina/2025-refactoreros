@@ -53,17 +53,18 @@ Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSqu
 
 { #category : 'action' }
 Board >> checkIfPlayerWon: aPlayer [
-	(aPlayer isLocatedAt: squareCount) ifTrue: [ 
-		winner := aPlayer .
-		gameFinished := true .
-		]
+
+	(aPlayer isLocatedAt: squareCount) ifTrue: [
+		winner := aPlayer.
+		gameFinished := true ]
 ]
 
 { #category : 'initialization' }
 Board >> createShipCollection [
 
 	1 to: playerCount do: [ :i |
-	playersShips addLast: (Ship newPlayerWithName: ('Player ', i asString )) ]
+		playersShips addLast:
+			(Ship newPlayerWithName: 'Player ' , i asString) ]
 ]
 
 { #category : 'comparing' }
@@ -71,12 +72,13 @@ Board >> doesPlayerNameWon: aPlayerName [
 
 	gameFinished
 		ifFalse: [ Error signal: 'Game is not finishied' ]
-		ifTrue: [ ^ (winner getName) = aPlayerName ]
+		ifTrue: [ ^ winner getName = aPlayerName ]
 ]
 
 { #category : 'action' }
 Board >> generateRandomNumberFromDiceCollection [
-	^ (dice collect: [ :die | die roll ]) sum.
+
+	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'comparing' }
@@ -87,13 +89,13 @@ Board >> isFinishedGamePlayerName: aPlayerName atSquare: aSquare [
 		                 detect: [ :player | player getName = aPlayerName ]
 		                 ifNone: [
 		                 Error signal: 'There is no player with such name' ].
-	^ matchedPlayer isLocatedAt: aSquare 
+	^ matchedPlayer isLocatedAt: aSquare
 ]
 
 { #category : 'comparing' }
 Board >> isGameFinished [
 
-	^ gameFinished 
+	^ gameFinished
 ]
 
 { #category : 'initialization' }
@@ -105,7 +107,7 @@ Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquare
 	playersShips := OrderedCollection new.
 	self createShipCollection.
 	finalShipAndPosition := Dictionary new.
-	gameFinished := false.
+	gameFinished := false
 ]
 
 { #category : 'action' }
@@ -116,8 +118,8 @@ Board >> startGame [
 		playersShips do: [ :player |
 			gameFinished ifFalse: [
 				randomForwardValue := self generateRandomNumberFromDiceCollection.
+
+				player moveForward: randomForwardValue withLimit: squareCount.
 				"Agregar método para chequear si está o no en agujero negro, y en base a eso, transformar posición o mover 1 adelante"
-				player moveForward: randomForwardValue withLimit: squareCount .
-				self checkIfPlayerWon: player].
-				 ] ]
+				self checkIfPlayerWon: player ] ] ]
 ]
