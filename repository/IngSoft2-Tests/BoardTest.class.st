@@ -38,6 +38,18 @@ BoardTest >> testWhenBoardGameFinishesAnd2ndShipIsAtPreviousToFinalSquareThenVal
 ]
 
 { #category : 'tests' }
+BoardTest >> testWhenBoardGameFinishesAndAPositionForAnInexistingShipIsValidatedThenFails [
+
+	| aBoard aDiceCollection aSquareCount|
+	aSquareCount := 10.
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: aSquareCount .
+	aBoard startGame .
+	self should: [aBoard isFinishedGamePlayerName: 'Player 3' atSquare: aSquareCount ]
+		raise: Error withMessageText: 'There is no player with such name'
+]
+
+{ #category : 'tests' }
 BoardTest >> testWhenBoardGameFinishesAndWinnerIsAtFinalSquareThenValid [
 
 	| aBoard aDiceCollection aSquareCount|
