@@ -70,7 +70,7 @@ Board >> checkIfPlayerWon: aPlayer [
 Board >> createShipCollection [
 
 	1 to: playerCount do: [ :i |
-	playerShipCollection addLast: Ship newPlayer ]
+	playersShips addLast: (Ship newPlayerWithName: ('Player ', i)) ]
 ]
 
 { #category : 'action' }
