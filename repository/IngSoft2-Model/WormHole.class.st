@@ -1,3 +1,6 @@
+"
+A wormhole has an entry and an exit that both trasnform a player's ship position if lands on either entry or exit. 
+"
 Class {
 	#name : 'WormHole',
 	#superclass : 'Object',

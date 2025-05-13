@@ -11,7 +11,8 @@ Class {
 		'finalShipAndPosition',
 		'dice',
 		'gameFinished',
-		'winner'
+		'winner',
+		'wormhole'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -39,7 +40,7 @@ Board class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount [
+Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
 
 	self checkValidPlayerCount: aPlayerCount.
 	self checkValidDiceCollection: aDiceCollection.
@@ -49,6 +50,7 @@ Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSqu
 		  newGameWithPlayerCount: aPlayerCount
 		  andDice: aDiceCollection
 		  andSquareCount: aSquareCount
+		  andWormhole: aWormhole 
 ]
 
 { #category : 'action' }
@@ -99,7 +101,7 @@ Board >> isGameFinished [
 ]
 
 { #category : 'initialization' }
-Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount [
+Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
 
 	playerCount := aPlayerCount.
 	dice := aDiceCollection.
@@ -107,7 +109,8 @@ Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquare
 	playersShips := OrderedCollection new.
 	self createShipCollection.
 	finalShipAndPosition := Dictionary new.
-	gameFinished := false
+	gameFinished := false.
+	wormhole := aWormhole
 ]
 
 { #category : 'action' }
@@ -118,8 +121,7 @@ Board >> startGame [
 		playersShips do: [ :player |
 			gameFinished ifFalse: [
 				randomForwardValue := self generateRandomNumberFromDiceCollection.
-
 				player moveForward: randomForwardValue withLimit: squareCount.
-				"Agregar método para chequear si está o no en agujero negro, y en base a eso, transformar posición o mover 1 adelante"
+				player transformIfLandedAt: wormhole.
 				self checkIfPlayerWon: player ] ] ]
 ]

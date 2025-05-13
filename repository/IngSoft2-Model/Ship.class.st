@@ -61,3 +61,8 @@ Ship >> moveOneStepForward [
 
 	position := position + 1
 ]
+
+{ #category : 'actions' }
+Ship >> transformIfLandedAt: wormhole [
+	position := wormhole getOppositeEnd: position
+]
