@@ -16,6 +16,17 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
+BoardTest >> testWhenBoardGameFinishesAndWinnerIsAtFinalSquareThenValid [
+
+	| aBoard aDiceCollection aSquareCount|
+	aSquareCount := 10.
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: aSquareCount .
+	aBoard startGame .
+	self assert: (aBoard isFinishedGamePlayerName: 'Player 1' atSquare: aSquareCount )
+]
+
+{ #category : 'tests' }
 BoardTest >> testWhenBoardGameWithMockDieIsStartedAndAShipWinsThenValid [
 
 	| aBoard aDiceCollection |
@@ -23,6 +34,26 @@ BoardTest >> testWhenBoardGameWithMockDieIsStartedAndAShipWinsThenValid [
 	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: 10.
 	aBoard startGame .
 	self assert: aBoard isGameFinished 
+]
+
+{ #category : 'tests' }
+BoardTest >> testWhenBoardGameWithMockDieIsStartedAndShip1WinsThenValid [
+
+	| aBoard aDiceCollection |
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: 10.
+	aBoard startGame .
+	self assert: (aBoard doesPlayerNameWon: 'Player 1')
+]
+
+{ #category : 'tests' }
+BoardTest >> testWhenBoardGameWithMockDieIsStartedAndShip2WinsThenInvalid [
+
+	| aBoard aDiceCollection |
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: 10.
+	aBoard startGame .
+	self deny: (aBoard doesPlayerNameWon: 'Player 2')
 ]
 
 { #category : 'tests' }

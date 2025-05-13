@@ -63,7 +63,8 @@ Board >> calculateFinalPositions [
 Board >> checkIfPlayerWon: aPlayer [
 	(aPlayer isLocatedAt: squareCount) ifTrue: [ 
 		winner := aPlayer .
-		gameFinished := true ]
+		gameFinished := true .
+		self calculateFinalPositions ]
 ]
 
 { #category : 'initialization' }
@@ -73,12 +74,31 @@ Board >> createShipCollection [
 	playersShips addLast: (Ship newPlayerWithName: ('Player ', i asString )) ]
 ]
 
+{ #category : 'comparing' }
+Board >> doesPlayerNameWon: aPlayerName [
+
+	gameFinished
+		ifFalse: [ Error signal: 'Game is not finishied' ]
+		ifTrue: [ ^ (winner getName) = aPlayerName ]
+]
+
 { #category : 'action' }
 Board >> generateRandomNumberFromDiceCollection [
 	^ (dice collect: [ :die | die roll ]) sum.
 ]
 
-{ #category : 'action' }
+{ #category : 'comparing' }
+Board >> isFinishedGamePlayerName: aPlayerName atSquare: aSquare [
+
+	| matchedPlayer |
+	matchedPlayer := playersShips
+		                 detect: [ :player | player getName = aPlayerName ]
+		                 ifNone: [
+		                 Error signal: 'There is no player with such name' ].
+	^ finalShipAndPosition at: matchedPlayer
+]
+
+{ #category : 'comparing' }
 Board >> isGameFinished [
 
 	^ gameFinished 

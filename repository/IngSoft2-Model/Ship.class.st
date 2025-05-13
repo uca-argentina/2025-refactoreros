@@ -20,7 +20,7 @@ Ship class >> newPlayerWithName: aName [
 
 { #category : 'actions' }
 Ship >> getName [
-	^ name
+	^ name asString
 ]
 
 { #category : 'initialization' }
@@ -32,7 +32,7 @@ Ship >> initializeAtSquareOne [
 { #category : 'initialization' }
 Ship >> initializeAtSquareOneWithName: aName [
 
-	name := aName.
+	name := aName asString.
 	position := 1
 ]
 
