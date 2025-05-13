@@ -6,18 +6,6 @@ Class {
 }
 
 { #category : 'tests' }
-ShipTest >> testWhenAShipAtSquare5MovesBackwards3StepsThenLandsAtSquare2 [
-
-	| aShip |
-	aShip := Ship newPlayerWithName: 'Player test'.
-
-	aShip moveForward: 4 withLimit: 10.
-	aShip moveBackwards: 3.
-
-	self assert: (aShip isLocatedAt: 2)
-]
-
-{ #category : 'tests' }
 ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 
 	| aShip |

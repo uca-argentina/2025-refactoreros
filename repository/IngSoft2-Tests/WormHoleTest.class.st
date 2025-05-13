@@ -52,7 +52,7 @@ WormHoleTest >> testWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntranceP
 WormHoleTest >> testWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 
 	self
-		should: [ WormHole withEntranceAt: -1 andExitAt: 1 ]
+		should: [ WormHole withEntranceAt: 0 andExitAt: 1 ]
 		raise: Error
 		withMessageText: 'Positions should be numbers above zero'
 ]

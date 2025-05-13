@@ -43,12 +43,6 @@ Ship >> isLocatedAt: aSquare [
 ]
 
 { #category : 'actions' }
-Ship >> moveBackwards: aNumberOfSquares [
-
-	position := position - aNumberOfSquares
-]
-
-{ #category : 'actions' }
 Ship >> moveForward: aNumberOfSquares withLimit: aLimit [
 
 	position := position + aNumberOfSquares <= aLimit
