@@ -9,9 +9,9 @@ Class {
 ShipTest >> testWhenAShipAtSquare5MovesBackwards3StepsThenLandsAtSquare2 [
 
 	| aShip |
-	aShip := Ship newPlayer.
+	aShip := Ship newPlayerWithName: 'Player test'.
 
-	aShip moveForward: 4.
+	aShip moveForward: 4 withLimit: 10.
 	aShip moveBackwards: 3.
 
 	self assert: (aShip isLocatedAt: 2)
@@ -21,7 +21,7 @@ ShipTest >> testWhenAShipAtSquare5MovesBackwards3StepsThenLandsAtSquare2 [
 ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 
 	| aShip |
-	aShip := Ship newPlayer.
+	aShip := Ship newPlayerWithName: 'Player test'.
 
 	self assert: (aShip isLocatedAt: 1)
 ]
@@ -30,7 +30,7 @@ ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 ShipTest >> testWhenAShipMovesForwardOneStepTwiceThenLandsAtSquareThree [
 
 	| aShip |
-	aShip := Ship newPlayer.
+	aShip := Ship newPlayerWithName: 'Player test'.
 
 	aShip moveOneStepForward.
 	aShip moveOneStepForward.
@@ -42,9 +42,9 @@ ShipTest >> testWhenAShipMovesForwardOneStepTwiceThenLandsAtSquareThree [
 ShipTest >> testWhenAShipMovesForwardTwoSquaresThenItLandsAtSquareThree [
 
 	| aShip |
-	aShip := Ship newPlayer.
+	aShip := Ship newPlayerWithName: 'Player test'.
 
-	aShip moveForward: 2.
+	aShip moveForward: 2 withLimit: 10.
 
 	self assert: (aShip isLocatedAt: 3)
 ]

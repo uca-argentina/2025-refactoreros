@@ -5,21 +5,34 @@ Class {
 	#name : 'Ship',
 	#superclass : 'Object',
 	#instVars : [
-		'position'
+		'position',
+		'name'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'instance creation' }
-Ship class >> newPlayer [
+Ship class >> newPlayerWithName: aName [
 
-	^ self new initializeAtSquareOne
+	^ self new initializeAtSquareOneWithName: aName
+]
+
+{ #category : 'actions' }
+Ship >> getName [
+	^ name asString
 ]
 
 { #category : 'initialization' }
 Ship >> initializeAtSquareOne [
 
+	position := 1
+]
+
+{ #category : 'initialization' }
+Ship >> initializeAtSquareOneWithName: aName [
+
+	name := aName asString.
 	position := 1
 ]
 
@@ -36,9 +49,11 @@ Ship >> moveBackwards: aNumberOfSquares [
 ]
 
 { #category : 'actions' }
-Ship >> moveForward: aNumberOfSquares [
+Ship >> moveForward: aNumberOfSquares withLimit: aLimit [
 
-	position := position + aNumberOfSquares
+	position := position + aNumberOfSquares <= aLimit
+		            ifTrue: [ position + aNumberOfSquares ]
+		            ifFalse: [ aLimit ]
 ]
 
 { #category : 'actions' }
