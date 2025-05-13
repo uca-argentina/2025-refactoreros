@@ -52,19 +52,11 @@ Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSqu
 ]
 
 { #category : 'action' }
-Board >> calculateFinalPositions [
-	(squareCount to: 1 by: -1) do: [ :squarePosition |
-		playersShips do: [ :player |
-			finalShipAndPosition at: player put: squarePosition ]
-		 ]
-]
-
-{ #category : 'action' }
 Board >> checkIfPlayerWon: aPlayer [
 	(aPlayer isLocatedAt: squareCount) ifTrue: [ 
 		winner := aPlayer .
 		gameFinished := true .
-		self calculateFinalPositions ]
+		]
 ]
 
 { #category : 'initialization' }
@@ -95,7 +87,7 @@ Board >> isFinishedGamePlayerName: aPlayerName atSquare: aSquare [
 		                 detect: [ :player | player getName = aPlayerName ]
 		                 ifNone: [
 		                 Error signal: 'There is no player with such name' ].
-	^ finalShipAndPosition at: matchedPlayer
+	^ matchedPlayer isLocatedAt: aSquare 
 ]
 
 { #category : 'comparing' }
@@ -125,6 +117,7 @@ Board >> startGame [
 			gameFinished ifFalse: [
 				randomForwardValue := self generateRandomNumberFromDiceCollection.
 				"Agregar método para chequear si está o no en agujero negro, y en base a eso, transformar posición o mover 1 adelante"
-				player moveForward: randomForwardValue withLimit: squareCount ].
-				self checkIfPlayerWon: player ] ]
+				player moveForward: randomForwardValue withLimit: squareCount .
+				self checkIfPlayerWon: player].
+				 ] ]
 ]
