@@ -15,6 +15,32 @@ ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 ]
 
 { #category : 'tests' }
+ShipTest >> testWhenAShipLandsAtASquareDifferentFromWormholeAndPositionRemainsTheSameThenValid [
+
+	| aShip aWormhole|
+	aShip := Ship newPlayerWithName: 'Player test'.
+	aWormhole := WormHole withEntranceAt: 2 andExitAt: 5.
+
+	aShip moveForward: 1 withLimit: 10.
+	aShip transformIfLandedAt: aWormhole .
+
+	self assert: (aShip isLocatedAt: 5)
+]
+
+{ #category : 'tests' }
+ShipTest >> testWhenAShipLandsAtAWormholeAndPositionRemainsTheSameThenInvalid [
+
+	| aShip aWormhole |
+	aShip := Ship newPlayerWithName: 'Player test'.
+	aWormhole := WormHole withEntranceAt: 2 andExitAt: 5.
+
+	aShip moveForward: 1 withLimit: 10.
+	aShip transformIfLandedAt: aWormhole.
+
+	self deny: (aShip isLocatedAt: 2)
+]
+
+{ #category : 'tests' }
 ShipTest >> testWhenAShipMovesForwardOneStepTwiceThenLandsAtSquareThree [
 
 	| aShip |
