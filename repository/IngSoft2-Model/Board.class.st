@@ -6,10 +6,12 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'playerCount',
-		'diceCollection',
 		'squareCount',
-		'playerShipCollection',
-		'gameFinished'
+		'playersShips',
+		'finalShipAndPosition',
+		'dice',
+		'gameFinished',
+		'winner'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -49,6 +51,21 @@ Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSqu
 		  andSquareCount: aSquareCount
 ]
 
+{ #category : 'action' }
+Board >> calculateFinalPositions [
+	(squareCount to: 1 by: -1) do: [ :squarePosition |
+		playersShips do: [ :player |
+			finalShipAndPosition at: player put: squarePosition ]
+		 ]
+]
+
+{ #category : 'action' }
+Board >> checkIfPlayerWon: aPlayer [
+	(aPlayer isLocatedAt: squareCount) ifTrue: [ 
+		winner := aPlayer .
+		gameFinished := true ]
+]
+
 { #category : 'initialization' }
 Board >> createShipCollection [
 
@@ -56,33 +73,38 @@ Board >> createShipCollection [
 	playerShipCollection addLast: Ship newPlayer ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'action' }
+Board >> generateRandomNumberFromDiceCollection [
+	^ (dice collect: [ :die | die roll ]) sum.
+]
+
+{ #category : 'action' }
+Board >> isGameFinished [
+
+	^ gameFinished 
+]
+
+{ #category : 'initialization' }
 Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount [
 
 	playerCount := aPlayerCount.
-	diceCollection := aDiceCollection.
+	dice := aDiceCollection.
 	squareCount := aSquareCount.
-	playerShipCollection := OrderedCollection new.
+	playersShips := OrderedCollection new.
 	self createShipCollection.
+	finalShipAndPosition := Dictionary new.
 	gameFinished := false.
 ]
 
 { #category : 'action' }
 Board >> startGame [
-	
-	"Debería implementarse de nuevo un check de todos objetos validos para la partida AQUI"
-	
+
 	| randomForwardValue |
-	
-	[ gameFinished ] whileFalse: [ 
-		playerShipCollection do: [ :player |
-			randomForwardValue := (diceCollection collect: [ :die |  die roll]) sum.
-			1 to: randomForwardValue do: [ 
-				"Check juego no terminado - con el gameFinished flag"
-				player moveOneStepForward
-				"Check si no está en un agujero negro - y si lo está, modificarle la posición según lo que devuelva"
-				"Check si no está en square final" ]
-			 ]
-	 ]
-	
+	[ gameFinished ] whileFalse: [
+		playersShips do: [ :player |
+			gameFinished ifFalse: [
+				randomForwardValue := self generateRandomNumberFromDiceCollection.
+				"Agregar método para chequear si está o no en agujero negro, y en base a eso, transformar posición o mover 1 adelante"
+				player moveForward: randomForwardValue withLimit: squareCount ].
+				self checkIfPlayerWon: player ] ]
 ]

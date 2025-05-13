@@ -16,6 +16,16 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
+BoardTest >> testWhenBoardGameWithMockDieIsStartedAndAShipWinsThenValid [
+
+	| aBoard aDiceCollection |
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: 10.
+	aBoard startGame .
+	self assert: aBoard isGameFinished 
+]
+
+{ #category : 'tests' }
 BoardTest >> testWhenBoardIsCreatedWithShipCountBelowOneThenItFails [
 
 	|aDiceCollection|
