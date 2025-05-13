@@ -16,6 +16,28 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
+BoardTest >> testWhenBoardGameFinishesAnd2ndShipIsAtFinalSquareThenInvalid [
+
+	| aBoard aDiceCollection aSquareCount|
+	aSquareCount := 10.
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: aSquareCount .
+	aBoard startGame .
+	self deny: (aBoard isFinishedGamePlayerName: 'Player 2' atSquare: aSquareCount )
+]
+
+{ #category : 'tests' }
+BoardTest >> testWhenBoardGameFinishesAnd2ndShipIsAtPreviousToFinalSquareThenValid [
+
+	| aBoard aDiceCollection aSquareCount|
+	aSquareCount := 10.
+	aDiceCollection := OneDieWithOneFace new createCollection.
+	aBoard := Board gameWithPlayerCount: 2 andDice: aDiceCollection andSquareCount: aSquareCount .
+	aBoard startGame .
+	self assert: (aBoard isFinishedGamePlayerName: 'Player 2' atSquare: aSquareCount - 1 )
+]
+
+{ #category : 'tests' }
 BoardTest >> testWhenBoardGameFinishesAndWinnerIsAtFinalSquareThenValid [
 
 	| aBoard aDiceCollection aSquareCount|
