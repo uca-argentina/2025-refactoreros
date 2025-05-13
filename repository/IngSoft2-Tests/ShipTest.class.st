@@ -6,6 +6,24 @@ Class {
 }
 
 { #category : 'tests' }
+ShipTest >> testWhenAShipIsCreatedAndNameIsDifferentThenInvalid [
+
+	| aShip |
+	aShip := Ship newPlayerWithName: 'Player test'.
+
+	self deny: (aShip getName = 'Player 2')
+]
+
+{ #category : 'tests' }
+ShipTest >> testWhenAShipIsCreatedAndNameIsEqualThenValid [
+
+	| aShip |
+	aShip := Ship newPlayerWithName: 'Player test'.
+
+	self assert: (aShip getName = 'Player test')
+]
+
+{ #category : 'tests' }
 ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 
 	| aShip |
