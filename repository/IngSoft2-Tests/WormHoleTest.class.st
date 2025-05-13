@@ -16,6 +16,39 @@ WormHoleTest >> should: anErrorBlock raise: errorClass withMessageText: errorMes
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testWhenAWormHoleRecivesAPositionThatIsntEntranceNorExitThenItReturnsItsTheSamePosition [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 1.
+
+
+	self assert: (aWormHole getOppositeEnd: aPosition) equals: 1
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitPosition [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 2.
+
+
+	self assert: (aWormHole getOppositeEnd: aPosition) equals: 4
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntrancePosition [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 4.
+
+
+	self assert: (aWormHole getOppositeEnd: aPosition) equals: 2
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 
 	self

@@ -19,11 +19,27 @@ WormHole class >> checkAboveZeroForEntrance: anEntrancePosition andExit: anExitP
 		Error signal: 'Positions should be numbers above zero' ]
 ]
 
+{ #category : 'argument validation' }
+WormHole class >> checkEntrance: anEntrancePosition isBeforeExit: anExitPosition [
+
+	(anEntrancePosition < anExitPosition ) ifFalse: [ Error signal: 'Entrace should be located before exit']
+]
+
+{ #category : 'initialization' }
+WormHole class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
+
+	self checkAboveZeroForEntrance: anEntrancePosition andExit: anExitPosition.
+	self checkEntrance: anEntrancePosition  isBeforeExit: anExitPosition. 
+	
+	^ self new intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition
+]
+
 { #category : 'accessing' }
 WormHole >> getOppositeEnd: aPosition [
 
 	aPosition = entrancePosition ifTrue: [ ^ exitPosition ].
-
+	aPosition = exitPosition ifTrue: [ ^ entrancePosition ].
+	^ aPosition
 ]
 
 { #category : 'accessing' }
