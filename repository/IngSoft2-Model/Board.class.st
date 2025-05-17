@@ -12,7 +12,8 @@ Class {
 		'dice',
 		'gameFinished',
 		'winner',
-		'wormhole'
+		'wormhole',
+		'shipsPositions'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -53,6 +54,12 @@ Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSqu
 		  andWormhole: aWormhole 
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> checkIfPlayerWon2: aShipPosition [
+
+	aShipPosition >= squareCount ifTrue:[ gameFinished := true] 
+]
+
 { #category : 'action' }
 Board >> checkIfPlayerWon: aPlayer [
 
@@ -66,7 +73,11 @@ Board >> createShipCollection [
 
 	1 to: playerCount do: [ :i |
 		playersShips addLast:
-			(Ship newPlayerWithName: 'Player ' , i asString) ]
+			(Ship newPlayerWithName: 'Player ' , i asString).
+		shipsPositions addLast: 1.
+			
+		]
+
 ]
 
 { #category : 'comparing' }
@@ -110,6 +121,7 @@ Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquare
 	self createShipCollection.
 	finalShipAndPosition := Dictionary new.
 	gameFinished := false.
+	shipsPositions := OrderedCollection new.
 	wormhole := aWormhole
 ]
 
@@ -128,4 +140,15 @@ Board >> startGame [
 
 { #category : 'as yet unclassified' }
 Board >> startNewGame2 [
+
+	| randomForwardValue |
+	
+	
+	[ gameFinished ] whileFalse: [
+		1 to: shipsPositions size do: [ :i |
+				randomForwardValue := self generateRandomNumberFromDiceCollection.
+				shipsPositions at: i put: (shipsPositions at: i) + randomForwardValue.
+				self checkIfPlayerWon2: (shipsPositions at: i).
+				
+			] ]
 ]
