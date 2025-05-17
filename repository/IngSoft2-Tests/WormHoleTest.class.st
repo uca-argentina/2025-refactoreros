@@ -16,18 +16,7 @@ WormHoleTest >> should: anErrorBlock raise: errorClass withMessageText: errorMes
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenAWormHoleRecivesAPositionThatIsntEntranceNorExitThenItReturnsItsTheSamePosition [
-
-	| aWormHole aPosition |
-	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
-	aPosition := 1.
-
-
-	self assert: (aWormHole getOppositeEnd: aPosition) = 1
-]
-
-{ #category : 'tests' }
-WormHoleTest >> testWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitPosition [
+WormHoleTest >> test01AWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitPosition [
 
 	| aWormHole aPosition |
 	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
@@ -38,7 +27,7 @@ WormHoleTest >> testWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitP
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntrancePosition [
+WormHoleTest >> test02AWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntrancePosition [
 
 	| aWormHole aPosition |
 	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
@@ -49,7 +38,18 @@ WormHoleTest >> testWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntranceP
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
+WormHoleTest >> test03AWhenAWormHoleRecivesAPositionThatIsntEntranceNorExitThenItReturnsItsTheSamePosition [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 1.
+
+
+	self assert: (aWormHole getOppositeEnd: aPosition) = 1
+]
+
+{ #category : 'tests' }
+WormHoleTest >> test04AWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 
 	self
 		should: [ WormHole withEntranceAt: 0 andExitAt: 1 ]
@@ -58,7 +58,7 @@ WormHoleTest >> testWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenBlackHoleIsCreatedWithExitBeforeEntranceThenItFails [
+WormHoleTest >> test05AWhenBlackHoleIsCreatedWithExitBeforeEntranceThenItFails [
 
 	self
 		should: [ WormHole withEntranceAt: 3 andExitAt: 1 ]

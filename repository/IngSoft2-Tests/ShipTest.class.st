@@ -6,25 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-ShipTest >> testWhenAShipIsCreatedAndNameIsDifferentThenInvalid [
-
-	| aShip |
-	aShip := Ship newPlayerWithName: 'Player test'.
-
-	self deny: (aShip getName = 'Player 2')
-]
-
-{ #category : 'tests' }
-ShipTest >> testWhenAShipIsCreatedAndNameIsEqualThenValid [
-
-	| aShip |
-	aShip := Ship newPlayerWithName: 'Player test'.
-
-	self assert: (aShip getName = 'Player test')
-]
-
-{ #category : 'tests' }
-ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
+ShipTest >> test01AWhenAShipIsCreatedThenItStartsAtSquareOne [
 
 	| aShip |
 	aShip := Ship newPlayerWithName: 'Player test'.
@@ -33,7 +15,36 @@ ShipTest >> testWhenAShipIsCreatedThenItStartsAtSquareOne [
 ]
 
 { #category : 'tests' }
-ShipTest >> testWhenAShipLandsAtASquareDifferentFromWormholeAndPositionRemainsTheSameThenValid [
+ShipTest >> test02AWhenAShipIsCreatedAndNameIsEqualThenValid [
+
+	| aShip |
+	aShip := Ship newPlayerWithName: 'Player test'.
+
+	self assert: (aShip getName = 'Player test')
+]
+
+{ #category : 'tests' }
+ShipTest >> test03AWhenAShipIsCreatedAndNameIsDifferentThenInvalid [
+
+	| aShip |
+	aShip := Ship newPlayerWithName: 'Player test'.
+
+	self deny: (aShip getName = 'Player 2')
+]
+
+{ #category : 'tests' }
+ShipTest >> test04AWhenAShipMovesForwardTwoSquaresThenItLandsAtSquareThree [
+
+	| aShip |
+	aShip := Ship newPlayerWithName: 'Player test'.
+
+	aShip moveForward: 2 withLimit: 10.
+
+	self assert: (aShip isLocatedAt: 3)
+]
+
+{ #category : 'tests' }
+ShipTest >> test05AWhenAShipLandsAtASquareDifferentFromWormholeAndPositionRemainsTheSameThenValid [
 
 	| aShip aWormhole|
 	aShip := Ship newPlayerWithName: 'Player test'.
@@ -46,7 +57,7 @@ ShipTest >> testWhenAShipLandsAtASquareDifferentFromWormholeAndPositionRemainsTh
 ]
 
 { #category : 'tests' }
-ShipTest >> testWhenAShipLandsAtAWormholeAndPositionRemainsTheSameThenInvalid [
+ShipTest >> test06AWhenAShipLandsAtAWormholeAndPositionRemainsTheSameThenInvalid [
 
 	| aShip aWormhole |
 	aShip := Ship newPlayerWithName: 'Player test'.
@@ -56,27 +67,4 @@ ShipTest >> testWhenAShipLandsAtAWormholeAndPositionRemainsTheSameThenInvalid [
 	aShip transformIfLandedAt: aWormhole.
 
 	self deny: (aShip isLocatedAt: 2)
-]
-
-{ #category : 'tests' }
-ShipTest >> testWhenAShipMovesForwardOneStepTwiceThenLandsAtSquareThree [
-
-	| aShip |
-	aShip := Ship newPlayerWithName: 'Player test'.
-
-	aShip moveOneStepForward.
-	aShip moveOneStepForward.
-
-	self assert: (aShip isLocatedAt: 3)
-]
-
-{ #category : 'tests' }
-ShipTest >> testWhenAShipMovesForwardTwoSquaresThenItLandsAtSquareThree [
-
-	| aShip |
-	aShip := Ship newPlayerWithName: 'Player test'.
-
-	aShip moveForward: 2 withLimit: 10.
-
-	self assert: (aShip isLocatedAt: 3)
 ]

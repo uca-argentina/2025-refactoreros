@@ -125,3 +125,7 @@ Board >> startGame [
 				player transformIfLandedAt: wormhole.
 				self checkIfPlayerWon: player ] ] ]
 ]
+
+{ #category : 'as yet unclassified' }
+Board >> startNewGame2 [
+]

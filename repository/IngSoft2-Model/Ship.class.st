@@ -24,12 +24,6 @@ Ship >> getName [
 ]
 
 { #category : 'initialization' }
-Ship >> initializeAtSquareOne [
-
-	position := 1
-]
-
-{ #category : 'initialization' }
 Ship >> initializeAtSquareOneWithName: aName [
 
 	name := aName asString.
@@ -51,12 +45,7 @@ Ship >> moveForward: aNumberOfSquares withLimit: aLimit [
 ]
 
 { #category : 'actions' }
-Ship >> moveOneStepForward [
-
-	position := position + 1
-]
-
-{ #category : 'actions' }
 Ship >> transformIfLandedAt: wormhole [
+
 	position := wormhole getOppositeEnd: position
 ]

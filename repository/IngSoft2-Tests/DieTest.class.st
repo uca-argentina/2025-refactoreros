@@ -16,7 +16,18 @@ DieTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-DieTest >> testWhenADieHasOneFaceThenAlwaysReturnsOne [
+DieTest >> test01AWhenADieRollItFallsOnAValidNumber [
+
+	| aDie value |
+	aDie := Die withFaces: 6.
+	value := aDie roll.
+
+	self assert:
+		(value between: 1 and: 6)
+]
+
+{ #category : 'tests' }
+DieTest >> test02AWhenADieHasOneFaceThenAlwaysReturnsOne [
 
 	| aDie value |
 	aDie := Die withFaces: 1.
@@ -26,22 +37,11 @@ DieTest >> testWhenADieHasOneFaceThenAlwaysReturnsOne [
 ]
 
 { #category : 'tests' }
-DieTest >> testWhenADieHasZeroFacesThenCreationFails [
+DieTest >> test03AWhenADieHasZeroFacesThenCreationFails [
 
 	self
 		should: [ Die withFaces: 0 ]
 		raise: Error
 		withMessageText: 'Invalid number of faces'
 
-]
-
-{ #category : 'tests' }
-DieTest >> testWhenADieRollItFallsOnAValidNumber [
-
-	| aDie value |
-	aDie := Die withFaces: 6.
-	value := aDie roll.
-
-	self assert:
-		(value between: 1 and: 6)
 ]
