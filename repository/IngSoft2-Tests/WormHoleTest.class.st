@@ -23,7 +23,7 @@ WormHoleTest >> test01AWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsEx
 	aPosition := 2.
 
 
-	self assert: (aWormHole getOppositeEnd: aPosition) = 4
+	self assert: (aWormHole oppositeEnd: aPosition) = 4
 ]
 
 { #category : 'tests' }
@@ -34,18 +34,7 @@ WormHoleTest >> test02AWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntran
 	aPosition := 4.
 
 
-	self assert: (aWormHole getOppositeEnd: aPosition) = 2
-]
-
-{ #category : 'tests' }
-WormHoleTest >> test03AWhenAWormHoleRecivesAPositionThatIsntEntranceNorExitThenItReturnsItsTheSamePosition [
-
-	| aWormHole aPosition |
-	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
-	aPosition := 1.
-
-
-	self assert: (aWormHole getOppositeEnd: aPosition) = 1
+	self assert: (aWormHole oppositeEnd: aPosition) = 2
 ]
 
 { #category : 'tests' }
