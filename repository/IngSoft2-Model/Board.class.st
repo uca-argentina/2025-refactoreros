@@ -5,9 +5,9 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'playerCount',
+		'shipCount',
 		'squareCount',
-		'playersShips',
+		'shipList',
 		'finalShipAndPosition',
 		'dice',
 		'gameFinished',
@@ -54,101 +54,62 @@ Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSqu
 		  andWormhole: aWormhole 
 ]
 
-{ #category : 'as yet unclassified' }
-Board >> checkIfPlayerWon2: aShipPosition [
+{ #category : 'actions' }
+Board >> checkIfShipWon: aShip [
 
-	aShipPosition >= squareCount ifTrue:[ gameFinished := true] 
-]
-
-{ #category : 'action' }
-Board >> checkIfPlayerWon: aPlayer [
-
-	(aPlayer isLocatedAt: squareCount) ifTrue: [
-		winner := aPlayer.
-		gameFinished := true ]
+	(shipsPositions at: aShip) >= squareCount ifTrue: [
+		gameFinished := true.
+		winner := aShip ]
 ]
 
 { #category : 'initialization' }
-Board >> createShipCollection [
+Board >> createShipsPositions [
 
-	1 to: playerCount do: [ :i |
-		playersShips addLast:
-			(Ship newPlayerWithName: 'Player ' , i asString).
-		shipsPositions addLast: 1.
-			
-		]
-
+	1 to: shipCount do: [ :i | shipsPositions at: (shipList at: i) put: 1 ]
 ]
 
-{ #category : 'comparing' }
-Board >> doesPlayerNameWon: aPlayerName [
-
-	gameFinished
-		ifFalse: [ Error signal: 'Game is not finishied' ]
-		ifTrue: [ ^ winner getName = aPlayerName ]
-]
-
-{ #category : 'action' }
-Board >> generateRandomNumberFromDiceCollection [
+{ #category : 'actions' }
+Board >> generateDiceResult [
 
 	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'comparing' }
-Board >> isFinishedGamePlayerName: aPlayerName atSquare: aSquare [
+Board >> getWinner [
 
-	| matchedPlayer |
-	matchedPlayer := playersShips
-		                 detect: [ :player | player getName = aPlayerName ]
-		                 ifNone: [
-		                 Error signal: 'There is no player with such name' ].
-	^ matchedPlayer isLocatedAt: aSquare
-]
-
-{ #category : 'comparing' }
-Board >> isGameFinished [
-
-	^ gameFinished
+	gameFinished
+		ifFalse: [ Error signal: 'Game is not finishied' ]
+		ifTrue: [ ^ winner ]
 ]
 
 { #category : 'initialization' }
-Board >> newGameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
+Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
 
-	playerCount := aPlayerCount.
+	shipCount := aShipList size.
+	shipList := aShipList.
+	shipsPositions := Dictionary new.
+	self createShipsPositions.
 	dice := aDiceCollection.
 	squareCount := aSquareCount.
-	playersShips := OrderedCollection new.
-	self createShipCollection.
-	finalShipAndPosition := Dictionary new.
 	gameFinished := false.
-	shipsPositions := OrderedCollection new.
 	wormhole := aWormhole
 ]
 
-{ #category : 'action' }
-Board >> startGame [
+{ #category : 'actions' }
+Board >> runGame [
 
-	| randomForwardValue |
+	| diceResult aShip nextPosition |
 	[ gameFinished ] whileFalse: [
-		playersShips do: [ :player |
-			gameFinished ifFalse: [
-				randomForwardValue := self generateRandomNumberFromDiceCollection.
-				player moveForward: randomForwardValue withLimit: squareCount.
-				player transformIfLandedAt: wormhole.
-				self checkIfPlayerWon: player ] ] ]
-]
+		1 to: shipCount do: [ :i |
+			aShip := shipList at: i.
 
-{ #category : 'as yet unclassified' }
-Board >> startNewGame2 [
-
-	| randomForwardValue |
-	
-	
-	[ gameFinished ] whileFalse: [
-		1 to: shipsPositions size do: [ :i |
-				randomForwardValue := self generateRandomNumberFromDiceCollection.
-				shipsPositions at: i put: (shipsPositions at: i) + randomForwardValue.
-				self checkIfPlayerWon2: (shipsPositions at: i).
-				
-			] ]
+			diceResult := self generateDiceResult.
+			nextPosition := (shipsPositions at: aShip) + diceResult.
+			
+			(wormhole isAWormHoleEnd: nextPosition) ifTrue:[
+				nextPosition := wormhole oppositeEnd: nextPosition.
+				]. 
+			
+			shipsPositions at: aShip put: nextPosition.
+			self checkIfShipWon: (aShip) ] ]
 ]
