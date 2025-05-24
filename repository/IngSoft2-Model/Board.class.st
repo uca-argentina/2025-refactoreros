@@ -15,7 +15,8 @@ Class {
 		'wormhole',
 		'shipsPositions',
 		'shipsLaps',
-		'lapsGoal'
+		'lapsGoal',
+		'shipManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -131,10 +132,7 @@ Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount:
 	shipCount := aShipList size.
 	shipList := aShipList.
 	lapsGoal := aNumberOfLaps.
-	shipsPositions := Dictionary new.
-	self createShipsPositions.
-	shipsLaps := Dictionary new.
-	self createShipsLaps.
+	shipManager := ShipManager withShips: aShipList.
 	dice := aDiceCollection.
 	squareCount := aSquareCount.
 	gameFinished := false.
@@ -150,11 +148,12 @@ Board >> runGame [
 			aShip := shipList at: i.
 
 			diceResult := self generateDiceResult.
-			nextPosition := (shipsPositions at: aShip) + diceResult.
+			nextPosition := shipManager manageNextPositionFor: aShip with: diceResult.
 			
 			(wormhole isAWormHoleEnd: nextPosition) ifTrue:[
 				nextPosition := wormhole oppositeEnd: nextPosition.
-				]. 
+				].
+			
 			
 			shipsPositions at: aShip put: nextPosition.
 			self checkIfShipWon: (aShip) ] ]
