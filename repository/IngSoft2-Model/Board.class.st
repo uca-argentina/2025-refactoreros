@@ -19,21 +19,21 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'argument validation' }
+{ #category : 'validation' }
 Board class >> checkValidDiceCollection: aDiceCollection [
 
 	aDiceCollection isNotEmpty ifFalse: [
 		Error signal: 'At least one die is required' ]
 ]
 
-{ #category : 'argument validation' }
-Board class >> checkValidPlayerCount: aPlayerCount [
+{ #category : 'validation' }
+Board class >> checkValidShipList: aShipList [
 
-	aPlayerCount >= 1 ifFalse: [
-		Error signal: 'Player count should be equal or higher than 1' ]
+	aShipList isNotEmpty ifFalse: [
+		Error signal: 'At least one ship is required' ]
 ]
 
-{ #category : 'argument validation' }
+{ #category : 'validation' }
 Board class >> checkValidSquareCount: aSquareCount [
 
 	aSquareCount >= 2 ifFalse: [
@@ -41,14 +41,14 @@ Board class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Board class >> gameWithPlayerCount: aPlayerCount andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
+Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
 
-	self checkValidPlayerCount: aPlayerCount.
 	self checkValidDiceCollection: aDiceCollection.
 	self checkValidSquareCount: aSquareCount.
+	self checkValidShipList: aShipList.
 
 	^ self new
-		  newGameWithPlayerCount: aPlayerCount
+		  newGameWithShipList: aShipList
 		  andDice: aDiceCollection
 		  andSquareCount: aSquareCount
 		  andWormhole: aWormhole 
@@ -59,7 +59,7 @@ Board >> checkIfShipWon: aShip [
 
 	(shipsPositions at: aShip) >= squareCount ifTrue: [
 		gameFinished := true.
-		winner := aShip ]
+		winner := aShip ].
 ]
 
 { #category : 'initialization' }
@@ -80,6 +80,12 @@ Board >> getWinner [
 	gameFinished
 		ifFalse: [ Error signal: 'Game is not finishied' ]
 		ifTrue: [ ^ winner ]
+]
+
+{ #category : 'testing' }
+Board >> isGameFinished [ 
+
+	^ gameFinished
 ]
 
 { #category : 'initialization' }
