@@ -13,7 +13,9 @@ Class {
 		'gameFinished',
 		'winner',
 		'wormhole',
-		'shipsPositions'
+		'shipsPositions',
+		'shipsLaps',
+		'lapsGoal'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -41,7 +43,7 @@ Board class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
+Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andWormhole: aWormhole [
 
 	self checkValidDiceCollection: aDiceCollection.
 	self checkValidSquareCount: aSquareCount.
@@ -51,15 +53,34 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 		  newGameWithShipList: aShipList
 		  andDice: aDiceCollection
 		  andSquareCount: aSquareCount
-		  andWormhole: aWormhole 
+		  andLaps: aNumberOfLaps
+		  andWormhole: aWormhole
 ]
 
 { #category : 'actions' }
 Board >> checkIfShipWon: aShip [
 
-	(shipsPositions at: aShip) >= squareCount ifTrue: [
+	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
+	shipCurrentPosition := shipsPositions at: aShip.
+	shipCurrentLaps := shipsLaps at: aShip.
+	lastTurnCompletedLaps := shipCurrentPosition // squareCount.
+
+	shipCurrentPosition >= squareCount ifTrue: [
+		shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
+		shipsPositions at: aShip put: shipCurrentPosition - (lastTurnCompletedLaps * squareCount) 
+			].
+
+
+	((shipsLaps at: aShip) >= lapsGoal) ifTrue: [
 		gameFinished := true.
-		winner := aShip ].
+		winner := aShip 
+		].
+]
+
+{ #category : 'initialization' }
+Board >> createShipsLaps [
+	
+	(1 to: shipCount) do:[ :i | shipsLaps at:(shipList at: i) put: 0 ]
 ]
 
 { #category : 'initialization' }
@@ -72,6 +93,22 @@ Board >> createShipsPositions [
 Board >> generateDiceResult [
 
 	^ (dice collect: [ :die | die roll ]) sum
+]
+
+{ #category : 'accessing' }
+Board >> getShipLap: aShip [
+
+	^ (shipsLaps at: aShip) 
+	
+	
+]
+
+{ #category : 'accessing' }
+Board >> getShipPosition: aShip [
+
+	^ shipsPositions at: aShip 
+	
+	
 ]
 
 { #category : 'comparing' }
@@ -89,12 +126,15 @@ Board >> isGameFinished [
 ]
 
 { #category : 'initialization' }
-Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
+Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andWormhole: aWormhole [
 
 	shipCount := aShipList size.
 	shipList := aShipList.
+	lapsGoal := aNumberOfLaps.
 	shipsPositions := Dictionary new.
 	self createShipsPositions.
+	shipsLaps := Dictionary new.
+	self createShipsLaps.
 	dice := aDiceCollection.
 	squareCount := aSquareCount.
 	gameFinished := false.

@@ -20,9 +20,8 @@ LoadedDice class >> withSetNumbers: aCollectionOfNumbers [
 { #category : 'initialization' }
 LoadedDice >> initializeLoadedDice: aCollectionOfNumbers [
 
-	numbers := OrderedCollection newFromArray: aCollectionOfNumbers
-	
-	
+	numbers := OrderedCollection newFromArray: aCollectionOfNumbers.
+
 
 
 ]
