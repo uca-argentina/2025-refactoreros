@@ -74,7 +74,12 @@ Board >> generateDiceResult [
 	^ (dice collect: [ :die | die roll ]) sum
 ]
 
-{ #category : 'comparing' }
+{ #category : 'accessing' }
+Board >> getPositionOfShip: aShipName [
+	^ shipsPositions at: aShipName 
+]
+
+{ #category : 'accessing' }
 Board >> getWinner [
 
 	gameFinished
