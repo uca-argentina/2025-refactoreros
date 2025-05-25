@@ -120,7 +120,7 @@ BoardTest >> test08AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 	self
 		should: [ aBoard getPositionOfShip: 'Player 2' ]
 		raise: Error
-		withMessageText: 'key ''Player 2'' not found in Dictionary'
+		withMessageText: 'No existe un jugador con ese nombre'
 ]
 
 { #category : 'tests' }

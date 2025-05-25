@@ -76,7 +76,10 @@ Board >> generateDiceResult [
 
 { #category : 'accessing' }
 Board >> getPositionOfShip: aShipName [
-	^ shipsPositions at: aShipName 
+
+	^ shipsPositions
+		  at: aShipName
+		  ifAbsent: [ Error signal: 'No existe un jugador con ese nombre' ]
 ]
 
 { #category : 'accessing' }
