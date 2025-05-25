@@ -16,7 +16,7 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-BoardTest >> test01AWhenBoardGameWithMockDieIsStartedAndAShipWinsThenValid [
+BoardTest >> test01AWhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -33,7 +33,25 @@ BoardTest >> test01AWhenBoardGameWithMockDieIsStartedAndAShipWinsThenValid [
 ]
 
 { #category : 'tests' }
-BoardTest >> test02AWhenBoardGameWithMockDieIsStartedAndShip2WinsThenInvalid [
+BoardTest >> test02AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
+
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
+	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	aShipList := OrderedCollection newFromArray:
+		             #( 'Player 1' 'Player 2' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self assert: aBoard getWinner = 'Player 1'
+]
+
+{ #category : 'tests' }
+BoardTest >> test03AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -51,7 +69,7 @@ BoardTest >> test02AWhenBoardGameWithMockDieIsStartedAndShip2WinsThenInvalid [
 ]
 
 { #category : 'tests' }
-BoardTest >> test03AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
+BoardTest >> test04AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -68,7 +86,7 @@ BoardTest >> test03AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
 ]
 
 { #category : 'tests' }
-BoardTest >> test04AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
+BoardTest >> test05AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -86,25 +104,7 @@ BoardTest >> test04AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 ]
 
 { #category : 'tests' }
-BoardTest >> test05AWhenBoardGameWithMockDieIsStartedAndShip1WinsThenValid [
-
-	| aBoard dice wormhole aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray:
-		             #( 'Player 1' 'Player 2' ).
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-		          andWormhole: wormhole.
-	aBoard runGame.
-	self assert: aBoard getWinner = 'Player 1'
-]
-
-{ #category : 'tests' }
-BoardTest >> test08AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
+BoardTest >> test06AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -124,7 +124,7 @@ BoardTest >> test08AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 ]
 
 { #category : 'tests' }
-BoardTest >> test09AWhenBoardIsCreatedWithEmptyShipListItFails [
+BoardTest >> test07AWhenBoardIsCreatedWithEmptyShipListItFails [
 
 	| dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -143,7 +143,7 @@ BoardTest >> test09AWhenBoardIsCreatedWithEmptyShipListItFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> test10AWhenBoardIsCreatedWithZeroDieThenFails [
+BoardTest >> test08AWhenBoardIsCreatedWithZeroDieThenFails [
 
 	| dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -161,7 +161,7 @@ BoardTest >> test10AWhenBoardIsCreatedWithZeroDieThenFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> test11AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
+BoardTest >> test09AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 
 	| dice wormhole aShipList |
 	dice := OrderedCollection new.
@@ -177,4 +177,21 @@ BoardTest >> test11AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 				andWormhole: wormhole ]
 		raise: Error
 		withMessageText: 'Square count should be equal or higher than 2'
+]
+
+{ #category : 'tests' }
+BoardTest >> test10AWhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
+
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self assert: aBoard isGameFinished 
 ]
