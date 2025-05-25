@@ -39,7 +39,7 @@ BoardTest >> test02AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenVali
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray:
+	aShipList := OrderedCollection withAll:
 		             #( 'Player 1' 'Player 2' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
