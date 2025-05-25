@@ -22,7 +22,7 @@ BoardTest >> test01AWhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
@@ -57,7 +57,7 @@ BoardTest >> test03AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInva
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray:
+	aShipList := OrderedCollection withAll: 
 		             #( 'Player 1' 'Player 2' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
@@ -75,7 +75,7 @@ BoardTest >> test04AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
@@ -92,7 +92,7 @@ BoardTest >> test05AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray:
+	aShipList := OrderedCollection withAll:
 		             #( 'Player 1' 'Player 2' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
@@ -110,7 +110,7 @@ BoardTest >> test06AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
@@ -130,7 +130,7 @@ BoardTest >> test07AWhenBoardIsCreatedWithEmptyShipListItFails [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #(  ).
+	aShipList := OrderedCollection withAll: #(  ).
 	self
 		should: [
 			Board
@@ -148,7 +148,7 @@ BoardTest >> test08AWhenBoardIsCreatedWithZeroDieThenFails [
 	| dice wormhole aShipList |
 	dice := OrderedCollection new.
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
 			Board
@@ -167,7 +167,7 @@ BoardTest >> test09AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
 			Board
@@ -186,7 +186,7 @@ BoardTest >> test10AWhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
