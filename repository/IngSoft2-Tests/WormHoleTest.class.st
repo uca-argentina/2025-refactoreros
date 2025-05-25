@@ -54,3 +54,36 @@ WormHoleTest >> test05AWhenBlackHoleIsCreatedWithExitBeforeEntranceThenItFails [
 		raise: Error
 		withMessageText: 'Entrace should be located before exit'
 ]
+
+{ #category : 'tests' }
+WormHoleTest >> test06AWhenAWormholeValidatesItsEntrancePositionThenValid [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 2.
+
+
+	self assert: (aWormHole isAWormHoleEnd: aPosition)
+]
+
+{ #category : 'tests' }
+WormHoleTest >> test07AWhenAWormholeValidatesItsExitPositionThenValid [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 4.
+
+
+	self assert: (aWormHole isAWormHoleEnd: aPosition)
+]
+
+{ #category : 'tests' }
+WormHoleTest >> test08AWhenAWormholeValidatesANonEndPositionThenInvalid [
+
+	| aWormHole aPosition |
+	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
+	aPosition := 3.
+
+
+	self deny: (aWormHole isAWormHoleEnd: aPosition)
+]
