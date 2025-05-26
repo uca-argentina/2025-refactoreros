@@ -8,8 +8,18 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'argument validation' }
+EmptySquare class >> validateInitializedPosition: aPosition [
+
+	aPosition >= 1 ifFalse: [
+		Error signal:
+			'A square must be initialized with a position integer equal or higher than 1' ]
+]
+
 { #category : 'accessing' }
 EmptySquare class >> withPositionAt: aPosition [
+
+	self validateInitializedPosition: aPosition.
 	^ self new initializeWithPositionAt: aPosition
 ]
 
