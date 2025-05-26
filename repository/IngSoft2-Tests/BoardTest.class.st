@@ -254,7 +254,7 @@ BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
 { #category : 'tests' }
 BoardTest >> testB04WhenSBoardIsCreatedWithInvalidLapCountThenFails [
 
-	| aBoard dice wormhole aShipList |
+	| dice wormhole aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 
