@@ -17,21 +17,9 @@ ShipManager class >> withShips: aShipList [
 ]
 
 { #category : 'accessing' }
-ShipManager >> correctTheShip: aShip position: nextPosition withLapLength: squareCount [
+ShipManager >> calculateNextPositionFor: aShip with: diceResult [
 
-	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
-	shipCurrentPosition := shipsPositions at: aShip.
-	shipCurrentLaps := shipsLaps at: aShip.
-	lastTurnCompletedLaps := nextPosition // squareCount.
-
-	nextPosition > squareCount
-		ifTrue: [
-			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
-			shipsPositions
-				at: aShip
-				put: nextPosition - (lastTurnCompletedLaps * squareCount) ]
-		ifFalse: [ shipsPositions at: aShip put: nextPosition ].
-	^ shipsPositions at: aShip
+	^ (shipsPositions at: aShip) + diceResult
 ]
 
 { #category : 'accessing' }
@@ -102,7 +90,19 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 ]
 
 { #category : 'accessing' }
-ShipManager >> manageNextPositionFor: aShip with: diceResult [
+ShipManager >> placeTheShip: aShip position: nextPosition withLapLength: squareCount [
 
-	^ (shipsPositions at: aShip) + diceResult
+	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
+	shipCurrentPosition := shipsPositions at: aShip.
+	shipCurrentLaps := shipsLaps at: aShip.
+	lastTurnCompletedLaps := nextPosition // squareCount.
+
+	nextPosition > squareCount
+		ifTrue: [
+			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
+			shipsPositions
+				at: aShip
+				put: nextPosition - (lastTurnCompletedLaps * squareCount) ]
+		ifFalse: [ shipsPositions at: aShip put: nextPosition ].
+	^ shipsPositions at: aShip
 ]

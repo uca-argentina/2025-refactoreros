@@ -18,23 +18,24 @@ EmptySquareTest >> should: anErrorBlock raise: errorClass withMessageText: error
 { #category : 'tests' }
 EmptySquareTest >> test01BWhenAnEmptySquareReturnsTheSameDictionaryItRecivedThenIsValid [
 
-	| anEmptySquare aDictionaryOfPositions |
-	aDictionaryOfPositions := Dictionary new.
-	aDictionaryOfPositions at: 'Player 1' put: 1.
+	| anEmptySquare shipsPositions |
+	shipsPositions := Dictionary new.
+	shipsPositions at: 'Player 1' put: 1.
 
 	anEmptySquare := EmptySquare withPositionAt: 1.
+	anEmptySquare
+		applyEffectTo: shipsPositions
+		forShip: 'Player 1'.
 
-	self assert: ((anEmptySquare
-			 applyEffectTo: aDictionaryOfPositions
-			 forShip: 'Player 1') = aDictionaryOfPositions)
+	self assert: (shipsPositions at: 'Player 1') = 1
 ]
 
 { #category : 'tests' }
 EmptySquareTest >> test02BWhenAnEmptySquareIsCreatedWithInvalidPositionThenFails [
 
-	| anEmptySquare aDictionaryOfPositions |
-	aDictionaryOfPositions := Dictionary new.
-	aDictionaryOfPositions at: 'Player 1' put: 1.
+	| anEmptySquare shipsPositions |
+	shipsPositions := Dictionary new.
+	shipsPositions at: 'Player 1' put: 1.
 
 	self
 		should: [ anEmptySquare := EmptySquare withPositionAt: -1 ]

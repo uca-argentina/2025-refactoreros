@@ -1,5 +1,5 @@
 Class {
-	#name : 'EmptySquare',
+	#name : 'HyperSpaceJumpSquare',
 	#superclass : 'Object',
 	#instVars : [
 		'position'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'argument validation' }
-EmptySquare class >> validateInitializedPosition: aPosition [
+HyperSpaceJumpSquare class >> validateInitializedPosition: aPosition [
 
 	aPosition >= 1 ifFalse: [
 		Error signal:
@@ -17,18 +17,20 @@ EmptySquare class >> validateInitializedPosition: aPosition [
 ]
 
 { #category : 'accessing' }
-EmptySquare class >> withPositionAt: aPosition [
+HyperSpaceJumpSquare class >> withPositionAt: aPosition [
 
 	self validateInitializedPosition: aPosition.
 	^ self new initializeWithPositionAt: aPosition
 ]
 
 { #category : 'actions' }
-EmptySquare >> applyEffectTo: shipsPositions forShip: aShip [
+HyperSpaceJumpSquare >> applyEffectTo: shipsPositions forShip: aShip [
+
+	(shipsPositions at: aShip put: (shipsPositions at: aShip) + 4)
 ]
 
 { #category : 'accessing' }
-EmptySquare >> initializeWithPositionAt: aPosition [
+HyperSpaceJumpSquare >> initializeWithPositionAt: aPosition [
 
 	position := aPosition
 ]

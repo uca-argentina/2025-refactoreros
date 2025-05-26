@@ -103,16 +103,16 @@ Board >> isGameFinished [
 ]
 
 { #category : 'initialization' }
-Board >> newGameWithShipList: arg1 andDice: arg2 andSquareCount: arg3 andLaps: arg4 andWormhole: arg5 [
+Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCount andLaps: aLaps andWormhole: aWormhole [
 
-	shipList := arg1.
-	lapsGoal := arg4.
-	shipManager := ShipManager withShips: arg1.
-	dice := arg2.
-	squareCount := arg3.
+	shipList := aNewGame.
+	lapsGoal := aLaps.
+	shipManager := ShipManager withShips: aNewGame.
+	dice := aDice.
+	squareCount := aSquareCount.
 	self creatSquareList.
 	gameFinished := false.
-	wormhole := arg5
+	wormhole := aWormhole
 ]
 
 { #category : 'actions' }
@@ -124,7 +124,7 @@ Board >> runGame [
 			
 			gameFinished ifFalse: [ diceResult := self generateDiceResult.
 			nextPosition := shipManager
-				                manageNextPositionFor: aShip
+				                calculateNextPositionFor: aShip
 				                with: diceResult.
 			
 
@@ -132,14 +132,12 @@ Board >> runGame [
 				nextPosition := wormhole oppositeEnd: nextPosition ].
 			
 			
-			correctPosition := shipManager correctTheShip: aShip  position: nextPosition withLapLength: squareCount.
+			correctPosition := shipManager placeTheShip: aShip position: nextPosition withLapLength: squareCount.
 			nextSquare := squareList at: correctPosition.
 			shipManager landShip: aShip atSquare: nextSquare.
 			
 			
 			gameFinished := shipManager hasShip: aShip reachedLapGoal: lapsGoal   ]
 
-			
-			
 			 ] ]
 ]
