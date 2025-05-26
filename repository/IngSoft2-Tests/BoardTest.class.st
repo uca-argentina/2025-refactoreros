@@ -20,7 +20,7 @@ BoardTest >> test01AWhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 9 1)).
+	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board

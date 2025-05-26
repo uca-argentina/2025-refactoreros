@@ -25,6 +25,8 @@ EmptySquare class >> withPositionAt: aPosition [
 
 { #category : 'actions' }
 EmptySquare >> applyEffectTo: shipsPositions forShip: aShip [
+
+	^ shipsPositions
 ]
 
 { #category : 'accessing' }
