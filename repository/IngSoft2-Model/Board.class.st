@@ -11,7 +11,8 @@ Class {
 		'gameFinished',
 		'wormhole',
 		'lapsGoal',
-		'shipManager'
+		'shipManager',
+		'squareList'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -54,29 +55,51 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 ]
 
 { #category : 'actions' }
+Board >> calculateNextSquare: aPosition [
+
+	| squarePosition |
+
+	squarePosition := aPosition.
+	(aPosition > squareCount) ifTrue: [ 
+			squarePosition := aPosition % squareCount.
+		 ].
+	
+	^ squareList at: squarePosition
+	
+]
+
+{ #category : 'initialization' }
+Board >> creatSquareList [
+
+	squareList := OrderedCollection new.
+
+	(1 to: squareCount*3) do: [ :i | squareList add: (EmptySquare withPositionAt:i ) ]
+]
+
+{ #category : 'actions' }
 Board >> generateDiceResult [
 
 	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'accessing' }
-Board >> getShipLap: aShip [
+Board >> getShipLap: arg1 [
 
-	^ shipManager getShipLap: aShip
+	^ shipManager getShipLap: arg1
 ]
 
 { #category : 'accessing' }
-Board >> getShipPosition: aShip [
+Board >> getShipPosition: arg1 [
 
-	^ shipManager getShipPosition: aShip
+	^ shipManager getShipPosition: arg1
 ]
 
 { #category : 'accessing' }
 Board >> getWinner [
 
 	gameFinished
-		ifFalse: [ Error signal: 'The game is still being played' ]
 		ifTrue: [ ^ shipManager getWinner ]
+		ifFalse: [ Error signal: 'The game is still being played' ]
 ]
 
 { #category : 'testing' }
@@ -86,21 +109,22 @@ Board >> isGameFinished [
 ]
 
 { #category : 'initialization' }
-Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andWormhole: aWormhole [
+Board >> newGameWithShipList: arg1 andDice: arg2 andSquareCount: arg3 andLaps: arg4 andWormhole: arg5 [
 
-	shipList := aShipList.
-	lapsGoal := aNumberOfLaps.
-	shipManager := ShipManager withShips: aShipList.
-	dice := aDiceCollection.
-	squareCount := aSquareCount.
+	shipList := arg1.
+	lapsGoal := arg4.
+	shipManager := ShipManager withShips: arg1.
+	dice := arg2.
+	squareCount := arg3.
+	self creatSquareList.
 	gameFinished := false.
-	wormhole := aWormhole
+	wormhole := arg5
 ]
 
 { #category : 'actions' }
 Board >> runGame [
 
-	| diceResult nextPosition |
+	| diceResult nextPosition nextSquare |
 	[ gameFinished ] whileFalse: [
 		shipList do: [ :aShip |
 			
@@ -108,11 +132,17 @@ Board >> runGame [
 			nextPosition := shipManager
 				                manageNextPositionFor: aShip
 				                with: diceResult.
+			
+			nextSquare := self calculateNextSquare: nextPosition.
 
 			(wormhole isAWormHoleEnd: nextPosition) ifTrue: [
 				nextPosition := wormhole oppositeEnd: nextPosition ].
-
-			shipManager setPosition: nextPosition for: aShip .
+			
+			
+			shipManager setPositionOf: aShip  to: nextPosition.
+			shipManager landShip: aShip atSquare: nextSquare.
+			
+			
 			gameFinished := shipManager hasShip: aShip reachedLapGoal: lapsGoal withLapLength: squareCount  ]
 
 			

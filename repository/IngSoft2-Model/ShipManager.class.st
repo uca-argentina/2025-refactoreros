@@ -1,6 +1,3 @@
-"
-An internal collaborator for Board, that provides support for Ship game information 
-"
 Class {
 	#name : 'ShipManager',
 	#superclass : 'Object',
@@ -49,6 +46,7 @@ ShipManager >> getWinner [
 ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal withLapLength: squareCount [
 
 	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
+	
 	shipCurrentPosition := shipsPositions at: aShip.
 	shipCurrentLaps := shipsLaps at: aShip.
 	lastTurnCompletedLaps := shipCurrentPosition // squareCount.
@@ -73,24 +71,18 @@ ShipManager >> initializeWithShips: aShipList [
 	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ]
 ]
 
+{ #category : 'actions' }
+ShipManager >> landShip: aShip atSquare: nextSquare [
+	shipsPositions := nextSquare applyEffectTo: shipsPositions forShip: aShip.
+]
+
 { #category : 'accessing' }
 ShipManager >> manageNextPositionFor: aShip with: diceResult [
 
 	^ (shipsPositions at: aShip) + diceResult
 ]
 
-{ #category : 'action' }
-ShipManager >> manageShip: aShip landedAtSquare: aSquare [
-
-	| result |
-
-	result := aSquare transform: (shipsPositions , aShip ).
-	
-	shipsPositions at: aShip put: result.
-]
-
 { #category : 'initialization' }
-ShipManager >> setPosition: aPosition for: aShip [
-
-	shipsPositions at: aShip put: aPosition
+ShipManager >> setPositionOf:aShip  to: nextPosition [
+	shipsPositions at: aShip put: nextPosition 
 ]
