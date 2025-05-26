@@ -9,10 +9,7 @@ Class {
 		'shipList',
 		'dice',
 		'gameFinished',
-		'winner',
 		'wormhole',
-		'shipsPositions',
-		'shipsLaps',
 		'lapsGoal',
 		'shipManager'
 	],
@@ -54,26 +51,6 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 		  andSquareCount: aSquareCount
 		  andLaps: aNumberOfLaps
 		  andWormhole: aWormhole
-]
-
-{ #category : 'actions' }
-Board >> checkIfShipWon: aShip [
-
-	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
-	shipCurrentPosition := shipsPositions at: aShip.
-	shipCurrentLaps := shipsLaps at: aShip.
-	lastTurnCompletedLaps := shipCurrentPosition // squareCount.
-
-	shipCurrentPosition >= squareCount ifTrue: [
-		shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
-		shipsPositions at: aShip put: shipCurrentPosition - (lastTurnCompletedLaps * squareCount) 
-			].
-
-
-	((shipsLaps at: aShip) >= lapsGoal) ifTrue: [
-		gameFinished := true.
-		winner := aShip 
-		].
 ]
 
 { #category : 'actions' }
@@ -126,8 +103,8 @@ Board >> runGame [
 	| diceResult nextPosition |
 	[ gameFinished ] whileFalse: [
 		shipList do: [ :aShip |
-
-			diceResult := self generateDiceResult.
+			
+			gameFinished ifFalse: [ diceResult := self generateDiceResult.
 			nextPosition := shipManager
 				                manageNextPositionFor: aShip
 				                with: diceResult.
@@ -135,7 +112,10 @@ Board >> runGame [
 			(wormhole isAWormHoleEnd: nextPosition) ifTrue: [
 				nextPosition := wormhole oppositeEnd: nextPosition ].
 
+			shipManager setPosition: nextPosition for: aShip .
+			gameFinished := shipManager hasShip: aShip reachedLapGoal: lapsGoal withLapLength: squareCount  ]
 
-			shipsPositions at: aShip put: nextPosition.
-			self checkIfShipWon: aShip ] ]
+			
+			
+			 ] ]
 ]

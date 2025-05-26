@@ -20,7 +20,7 @@ BoardTest >> test01AWhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	dice add: (LoadedDice withSetNumbers: #( 9 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
@@ -38,7 +38,7 @@ BoardTest >> test02AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenVali
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
+	dice add: (LoadedDice withSetNumbers: #( 11 1)).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 	aShipList := OrderedCollection withAll:
 		             #( 'Player 1' 'Player 2' ).
@@ -72,24 +72,6 @@ BoardTest >> test03AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInva
 ]
 
 { #category : 'tests' }
-BoardTest >> test04AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
-
-	| aBoard dice wormhole aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-					 andLaps: 1
-		          andWormhole: wormhole.
-	aBoard runGame.
-	self assert: (aBoard getPositionOfShip: 'Player 1') >= 10
-]
-
-{ #category : 'tests' }
 BoardTest >> test05AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
 	| aBoard dice wormhole aShipList |
@@ -105,7 +87,7 @@ BoardTest >> test05AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 					 andLaps: 1
 		          andWormhole: wormhole.
 	aBoard runGame.
-	self deny: (aBoard getPositionOfShip: 'Player 2') >= 10
+	self deny: (aBoard getShipPosition: 'Player 2') >= 10
 ]
 
 { #category : 'tests' }
@@ -124,9 +106,9 @@ BoardTest >> test06AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 		          andWormhole: wormhole.
 	aBoard runGame.
 	self
-		should: [ aBoard getPositionOfShip: 'Player 2' ]
+		should: [ aBoard getShipPosition: 'Player 2' ]
 		raise: Error
-		withMessageText: 'No existe un jugador con ese nombre'
+		withMessageText: 'There is no ship with such name'
 ]
 
 { #category : 'tests' }

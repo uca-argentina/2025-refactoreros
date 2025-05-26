@@ -31,7 +31,8 @@ ShipManager >> getShipLap: aShip [
 { #category : 'accessing' }
 ShipManager >> getShipPosition: aShip [
 
-	^ shipsPositions at: aShip 
+	^ shipsPositions at: aShip ifAbsent: [ 
+		Error signal: 'There is no ship with such name' ]
 	
 	
 ]
@@ -40,6 +41,28 @@ ShipManager >> getShipPosition: aShip [
 ShipManager >> getWinner [
 
 	^ winner
+]
+
+{ #category : 'actions' }
+ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal withLapLength: squareCount [
+
+	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
+	shipCurrentPosition := shipsPositions at: aShip.
+	shipCurrentLaps := shipsLaps at: aShip.
+	lastTurnCompletedLaps := shipCurrentPosition // squareCount.
+
+	shipCurrentPosition >= squareCount ifTrue: [
+		shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
+		shipsPositions
+			at: aShip
+			put: shipCurrentPosition - (lastTurnCompletedLaps * squareCount) ].
+
+
+	(shipsLaps at: aShip) >= lapsGoal
+		ifTrue: [
+			winner := aShip.
+			^ true ]
+		ifFalse: [ ^ false ]
 ]
 
 { #category : 'intialization' }
@@ -66,4 +89,10 @@ ShipManager >> manageShip: aShip landedAtSquare: aSquare [
 	result := aSquare transform: (shipsPositions , aShip ).
 	
 	shipsPositions at: aShip put: result.
+]
+
+{ #category : 'initialization' }
+ShipManager >> setPosition: aPosition for: aShip [
+
+	shipsPositions at: aShip put: aPosition
 ]
