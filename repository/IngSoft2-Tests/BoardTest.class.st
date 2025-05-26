@@ -197,7 +197,7 @@ BoardTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 
 	aBoard := Board
 		          gameWithShipList: aShipList
@@ -218,7 +218,7 @@ BoardTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 
 	aBoard := Board
 		          gameWithShipList: aShipList
@@ -239,7 +239,7 @@ BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
 
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 
-	aShipList := OrderedCollection newFromArray: #( 'Player 1' ).
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 
 	aBoard := Board
 		          gameWithShipList: aShipList
