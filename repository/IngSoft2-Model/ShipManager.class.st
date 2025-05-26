@@ -20,13 +20,13 @@ ShipManager class >> withShips: aShipList [
 { #category : 'initialization' }
 ShipManager >> createShipsLaps [
 	
-	(1 to: shipCount) do:[ :i | shipsLaps at:(shipList at: i) put: 0 ]
+	shipList do:[ :aShip | shipsLaps at: aShip put: 0 ]
 ]
 
 { #category : 'initialization' }
 ShipManager >> createShipsPositions [
 
-	1 to: shipCount do: [ :i | shipsPositions at: (shipList at: i) put: 1 ]
+	shipList do: [ :ship | shipsPositions at: ship put: 1 ]
 ]
 
 { #category : 'intialization' }
@@ -45,7 +45,7 @@ ShipManager >> manageNextPositionFor: aShip with: diceResult [
 	^ (shipsPositions at: aShip) + diceResult
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'action' }
 ShipManager >> manageShip: aShip landedAtSquare: aSquare [
 
 	| result |

@@ -5,10 +5,8 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'shipCount',
 		'squareCount',
 		'shipList',
-		'finalShipAndPosition',
 		'dice',
 		'gameFinished',
 		'winner',
@@ -78,18 +76,6 @@ Board >> checkIfShipWon: aShip [
 		].
 ]
 
-{ #category : 'initialization' }
-Board >> createShipsLaps [
-	
-	(1 to: shipCount) do:[ :i | shipsLaps at:(shipList at: i) put: 0 ]
-]
-
-{ #category : 'initialization' }
-Board >> createShipsPositions [
-
-	1 to: shipCount do: [ :i | shipsPositions at: (shipList at: i) put: 1 ]
-]
-
 { #category : 'actions' }
 Board >> generateDiceResult [
 
@@ -129,7 +115,6 @@ Board >> isGameFinished [
 { #category : 'initialization' }
 Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andWormhole: aWormhole [
 
-	shipCount := aShipList size.
 	shipList := aShipList.
 	lapsGoal := aNumberOfLaps.
 	shipManager := ShipManager withShips: aShipList.
@@ -142,19 +127,19 @@ Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount:
 { #category : 'actions' }
 Board >> runGame [
 
-	| diceResult aShip nextPosition |
+	| diceResult nextPosition |
 	[ gameFinished ] whileFalse: [
-		1 to: shipCount do: [ :i |
-			aShip := shipList at: i.
+		shipList do: [ :aShip |
 
 			diceResult := self generateDiceResult.
-			nextPosition := shipManager manageNextPositionFor: aShip with: diceResult.
-			
-			(wormhole isAWormHoleEnd: nextPosition) ifTrue:[
-				nextPosition := wormhole oppositeEnd: nextPosition.
-				].
-			
-			
+			nextPosition := shipManager
+				                manageNextPositionFor: aShip
+				                with: diceResult.
+
+			(wormhole isAWormHoleEnd: nextPosition) ifTrue: [
+				nextPosition := wormhole oppositeEnd: nextPosition ].
+
+
 			shipsPositions at: aShip put: nextPosition.
-			self checkIfShipWon: (aShip) ] ]
+			self checkIfShipWon: aShip ] ]
 ]
