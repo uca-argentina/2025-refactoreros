@@ -17,6 +17,24 @@ ShipManager class >> withShips: aShipList [
 ]
 
 { #category : 'accessing' }
+ShipManager >> correctTheShip: aShip position: nextPosition withLapLength: squareCount [
+
+	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
+	shipCurrentPosition := shipsPositions at: aShip.
+	shipCurrentLaps := shipsLaps at: aShip.
+	lastTurnCompletedLaps := nextPosition // squareCount.
+
+	nextPosition > squareCount
+		ifTrue: [
+			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
+			shipsPositions
+				at: aShip
+				put: nextPosition - (lastTurnCompletedLaps * squareCount) ]
+		ifFalse: [ shipsPositions at: aShip put: nextPosition ].
+	^ shipsPositions at: aShip
+]
+
+{ #category : 'accessing' }
 ShipManager >> getShipLap: aShip [
 
 	^ (shipsLaps at: aShip) 
@@ -40,6 +58,12 @@ ShipManager >> getWinner [
 	orderedShips := shipsLaps associations asSortedCollection: [ :a :b |
 		                a value > b value ].
 	^ (orderedShips at: 1) key
+]
+
+{ #category : 'actions' }
+ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
+
+	^ (shipsLaps at: aShip) >= lapsGoal
 ]
 
 { #category : 'actions' }
@@ -73,6 +97,7 @@ ShipManager >> initializeWithShips: aShipList [
 
 { #category : 'actions' }
 ShipManager >> landShip: aShip atSquare: nextSquare [
+
 	shipsPositions := nextSquare applyEffectTo: shipsPositions forShip: aShip.
 ]
 
@@ -80,9 +105,4 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 ShipManager >> manageNextPositionFor: aShip with: diceResult [
 
 	^ (shipsPositions at: aShip) + diceResult
-]
-
-{ #category : 'initialization' }
-ShipManager >> setPositionOf:aShip  to: nextPosition [
-	shipsPositions at: aShip put: nextPosition 
 ]
