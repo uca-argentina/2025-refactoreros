@@ -7,8 +7,7 @@ Class {
 	#instVars : [
 		'shipsPositions',
 		'shipsLaps',
-		'shipList',
-		'winner'
+		'shipList'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -40,7 +39,10 @@ ShipManager >> getShipPosition: aShip [
 { #category : 'accessing' }
 ShipManager >> getWinner [
 
-	^ winner
+	| orderedShips |
+	orderedShips := shipsLaps associations asSortedCollection: [ :a :b |
+		                a value > b value ].
+	^ (orderedShips at: 1) key
 ]
 
 { #category : 'actions' }
@@ -58,11 +60,7 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal withLapLength: squareCoun
 			put: shipCurrentPosition - (lastTurnCompletedLaps * squareCount) ].
 
 
-	(shipsLaps at: aShip) >= lapsGoal
-		ifTrue: [
-			winner := aShip.
-			^ true ]
-		ifFalse: [ ^ false ]
+	^ (shipsLaps at: aShip) >= lapsGoal
 ]
 
 { #category : 'intialization' }
