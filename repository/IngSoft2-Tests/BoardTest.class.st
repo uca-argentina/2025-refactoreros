@@ -250,3 +250,23 @@ BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
 	aBoard runGame.
 	self assert: ((aBoard getShipPosition: 'Player 1' )= 6)
 ]
+
+{ #category : 'tests' }
+BoardTest >> testB04WhenSBoardIsCreatedWithInvalidLapCountThenFails [
+
+	| dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
+
+	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	
+	self should: [ Board
+		gameWithShipList: aShipList
+		andDice: dice
+		andSquareCount: 10
+		andLaps: 0
+		andWormhole: wormhole ] raise: Error withMessageText: 'Lap count must be equal or higher than 1'
+]

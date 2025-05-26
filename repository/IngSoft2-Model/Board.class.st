@@ -26,6 +26,13 @@ Board class >> checkValidDiceCollection: aDiceCollection [
 ]
 
 { #category : 'validation' }
+Board class >> checkValidLapCount: aNumberOfLaps [
+
+	aNumberOfLaps >= 1 ifFalse: [
+		Error signal: 'Lap count must be equal or higher than 1' ]
+]
+
+{ #category : 'validation' }
 Board class >> checkValidShipList: aShipList [
 
 	aShipList isNotEmpty ifFalse: [
@@ -45,6 +52,7 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 	self checkValidDiceCollection: aDiceCollection.
 	self checkValidSquareCount: aSquareCount.
 	self checkValidShipList: aShipList.
+	self checkValidLapCount: aNumberOfLaps .
 
 	^ self new
 		  newGameWithShipList: aShipList
