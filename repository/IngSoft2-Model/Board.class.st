@@ -79,7 +79,7 @@ Board >> getPositionOfShip: aShipName [
 
 	^ shipsPositions
 		  at: aShipName
-		  ifAbsent: [ Error signal: 'No existe un jugador con ese nombre' ]
+		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
 ]
 
 { #category : 'accessing' }

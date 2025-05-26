@@ -120,7 +120,7 @@ BoardTest >> test06AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 	self
 		should: [ aBoard getPositionOfShip: 'Player 2' ]
 		raise: Error
-		withMessageText: 'No existe un jugador con ese nombre'
+		withMessageText: 'There is no ship with such name'
 ]
 
 { #category : 'tests' }
