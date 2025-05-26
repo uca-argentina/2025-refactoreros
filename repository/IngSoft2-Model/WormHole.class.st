@@ -35,16 +35,21 @@ WormHole class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 ]
 
 { #category : 'accessing' }
-WormHole >> getOppositeEnd: aPosition [
-
-	aPosition = entrancePosition ifTrue: [ ^ exitPosition ].
-	aPosition = exitPosition ifTrue: [ ^ entrancePosition ].
-	^ aPosition
-]
-
-{ #category : 'accessing' }
 WormHole >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 
 	entrancePosition := anEntrancePosition.
 	exitPosition := anExitPosition
+]
+
+{ #category : 'testing' }
+WormHole >> isAWormHoleEnd: aPosition [
+
+	^ aPosition = entrancePosition or: aPosition = exitPosition
+]
+
+{ #category : 'accessing' }
+WormHole >> oppositeEnd: aPosition [
+
+	aPosition = entrancePosition ifTrue: [ ^ exitPosition ].
+	aPosition = exitPosition ifTrue: [ ^ entrancePosition ].
 ]

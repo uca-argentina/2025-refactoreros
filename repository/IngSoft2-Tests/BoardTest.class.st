@@ -16,138 +16,182 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardGameFinishesAnd2ndShipIsAtFinalSquareThenInvalid [
+BoardTest >> test01AWhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
-	| aBoard dice aSquareCount wormhole|
-	aSquareCount := 10.
-	dice := OneDieWithOneFace new createCollection.
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: aSquareCount andWormhole: wormhole.
-	aBoard startGame .
-	self deny: (aBoard isFinishedGamePlayerName: 'Player 2' atSquare: aSquareCount )
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self assert: aBoard getWinner = 'Player 1'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardGameFinishesAnd2ndShipIsAtPreviousToFinalSquareThenValid [
+BoardTest >> test02AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
 
-	| aBoard dice aSquareCount wormhole|
-	aSquareCount := 10.
-	dice := OneDieWithOneFace new createCollection.
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: aSquareCount andWormhole: wormhole.
-	aBoard startGame .
-	self assert: (aBoard isFinishedGamePlayerName: 'Player 2' atSquare: aSquareCount - 1 )
+	aShipList := OrderedCollection withAll:
+		             #( 'Player 1' 'Player 2' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self assert: aBoard getWinner = 'Player 1'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardGameFinishesAndAPositionForAnInexistingShipIsValidatedThenFails [
+BoardTest >> test03AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
 
-	| aBoard dice aSquareCount wormhole|
-	aSquareCount := 10.
-	dice := OneDieWithOneFace new createCollection.
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: aSquareCount andWormhole: wormhole.
-	aBoard startGame .
-	self should: [aBoard isFinishedGamePlayerName: 'Player 3' atSquare: aSquareCount ]
-		raise: Error withMessageText: 'There is no player with such name'
+	aShipList := OrderedCollection withAll: 
+		             #( 'Player 1' 'Player 2' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self deny: aBoard getWinner = 'Player 2'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardGameFinishesAndWinnerIsAtFinalSquareThenValid [
+BoardTest >> test04AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
 
-	| aBoard dice aSquareCount wormhole|
-	aSquareCount := 10.
-	dice := OneDieWithOneFace new createCollection.
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: aSquareCount andWormhole: wormhole.
-	aBoard startGame .
-	self assert: (aBoard isFinishedGamePlayerName: 'Player 1' atSquare: aSquareCount )
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self assert: (aBoard getPositionOfShip: 'Player 1') >= 10
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardGameWithMockDieIsStartedAndAShipWinsThenValid [
+BoardTest >> test05AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
-	| aBoard dice wormhole|
-	dice := OneDieWithOneFace new createCollection.
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: 10 andWormhole: wormhole.
-	aBoard startGame .
-	self assert: aBoard isGameFinished 
+	aShipList := OrderedCollection withAll:
+		             #( 'Player 1' 'Player 2' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self deny: (aBoard getPositionOfShip: 'Player 2') >= 10
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardGameWithMockDieIsStartedAndShip1WinsThenValid [
+BoardTest >> test06AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
 
-	| aBoard dice wormhole|
-	dice := OneDieWithOneFace new createCollection.
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: 10 andWormhole: wormhole.
-	aBoard startGame .
-	self assert: (aBoard doesPlayerNameWon: 'Player 1')
-]
-
-{ #category : 'tests' }
-BoardTest >> testWhenBoardGameWithMockDieIsStartedAndShip2WinsThenInvalid [
-
-	| aBoard dice wormhole |
-	dice := OneDieWithOneFace new createCollection.
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aBoard := Board gameWithPlayerCount: 2 andDice: dice andSquareCount: 10 andWormhole: wormhole.
-	aBoard startGame .
-	self deny: (aBoard doesPlayerNameWon: 'Player 2')
-]
-
-{ #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithShipCountBelowOneThenItFails [
-
-	|dice wormhole|
-	dice  := TwoDiceWithSixFaces new createCollection.
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
 	self
-		should: [ Board gameWithPlayerCount: 0 andDice: dice andSquareCount: 10 andWormhole: wormhole ]
+		should: [ aBoard getPositionOfShip: 'Player 2' ]
 		raise: Error
-		withMessageText: 'Player count should be equal or higher than 1'
+		withMessageText: 'There is no ship with such name'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithValidShipCountAndValidDiceCollectionAndValidSquareCountAndValidWormholesThenValid [
+BoardTest >> test07AWhenBoardIsCreatedWithEmptyShipListItFails [
 
+	| dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
+	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	aShipList := OrderedCollection withAll: #(  ).
 	self
-		shouldnt: [
-			| aBoard dice wormhole|
-			dice := TwoDiceWithSixFaces new createCollection.
-			wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-			aBoard := Board
-				          gameWithPlayerCount: 2
-				          andDice: dice
-				          andSquareCount: 10
-				          andWormhole: wormhole ]
+		should: [
+			Board
+				gameWithShipList: aShipList
+				andDice: dice
+				andSquareCount: 10
+				andWormhole: wormhole ]
 		raise: Error
+		withMessageText: 'At least one ship is required'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithZeroDieThenFails [
+BoardTest >> test08AWhenBoardIsCreatedWithZeroDieThenFails [
 
-	| dice wormhole|
+	| dice wormhole aShipList |
 	dice := OrderedCollection new.
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
-		should: [ Board gameWithPlayerCount: 1 andDice: dice andSquareCount: 10 andWormhole: wormhole]
+		should: [
+			Board
+				gameWithShipList: aShipList
+				andDice: dice
+				andSquareCount: 10
+				andWormhole: wormhole ]
 		raise: Error
 		withMessageText: 'At least one die is required'
 ]
 
 { #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithZeroSquaresThenFail [
+BoardTest >> test09AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 
-	| aDiceCollection wormhole|
-	aDiceCollection := TwoDiceWithSixFaces new createCollection.
+	| dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
-		should: [ Board gameWithPlayerCount: 1 andDice: aDiceCollection andSquareCount: 0 andWormhole: wormhole ]
+		should: [
+			Board
+				gameWithShipList: aShipList
+				andDice: dice
+				andSquareCount: 0
+				andWormhole: wormhole ]
 		raise: Error
 		withMessageText: 'Square count should be equal or higher than 2'
+]
+
+{ #category : 'tests' }
+BoardTest >> test10AWhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
+
+	| aBoard dice wormhole aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andWormhole: wormhole.
+	aBoard runGame.
+	self assert: aBoard isGameFinished 
 ]
