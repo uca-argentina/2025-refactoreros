@@ -85,25 +85,21 @@ Board >> generateDiceResult [
 { #category : 'accessing' }
 Board >> getShipLap: aShip [
 
-	^ (shipsLaps at: aShip) 
-	
-	
+	^ shipManager getShipLap: aShip
 ]
 
 { #category : 'accessing' }
 Board >> getShipPosition: aShip [
 
-	^ shipsPositions at: aShip 
-	
-	
+	^ shipManager getShipPosition: aShip
 ]
 
-{ #category : 'comparing' }
+{ #category : 'accessing' }
 Board >> getWinner [
 
 	gameFinished
-		ifFalse: [ Error signal: 'Game is not finishied' ]
-		ifTrue: [ ^ winner ]
+		ifFalse: [ Error signal: 'The game is still being played' ]
+		ifTrue: [ ^ shipManager getWinner ]
 ]
 
 { #category : 'testing' }

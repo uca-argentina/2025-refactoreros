@@ -1,11 +1,14 @@
+"
+An internal collaborator for Board, that provides support for Ship game information 
+"
 Class {
 	#name : 'ShipManager',
 	#superclass : 'Object',
 	#instVars : [
 		'shipsPositions',
 		'shipsLaps',
-		'shipCount',
-		'shipList'
+		'shipList',
+		'winner'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,26 +20,36 @@ ShipManager class >> withShips: aShipList [
 	^ self new initializeWithShips: aShipList 
 ]
 
-{ #category : 'initialization' }
-ShipManager >> createShipsLaps [
+{ #category : 'accessing' }
+ShipManager >> getShipLap: aShip [
+
+	^ (shipsLaps at: aShip) 
 	
-	shipList do:[ :aShip | shipsLaps at: aShip put: 0 ]
+	
 ]
 
-{ #category : 'initialization' }
-ShipManager >> createShipsPositions [
+{ #category : 'accessing' }
+ShipManager >> getShipPosition: aShip [
 
-	shipList do: [ :ship | shipsPositions at: ship put: 1 ]
+	^ shipsPositions at: aShip 
+	
+	
+]
+
+{ #category : 'accessing' }
+ShipManager >> getWinner [
+
+	^ winner
 ]
 
 { #category : 'intialization' }
-ShipManager >> initializeWithShips: aShipList [ 
-	shipCount := aShipList size.
-	shipList := aShipList .
+ShipManager >> initializeWithShips: aShipList [
+
+	shipList := aShipList.
 	shipsPositions := Dictionary new.
-	self createShipsPositions.
+	shipList do: [ :aShip | shipsPositions at: aShip put: 1 ].
 	shipsLaps := Dictionary new.
-	self createShipsLaps.
+	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ]
 ]
 
 { #category : 'accessing' }
