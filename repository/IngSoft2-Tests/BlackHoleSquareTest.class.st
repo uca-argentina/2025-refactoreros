@@ -1,12 +1,12 @@
 Class {
-	#name : 'BlackHoleTest',
+	#name : 'BlackHoleSquareTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-BlackHoleTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
+BlackHoleSquareTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
 
 	self
 		should: anErrorBlock
@@ -16,7 +16,7 @@ BlackHoleTest >> should: anErrorBlock raise: errorClass withMessageText: errorMe
 ]
 
 { #category : 'tests' }
-BlackHoleTest >> test01BWhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesBy4ThenValid [
+BlackHoleSquareTest >> test01BWhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesBy4ThenValid [
 
 	| aBlackHoleSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -32,7 +32,7 @@ BlackHoleTest >> test01BWhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesB
 ]
 
 { #category : 'tests' }
-BlackHoleTest >> test02BWhenABlackHoleSquareIsCreatedWithInvalidPositionThenFails [
+BlackHoleSquareTest >> test02BWhenABlackHoleSquareIsCreatedWithInvalidPositionThenFails [
 
 	| aBlackHoleSquare shipsPositions |
 	shipsPositions := Dictionary new.
@@ -45,7 +45,7 @@ BlackHoleTest >> test02BWhenABlackHoleSquareIsCreatedWithInvalidPositionThenFail
 ]
 
 { #category : 'tests' }
-BlackHoleTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
+BlackHoleSquareTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
@@ -68,7 +68,7 @@ BlackHoleTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDec
 ]
 
 { #category : 'tests' }
-BlackHoleTest >> test04BWhenAShipLandsOnBlackHoleAtASquareBeforeNumber5AndResultingPositionIsAtPreviousLapThenValid [
+BlackHoleSquareTest >> test04BWhenAShipLandsOnBlackHoleAtASquareBeforeNumber5AndResultingPositionIsAtPreviousLapThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingPosition |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).

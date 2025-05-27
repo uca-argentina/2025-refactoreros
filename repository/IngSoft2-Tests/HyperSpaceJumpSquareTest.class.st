@@ -1,12 +1,12 @@
 Class {
-	#name : 'HyperSpaceJumpTest',
+	#name : 'HyperSpaceJumpSquareTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-HyperSpaceJumpTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
+HyperSpaceJumpSquareTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
 
 	self
 		should: anErrorBlock
@@ -16,7 +16,7 @@ HyperSpaceJumpTest >> should: anErrorBlock raise: errorClass withMessageText: er
 ]
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncreasesBy4ThenValid [
+HyperSpaceJumpSquareTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncreasesBy4ThenValid [
 
 	| aHyperSpaceJumpSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -32,7 +32,7 @@ HyperSpaceJumpTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncre
 ]
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpTest >> test02BWhenAHyperSpaceJumpSquareIsCreatedWithInvalidPositionThenFails [
+HyperSpaceJumpSquareTest >> test02BWhenAHyperSpaceJumpSquareIsCreatedWithInvalidPositionThenFails [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.
