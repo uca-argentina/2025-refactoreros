@@ -57,25 +57,6 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 	^ (shipsLaps at: aShip) >= lapsGoal
 ]
 
-{ #category : 'actions' }
-ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal withLapLength: squareCount [
-
-	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
-	
-	shipCurrentPosition := shipsPositions at: aShip.
-	shipCurrentLaps := shipsLaps at: aShip.
-	lastTurnCompletedLaps := shipCurrentPosition // squareCount.
-
-	shipCurrentPosition >= squareCount ifTrue: [
-		shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
-		shipsPositions
-			at: aShip
-			put: shipCurrentPosition - (lastTurnCompletedLaps * squareCount) ].
-
-
-	^ (shipsLaps at: aShip) >= lapsGoal
-]
-
 { #category : 'intialization' }
 ShipManager >> initializeWithShips: aShipList [
 
