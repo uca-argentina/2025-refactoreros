@@ -7,16 +7,30 @@ Class {
 	#instVars : [
 		'shipsPositions',
 		'shipsLaps',
-		'shipList'
+		'shipList',
+		'lapLength'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'initialization' }
-ShipManager class >> withShips: aShipList [
+ShipManager class >> withShips: aShipList andLapLenght: aLapLength [
 
-	^ self new initializeWithShips: aShipList 
+	^ self new initializeWithShips: aShipList andLapLenght: aLapLength
+]
+
+{ #category : 'accessing' }
+ShipManager >> calculateLandingPositionFor: aShip movingTo: aPosition [
+
+	| shipCurrentPositon nextPosition |
+	shipCurrentPositon := shipsPositions at: aShip.
+
+	nextPosition := shipCurrentPositon + aPosition.
+
+	nextPosition > lapLength
+		ifTrue: [ ^ nextPosition % lapLength ]
+		ifFalse: [ ^ nextPosition ]
 ]
 
 { #category : 'accessing' }
@@ -26,29 +40,26 @@ ShipManager >> calculateNextPositionFor: aShip with: diceResult [
 ]
 
 { #category : 'accessing' }
-ShipManager >> getShipLap: aShip [
+ShipManager >> getShipLap: arg1 [
 
-	^ (shipsLaps at: aShip) 
-	
-	
+	^ shipsLaps at: arg1
 ]
 
 { #category : 'accessing' }
-ShipManager >> getShipPosition: aShip [
+ShipManager >> getShipPosition: arg1 [
 
-	^ shipsPositions at: aShip ifAbsent: [ 
-		Error signal: 'There is no ship with such name' ]
-	
-	
+	^ shipsPositions
+		  at: arg1
+		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
 ]
 
 { #category : 'accessing' }
 ShipManager >> getWinner [
 
-	| orderedShips |
-	orderedShips := shipsLaps associations asSortedCollection: [ :a :b |
-		                a value > b value ].
-	^ (orderedShips at: 1) key
+	| tmp1 |
+	tmp1 := shipsLaps associations asSortedCollection: [ :arg1 :arg2 |
+		        arg1 value > arg2 value ].
+	^ (tmp1 at: 1) key
 ]
 
 { #category : 'actions' }
@@ -58,9 +69,10 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 ]
 
 { #category : 'intialization' }
-ShipManager >> initializeWithShips: aShipList [
+ShipManager >> initializeWithShips: aShipList andLapLenght: aLapLength [
 
 	shipList := aShipList.
+	lapLength := aLapLength.
 	shipsPositions := Dictionary new.
 	shipList do: [ :aShip | shipsPositions at: aShip put: 1 ].
 	shipsLaps := Dictionary new.
@@ -73,7 +85,34 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 	| newShipsPositions |
 	newShipsPositions := shipsPositions copy.
 	nextSquare applyEffectTo: newShipsPositions forShip: aShip.
+	
+	newShipsPositions keysAndValuesDo: [:ship :position |
+		(position <= 0) ifTrue: [ 
+				newShipsPositions at: ship put: (lapLength + position).
+			 ]
+		 ].
+	
+	
 	shipsPositions := newShipsPositions 
+]
+
+{ #category : 'actions' }
+ShipManager >> moveShip: aShip to: nextPosition [
+
+	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
+	shipCurrentPosition := shipsPositions at: aShip.
+	shipCurrentLaps := shipsLaps at: aShip.
+	lastTurnCompletedLaps := nextPosition // lapLength.
+
+	(nextPosition > lapLength)
+		ifTrue: [
+			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
+
+			shipsPositions
+				at: aShip
+				put: nextPosition - (lastTurnCompletedLaps * lapLength) ]
+			
+		ifFalse: [ shipsPositions at: aShip put: nextPosition ]
 ]
 
 { #category : 'accessing' }

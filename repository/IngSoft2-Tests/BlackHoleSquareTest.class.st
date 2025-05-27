@@ -49,7 +49,7 @@ BlackHoleSquareTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAnd
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager withShips: aShipList.
+	aShipManager := ShipManager withShips: aShipList andLapLenght: 10.
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
 
 	aShipManager
@@ -72,7 +72,7 @@ BlackHoleSquareTest >> test04BWhenAShipLandsOnBlackHoleAtASquareBeforeNumber5And
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingPosition |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager withShips: aShipList.
+	aShipManager := ShipManager withShips: aShipList andLapLenght: 10.
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
 
 	aShipManager
