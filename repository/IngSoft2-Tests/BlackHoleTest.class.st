@@ -48,15 +48,20 @@ BlackHoleTest >> test02BWhenABlackHoleSquareIsCreatedWithInvalidPositionThenFail
 BlackHoleTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
-	
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager withShips: aShipList .
+	aShipManager := ShipManager withShips: aShipList.
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
-	
-	aShipManager placeTheShip: (aShipList at: 1) position: 12 withLapLength: 10.
-	
+
+	aShipManager
+		placeTheShip: (aShipList at: 1)
+		position: 12
+		withLapLength: 10.
+
 	"aShipManager landShip: (aShipList at: 1) atSquare: aBlackHoleSquare ."
-	aShipManager placeTheShip: (aShipList at: 1) position: ((aShipManager getShipPosition: (aShipList at: 1)) - 4) withLapLength: 10.
+	aShipManager
+		placeTheShip: (aShipList at: 1)
+		position: (aShipManager getShipPosition: (aShipList at: 1)) - 4
+		withLapLength: 10.
 	aShipResultingLap := aShipManager getShipLap: 'Player 1'.
 
 	self assert: aShipResultingLap = 0
@@ -66,15 +71,20 @@ BlackHoleTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDec
 BlackHoleTest >> test04BWhenAShipLandsOnBlackHoleAtASquareBeforeNumber5AndResultingPositionIsAtPreviousLapThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingPosition |
-	
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager withShips: aShipList .
+	aShipManager := ShipManager withShips: aShipList.
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
-	
-	aShipManager placeTheShip: (aShipList at: 1) position: 12 withLapLength: 10.
-	
+
+	aShipManager
+		placeTheShip: (aShipList at: 1)
+		position: 12
+		withLapLength: 10.
+
 	"aShipManager landShip: (aShipList at: 1) atSquare: aBlackHoleSquare ."
-	aShipManager placeTheShip: (aShipList at: 1) position: ((aShipManager getShipPosition: (aShipList at: 1)) - 4) withLapLength: 10.
+	aShipManager
+		placeTheShip: (aShipList at: 1)
+		position: (aShipManager getShipPosition: (aShipList at: 1)) - 4
+		withLapLength: 10.
 	aShipResultingPosition := aShipManager getShipPosition: 'Player 1'.
 
 	self assert: aShipResultingPosition = 8
