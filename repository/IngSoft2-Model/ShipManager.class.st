@@ -91,5 +91,4 @@ ShipManager >> placeTheShip: aShip position: nextPosition withLapLength: squareC
 				at: aShip
 				put: nextPosition - (lastTurnCompletedLaps * squareCount) ]
 		ifFalse: [ shipsPositions at: aShip put: nextPosition ].
-	^ shipsPositions at: aShip
 ]

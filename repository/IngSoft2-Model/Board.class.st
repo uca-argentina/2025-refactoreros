@@ -116,28 +116,41 @@ Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCou
 ]
 
 { #category : 'actions' }
+Board >> newLapAdjustedPositionForShip: aShip thatLandedOn: aPosition [
+
+	| lapAdjustedPosition |
+	shipManager
+		placeTheShip: aShip
+		position: aPosition 
+		withLapLength: squareCount.
+
+	lapAdjustedPosition := shipManager getShipPosition: aShip.
+	^ lapAdjustedPosition
+]
+
+{ #category : 'actions' }
 Board >> runGame [
 
-	| diceResult nextPosition correctPosition nextSquare |
+	| diceResult nextPosition lapAdjustedPosition nextSquare |
 	[ gameFinished ] whileFalse: [
 		shipList do: [ :aShip |
-			
-			gameFinished ifFalse: [ diceResult := self generateDiceResult.
-			nextPosition := shipManager
-				                calculateNextPositionFor: aShip
-				                with: diceResult.
-			
+			gameFinished ifFalse: [
+				diceResult := self generateDiceResult.
+				nextPosition := shipManager
+					                calculateNextPositionFor: aShip
+					                with: diceResult.
 
-			(wormhole isAWormHoleEnd: nextPosition) ifTrue: [
-				nextPosition := wormhole oppositeEnd: nextPosition ].
-			
-			
-			correctPosition := shipManager placeTheShip: aShip position: nextPosition withLapLength: squareCount.
-			nextSquare := squareList at: correctPosition.
-			shipManager landShip: aShip atSquare: nextSquare.
-			
-			
-			gameFinished := shipManager hasShip: aShip reachedLapGoal: lapsGoal   ]
+				lapAdjustedPosition := self newLapAdjustedPositionForShip: aShip thatLandedOn: nextPosition.
 
-			 ] ]
+				(wormhole isAWormHoleEnd: nextPosition) ifTrue: [
+					nextPosition := wormhole oppositeEnd: nextPosition.
+					lapAdjustedPosition := self newLapAdjustedPositionForShip: aShip thatLandedOn: nextPosition ].
+
+
+				nextSquare := squareList at: lapAdjustedPosition.
+				shipManager landShip: aShip atSquare: nextSquare.
+
+				gameFinished := shipManager
+					                hasShip: aShip
+					                reachedLapGoal: lapsGoal ] ] ]
 ]
