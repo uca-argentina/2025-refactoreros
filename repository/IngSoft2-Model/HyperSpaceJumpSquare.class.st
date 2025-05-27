@@ -30,6 +30,7 @@ HyperSpaceJumpSquare class >> withPositionAt: aPosition [
 HyperSpaceJumpSquare >> applyEffectTo: shipsPositions forShip: aShip [
 
 	(shipsPositions at: aShip put: (shipsPositions at: aShip) + 4)
+
 ]
 
 { #category : 'accessing' }

@@ -1,3 +1,6 @@
+"
+A squares that move all ships but the one who land here backwards N squares.
+"
 Class {
 	#name : 'MoonWalkSquare',
 	#superclass : 'Object',

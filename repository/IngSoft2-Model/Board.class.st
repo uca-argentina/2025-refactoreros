@@ -135,6 +135,7 @@ Board >> runGame [
 	[ gameFinished ] whileFalse: [
 		shipList do: [ :aShip |
 			gameFinished ifFalse: [
+				
 				diceResult := self generateDiceResult.
 				nextPosition := shipManager
 					                calculateNextPositionFor: aShip
