@@ -52,19 +52,16 @@ BlackHoleSquareTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAnd
 	aShipManager := ShipManager withShips: aShipList andLapLenght: 10.
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
 
-	aShipManager
-		placeTheShip: (aShipList at: 1)
-		position: 12
-		withLapLength: 10.
+	aShipManager moveShip: (aShipList at: 1) to: 12.
 
 	"aShipManager landShip: (aShipList at: 1) atSquare: aBlackHoleSquare ."
-	aShipManager
-		placeTheShip: (aShipList at: 1)
-		position: (aShipManager getShipPosition: (aShipList at: 1)) - 4
-		withLapLength: 10.
+
+	aShipManager landShip:(aShipList at: 1)  atSquare: aBlackHoleSquare.
+		
 	aShipResultingLap := aShipManager getShipLap: 'Player 1'.
 
-	self assert: aShipResultingLap = 0
+	self assert: (aShipResultingLap = 0 ).
+	self assert: ((aShipManager getShipPosition: 'Player 1' )= 8)
 ]
 
 { #category : 'tests' }

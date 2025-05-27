@@ -67,7 +67,7 @@ Board >> createSquareList [
 
 	squareList := OrderedCollection new.
 
-	(1 to: squareCount*lapsGoal) do: [ :i | squareList add: (EmptySquare withPositionAt:i ) ]
+	(1 to: squareCount) do: [ :i | squareList add: (EmptySquare withPositionAt:i ) ]
 ]
 
 { #category : 'actions' }

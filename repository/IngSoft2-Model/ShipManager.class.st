@@ -29,14 +29,44 @@ ShipManager >> calculateLandingPositionFor: aShip movingTo: aPosition [
 	nextPosition := shipCurrentPositon + aPosition.
 
 	nextPosition > lapLength
-		ifTrue: [ ^ nextPosition % lapLength ]
-		ifFalse: [ ^ nextPosition ]
+		ifTrue: [ ^ nextPosition % lapLength ].
+		^ nextPosition
 ]
 
 { #category : 'accessing' }
 ShipManager >> calculateNextPositionFor: aShip with: diceResult [
 
 	^ (shipsPositions at: aShip) + diceResult
+]
+
+{ #category : 'actions' }
+ShipManager >> correctBackwardsMovement: newShipsPositions [
+
+	| lapsGoneBackwards squaresGoneBackwards |
+	newShipsPositions keysAndValuesDo: [ :ship :position |
+		
+		position <= 0 ifTrue: [
+			lapsGoneBackwards := (position // lapLength) abs.
+			squaresGoneBackwards := (position % lapLength) abs.
+
+			newShipsPositions at: ship put: lapLength - squaresGoneBackwards.
+
+			shipsLaps at: ship put: (shipsLaps at: ship) - lapsGoneBackwards.
+			
+			(squaresGoneBackwards = 0) ifFalse: [
+				shipsLaps at: ship put: (shipsLaps at: ship) - 1 ] .
+			
+			(shipsLaps at: ship ) <= 0 ifTrue: [ 
+				shipsLaps at: ship put: 0.
+				shipsPositions at: ship put: 1.
+				 ]
+			
+			
+			] ].
+	
+	^ newShipsPositions
+	
+
 ]
 
 { #category : 'accessing' }
@@ -85,15 +115,13 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 	| newShipsPositions |
 	newShipsPositions := shipsPositions copy.
 	nextSquare applyEffectTo: newShipsPositions forShip: aShip.
-	
-	newShipsPositions keysAndValuesDo: [:ship :position |
-		(position <= 0) ifTrue: [ 
-				newShipsPositions at: ship put: (lapLength + position).
-			 ]
-		 ].
-	
-	
-	shipsPositions := newShipsPositions 
+
+	newShipsPositions := self correctBackwardsMovement: newShipsPositions.
+
+
+
+
+	shipsPositions := newShipsPositions
 ]
 
 { #category : 'actions' }
@@ -104,15 +132,11 @@ ShipManager >> moveShip: aShip to: nextPosition [
 	shipCurrentLaps := shipsLaps at: aShip.
 	lastTurnCompletedLaps := nextPosition // lapLength.
 
-	(nextPosition > lapLength)
-		ifTrue: [
-			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
+	shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
 
-			shipsPositions
-				at: aShip
-				put: nextPosition - (lastTurnCompletedLaps * lapLength) ]
-			
-		ifFalse: [ shipsPositions at: aShip put: nextPosition ]
+	shipsPositions
+		at: aShip
+		put: nextPosition - (lastTurnCompletedLaps * lapLength)
 ]
 
 { #category : 'accessing' }
