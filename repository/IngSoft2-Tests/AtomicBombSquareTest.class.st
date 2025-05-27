@@ -16,7 +16,7 @@ AtomicBombSquareTest >> should: anErrorBlock raise: errorClass withMessageText: 
 ]
 
 { #category : 'tests' }
-AtomicBombSquareTest >> test01BWhenAShipLandsInAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
+AtomicBombSquareTest >> test01BWhenAShipLandsOnAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
 
 	| anAtomicBombSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -34,25 +34,7 @@ AtomicBombSquareTest >> test01BWhenAShipLandsInAnAtomicBombSquareThenAllShipsRet
 ]
 
 { #category : 'tests' }
-AtomicBombSquareTest >> test02BWhenAShipLandsInAnAtomicBombSquareThenAllShipsKeepTheirLap [
-
-	| anAtomicBombSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: (5 -> 2).
-	shipsPositions at: 'Player 2' put: (3 -> 1).
-	shipsPositions at: 'Player 3' put: (9 -> 3).
-
-	anAtomicBombSquare := AtomicBombSquare withPositionAt: 5.
-
-	anAtomicBombSquare
-		applyEffectTo: shipsPositions
-		forShip: 'Player 1'.
-
-	self assert: (shipsPositions values collect: [:assoc | assoc value]) = #(2 1 3).
-]
-
-{ #category : 'tests' }
-AtomicBombSquareTest >> test03BWhenAnAtomicBombSquareIsCreatedWithInvalidPositionThenFails [
+AtomicBombSquareTest >> test02BWhenAnAtomicBombSquareIsCreatedWithInvalidPositionThenFails [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.

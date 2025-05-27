@@ -63,11 +63,11 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 ]
 
 { #category : 'initialization' }
-Board >> creatSquareList [
+Board >> createSquareList [
 
 	squareList := OrderedCollection new.
 
-	(1 to: squareCount*3) do: [ :i | squareList add: (EmptySquare withPositionAt:i ) ]
+	(1 to: squareCount*lapsGoal) do: [ :i | squareList add: (EmptySquare withPositionAt:i ) ]
 ]
 
 { #category : 'actions' }
@@ -110,7 +110,7 @@ Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCou
 	shipManager := ShipManager withShips: aNewGame.
 	dice := aDice.
 	squareCount := aSquareCount.
-	self creatSquareList.
+	self createSquareList.
 	gameFinished := false.
 	wormhole := aWormhole
 ]

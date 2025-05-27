@@ -1,3 +1,6 @@
+"
+Responsible for maintaining and managing ships lap and current lap position information as dictionaries. 
+"
 Class {
 	#name : 'ShipManager',
 	#superclass : 'Object',
@@ -86,7 +89,10 @@ ShipManager >> initializeWithShips: aShipList [
 { #category : 'actions' }
 ShipManager >> landShip: aShip atSquare: nextSquare [
 
-	shipsPositions := nextSquare applyEffectTo: shipsPositions forShip: aShip.
+	| newShipsPositions |
+	newShipsPositions := shipsPositions copy.
+	nextSquare applyEffectTo: newShipsPositions forShip: aShip.
+	shipsPositions := newShipsPositions 
 ]
 
 { #category : 'accessing' }

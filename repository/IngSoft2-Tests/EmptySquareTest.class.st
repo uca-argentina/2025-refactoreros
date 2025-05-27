@@ -16,7 +16,7 @@ EmptySquareTest >> should: anErrorBlock raise: errorClass withMessageText: error
 ]
 
 { #category : 'tests' }
-EmptySquareTest >> test01BWhenAnEmptySquareReturnsTheSameDictionaryItRecivedThenIsValid [
+EmptySquareTest >> test01BWhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheSameThenValid [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.

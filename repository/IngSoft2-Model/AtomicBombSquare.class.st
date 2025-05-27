@@ -1,3 +1,6 @@
+"
+A square that resets all ships positions (a dictionary: 'shipName' -> position) to ""1"" (positions from current lap, since this object doesn't receive lap information)
+"
 Class {
 	#name : 'AtomicBombSquare',
 	#superclass : 'Object',
@@ -26,11 +29,8 @@ AtomicBombSquare class >> withPositionAt: aPosition [
 { #category : 'actions' }
 AtomicBombSquare >> applyEffectTo: shipsPositions forShip: aShip [
 
-	shipsPositions keysDo: [:ship |
-        | lap |
-        lap := (shipsPositions at: ship) value.
-        shipsPositions at: ship put: (1 -> lap).
-    ].
+	shipsPositions keysDo: [ :ship |
+		shipsPositions at: ship put: 1]
 ]
 
 { #category : 'accessing' }

@@ -16,7 +16,7 @@ HyperSpaceJumpTest >> should: anErrorBlock raise: errorClass withMessageText: er
 ]
 
 { #category : 'tests' }
-HyperSpaceJumpTest >> test01BWhenAHyperSpaceJumpSquareIsReachedThenTheShipAdvances4Positions [
+HyperSpaceJumpTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncreasesBy4ThenValid [
 
 	| aHyperSpaceJumpSquare shipsPositions  |
 	shipsPositions := Dictionary new.
