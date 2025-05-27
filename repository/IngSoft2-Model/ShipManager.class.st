@@ -83,12 +83,26 @@ ShipManager >> placeTheShip: aShip position: nextPosition withLapLength: squareC
 	shipCurrentPosition := shipsPositions at: aShip.
 	shipCurrentLaps := shipsLaps at: aShip.
 	lastTurnCompletedLaps := nextPosition // squareCount.
+	
+	(nextPosition >= 1 and: nextPosition < squareCount) ifTrue: [ 
+		shipsPositions at: aShip put: nextPosition ].
 
-	nextPosition > squareCount
+	nextPosition >= squareCount
 		ifTrue: [
 			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
 			shipsPositions
 				at: aShip
-				put: nextPosition - (lastTurnCompletedLaps * squareCount) ]
-		ifFalse: [ shipsPositions at: aShip put: nextPosition ].
+				put: nextPosition - (lastTurnCompletedLaps * squareCount) ].
+			
+	(nextPosition <= 0 and: shipCurrentLaps >= 1) ifTrue: [ 
+		 shipsLaps at: aShip put: shipCurrentLaps - (lastTurnCompletedLaps + 1).
+			shipsPositions
+				at: aShip
+				put: squareCount - nextPosition abs ] .
+			
+	(nextPosition <= 0 and: shipCurrentLaps = 0) ifTrue: [ 
+		 shipsLaps at: aShip put: 0.
+			shipsPositions
+				at: aShip
+				put: 1 ] 
 ]

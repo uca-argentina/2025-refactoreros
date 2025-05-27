@@ -15,7 +15,7 @@ HyperSpaceJumpTest >> should: anErrorBlock raise: errorClass withMessageText: er
 		self assert: (error messageText) equals: errorMessage ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 HyperSpaceJumpTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncreasesBy4ThenValid [
 
 	| aHyperSpaceJumpSquare shipsPositions  |
@@ -31,7 +31,7 @@ HyperSpaceJumpTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncre
 	self assert: (shipsPositions at: 'Player 1') = 6
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 HyperSpaceJumpTest >> test02BWhenAHyperSpaceJumpSquareIsCreatedWithInvalidPositionThenFails [
 
 	| anEmptySquare shipsPositions |
