@@ -24,24 +24,11 @@ AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 	shipsPositions at: 'Player 2' put: 3.
 	shipsPositions at: 'Player 3' put: 9.
 
-	anAtomicBombSquare := AtomicBombSquare withPositionAt: 5.
+	anAtomicBombSquare := AtomicBombSquare new.
 
 	anAtomicBombSquare
 		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions values) = #(1 1 1).
-]
-
-{ #category : 'tests' }
-AtomicBombSquareTest >> testB02WhenAnAtomicBombSquareIsCreatedWithInvalidPositionThenFails [
-
-	| anAtomicBombSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 1.
-
-	self
-		should: [ anAtomicBombSquare := AtomicBombSquare withPositionAt: -1 ]
-		raise: Error
-		withMessageText: 'A square must be initialized with a position integer equal or higher than 1'
 ]

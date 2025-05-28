@@ -12,8 +12,17 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'actions' }
+MoonWalkSquare class >> checkValidBackwardsPushNumber: squaresToPushBackwards [
+
+	squaresToPushBackwards >= 1 ifFalse: [
+		Error signal: 'Squares to push backwards must be equal or higher than 1' ]
+]
+
 { #category : 'accessing' }
 MoonWalkSquare class >> withBackwardsPush: aNumberOfSquares [
+
+	self checkValidBackwardsPushNumber: aNumberOfSquares.
 
 	^ self new initializeWithBackwardsPush: aNumberOfSquares
 ]
