@@ -1,3 +1,6 @@
+"
+Returns a list of randomly distributed squares based on probabilities.
+"
 Class {
 	#name : 'SquareGenerator',
 	#superclass : 'Object',

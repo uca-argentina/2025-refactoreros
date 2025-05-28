@@ -1,3 +1,6 @@
+"
+Responsible for maintaining and managing ships shields as a dictionary.
+"
 Class {
 	#name : 'BattleManager',
 	#superclass : 'Object',

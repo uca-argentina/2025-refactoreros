@@ -62,22 +62,6 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 		  andSquareGenerator: squareGenerator
 ]
 
-{ #category : 'intialization' }
-Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andWormhole: aWormhole [
-
-	self checkValidDiceCollection: aDiceCollection.
-	self checkValidSquareCount: aSquareCount.
-	self checkValidShipList: aShipList.
-	self checkValidLapCount: aNumberOfLaps .
-
-	^ self new
-		  newGameWithShipList: aShipList
-		  andDice: aDiceCollection
-		  andSquareCount: aSquareCount
-		  andLaps: aNumberOfLaps
-		  andWormhole: aWormhole
-]
-
 { #category : 'actions' }
 Board >> generateDiceResult [
 

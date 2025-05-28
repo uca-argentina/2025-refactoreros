@@ -1,3 +1,6 @@
+"
+Returns a List of EmptySquares for testing.
+"
 Class {
 	#name : 'EmptySquareGenerator',
 	#superclass : 'Object',
