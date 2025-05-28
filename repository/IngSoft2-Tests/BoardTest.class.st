@@ -18,17 +18,17 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 { #category : 'tests' }
 BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
 					 andLaps: 1
-		          andWormhole: wormhole.
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self assert: aBoard getWinner = 'Player 1'
 ]

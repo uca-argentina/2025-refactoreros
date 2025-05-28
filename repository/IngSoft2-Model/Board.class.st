@@ -47,6 +47,22 @@ Board class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
+Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andSquareGenerator: squareGenerator [
+
+	self checkValidDiceCollection: aDiceCollection.
+	self checkValidSquareCount: aSquareCount.
+	self checkValidShipList: aShipList.
+	self checkValidLapCount: aNumberOfLaps .
+
+	^ self new
+		  newGameWithShipList: aShipList
+		  andDice: aDiceCollection
+		  andSquareCount: aSquareCount
+		  andLaps: aNumberOfLaps
+		  andSquareGenerator: squareGenerator
+]
+
+{ #category : 'intialization' }
 Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andWormhole: aWormhole [
 
 	self checkValidDiceCollection: aDiceCollection.
@@ -60,14 +76,6 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 		  andSquareCount: aSquareCount
 		  andLaps: aNumberOfLaps
 		  andWormhole: aWormhole
-]
-
-{ #category : 'initialization' }
-Board >> createSquareList [
-
-	squareList := OrderedCollection new.
-
-	(1 to: squareCount) do: [ :i | squareList add: (EmptySquare withPositionAt:i ) ]
 ]
 
 { #category : 'actions' }
@@ -88,7 +96,7 @@ Board >> getShipPosition: aShip [
 	^ shipManager getShipPosition: aShip
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Board >> getShipRankings: ships [
 	| shipsOrderedByRanking |
 
@@ -124,16 +132,16 @@ Board >> isGameFinished [
 ]
 
 { #category : 'initialization' }
-Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCount andLaps: aLaps andWormhole: aWormhole [
+Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCount andLaps: aLaps  andSquareGenerator: squareGenerator [
 
 	shipList := aNewGame.
 	lapsGoal := aLaps.
 	shipManager := ShipManager withShips: aNewGame andLapLenght: aSquareCount andDice: aDice.
 	dice := aDice.
 	squareCount := aSquareCount.
-	self createSquareList.
+	squareList :=  squareGenerator createSquares: squareCount.
 	gameFinished := false.
-	wormhole := aWormhole
+	"wormhole := aWormhole"
 ]
 
 { #category : 'actions' }
