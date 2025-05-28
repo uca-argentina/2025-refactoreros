@@ -9,7 +9,8 @@ Class {
 		'shipsLaps',
 		'shipList',
 		'lapLength',
-		'battleManager'
+		'battleManager',
+		'shipTurnSkips'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -78,6 +79,11 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 	^ (shipsLaps at: aShip) >= lapsGoal
 ]
 
+{ #category : 'testing' }
+ShipManager >> hasTurns: aShip [
+	^ ((shipTurnSkips at: aShip) = 0)
+]
+
 { #category : 'intialization' }
 ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
 
@@ -87,6 +93,8 @@ ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: 
 	shipList do: [ :aShip | shipsPositions at: aShip put: 1 ].
 	shipsLaps := Dictionary new.
 	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ].
+	shipTurnSkips := Dictionary new.
+	shipList do: [:aShip | shipTurnSkips at: aShip put: 0 ].
 	battleManager := BattleManager withShips: aShipList  andDice: aDice.
 ]
 
