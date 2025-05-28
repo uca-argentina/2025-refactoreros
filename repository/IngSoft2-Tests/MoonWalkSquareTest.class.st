@@ -24,7 +24,7 @@ MoonWalkSquareTest >> testB01WhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBa
 	shipsPositions at: 'Player 2' put: 5.
 	shipsPositions at: 'Player 3' put: 7.
 
-	aMoonWalkSquare := MoonWalkSquare withPositionAt: 6 andBackwardsPush: 4.
+	aMoonWalkSquare := MoonWalkSquare withBackwardsPush: 4.
 
 	aMoonWalkSquare
 		applyPositionEffectTo: shipsPositions
@@ -41,7 +41,7 @@ MoonWalkSquareTest >> testB02WhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveTh
 	shipsPositions at: 'Player 1' put: 6.
 	shipsPositions at: 'Player 2' put: 5.
 
-	aMoonWalkSquare := MoonWalkSquare withPositionAt: 6 andBackwardsPush: 4.
+	aMoonWalkSquare := MoonWalkSquare withBackwardsPush: 4.
 
 	aMoonWalkSquare
 		applyPositionEffectTo: shipsPositions
@@ -51,14 +51,12 @@ MoonWalkSquareTest >> testB02WhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveTh
 ]
 
 { #category : 'tests' }
-MoonWalkSquareTest >> testB03WhenAMoonWalkSquareIsCreatedWithInvalidPositionThenFails [
+MoonWalkSquareTest >> testB03WhenAMoonWalkSquareIsCreatedWithInvalidSquaresToPushBackwardsThenFails [
 
-	| aMoonWalkSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 1.
+	| aMoonWalkSquare |
 
 	self
-		should: [ aMoonWalkSquare := MoonWalkSquare withPositionAt: -1 andBackwardsPush: 1]
+		should: [ aMoonWalkSquare := MoonWalkSquare withBackwardsPush: -2]
 		raise: Error
-		withMessageText: 'A square must be initialized with a position integer equal or higher than 1'
+		withMessageText: 'Squares to push backwards must be equal or higher than 1'
 ]

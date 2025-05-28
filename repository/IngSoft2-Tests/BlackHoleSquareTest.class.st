@@ -5,16 +5,6 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'asserting' }
-BlackHoleSquareTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
-
-	self
-		should: anErrorBlock
-		raise: errorClass
-		withExceptionDo: [ :error |
-		self assert: (error messageText) equals: errorMessage ]
-]
-
 { #category : 'tests' }
 BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesBy4ThenValid [
 
@@ -22,7 +12,7 @@ BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecr
 	shipsPositions := Dictionary new.
 	shipsPositions at: 'Player 1' put: 6.
 
-	aBlackHoleSquare := BlackHoleSquare withPositionAt: 6.
+	aBlackHoleSquare := BlackHoleSquare new.
 
 	aBlackHoleSquare
 		applyPositionEffectTo: shipsPositions
@@ -32,26 +22,13 @@ BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecr
 ]
 
 { #category : 'tests' }
-BlackHoleSquareTest >> testB02WhenABlackHoleSquareIsCreatedWithInvalidPositionThenFails [
-
-	| aBlackHoleSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 1.
-
-	self
-		should: [ aBlackHoleSquare := BlackHoleSquare withPositionAt: -1 ]
-		raise: Error
-		withMessageText: 'A square must be initialized with a position integer equal or higher than 1'
-]
-
-{ #category : 'tests' }
 BlackHoleSquareTest >> testB03WhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aShipManager := ShipManager withShips: aShipList andLapLenght: 10 andDice: (LoadedDice withSetNumbers: #(0)).
 	
-	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
+	aBlackHoleSquare := BlackHoleSquare new.
 
 	aShipManager moveShip: (aShipList at: 1) to: 12.
 	aShipManager landShip:(aShipList at: 1)  atSquare: aBlackHoleSquare.

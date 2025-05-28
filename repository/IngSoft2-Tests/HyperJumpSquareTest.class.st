@@ -22,7 +22,7 @@ HyperJumpSquareTest >> testB01WhenAShipLandsOnHyperJumpSquareAndMovesAccordingTo
 	shipsPositions := Dictionary new.
 	shipsPositions at: 'Player 1' put: 2.
 
-	aHyperJumpSquare := HyperJumpSquare withPositionAt: 2.
+	aHyperJumpSquare := HyperJumpSquare new.
 
 	aHyperJumpSquare
 		applyPositionEffectTo: shipsPositions
@@ -41,7 +41,7 @@ HyperJumpSquareTest >> testB02WhenShipsLandSequentiallyOnHyperJumpSquareAndMoveA
 	shipsPositions at: 'Player 3' put: 2.
 	shipsPositions at: 'Player 4' put: 2.
 	
-	aHyperJumpSquare := HyperJumpSquare withPositionAt: 2.
+	aHyperJumpSquare := HyperJumpSquare withParsecsPerSquare: 5.
 
 	aHyperJumpSquare applyPositionEffectTo: shipsPositions forShip: 'Player 1'.
 	aHyperJumpSquare applyPositionEffectTo: shipsPositions forShip: 'Player 2'.
@@ -52,14 +52,14 @@ HyperJumpSquareTest >> testB02WhenShipsLandSequentiallyOnHyperJumpSquareAndMoveA
 ]
 
 { #category : 'tests' }
-HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidPositionThenFails [
+HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidParsecsPerSquareThenFails [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.
 	shipsPositions at: 'Player 1' put: 1.
 
 	self
-		should: [ anEmptySquare := EmptySquare withPositionAt: -1 ]
+		should: [ anEmptySquare := HyperJumpSquare withParsecsPerSquare: -1]
 		raise: Error
-		withMessageText: 'A square must be initialized with a position integer equal or higher than 1'
+		withMessageText: 'Parsecs per square must be equal or higher than 1'
 ]
