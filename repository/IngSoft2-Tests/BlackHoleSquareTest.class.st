@@ -16,7 +16,7 @@ BlackHoleSquareTest >> should: anErrorBlock raise: errorClass withMessageText: e
 ]
 
 { #category : 'tests' }
-BlackHoleSquareTest >> test01BWhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesBy4ThenValid [
+BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesBy4ThenValid [
 
 	| aBlackHoleSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -32,7 +32,7 @@ BlackHoleSquareTest >> test01BWhenAShipLandsOnABlackHoleSquareAndItsPositionDecr
 ]
 
 { #category : 'tests' }
-BlackHoleSquareTest >> test02BWhenABlackHoleSquareIsCreatedWithInvalidPositionThenFails [
+BlackHoleSquareTest >> testB02WhenABlackHoleSquareIsCreatedWithInvalidPositionThenFails [
 
 	| aBlackHoleSquare shipsPositions |
 	shipsPositions := Dictionary new.
@@ -45,7 +45,7 @@ BlackHoleSquareTest >> test02BWhenABlackHoleSquareIsCreatedWithInvalidPositionTh
 ]
 
 { #category : 'tests' }
-BlackHoleSquareTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
+BlackHoleSquareTest >> testB03WhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
@@ -65,7 +65,7 @@ BlackHoleSquareTest >> test03BWhenAShipLandsOnBlackHoleThatForcesItToLoseALapAnd
 ]
 
 { #category : 'tests' }
-BlackHoleSquareTest >> test04BWhenAShipLandsOnBlackHoleAtASquareBeforeNumber5AndResultingPositionIsAtPreviousLapThenValid [
+BlackHoleSquareTest >> testB04WhenAShipLandsOnBlackHoleAtASquareBeforeNumber5AndResultingPositionIsAtPreviousLapThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingPosition |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).

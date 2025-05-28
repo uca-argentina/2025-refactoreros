@@ -88,6 +88,27 @@ Board >> getShipPosition: aShip [
 	^ shipManager getShipPosition: aShip
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> getShipRankings: ships [
+	| shipsOrderedByRanking |
+
+	shipsOrderedByRanking := ships
+		sorted: [:s1 :s2 | 
+		| lap1 lap2 pos1 pos2 |
+		lap1 := shipManager getShipLap: s1.
+		lap2 := shipManager getShipLap: s2.
+		lap1 = lap2
+			ifTrue: [
+				pos1 := shipManager getShipPosition: s1.
+				pos2 := shipManager getShipPosition: s2.
+				pos1 > pos2
+			]
+			ifFalse: [lap1 > lap2]].
+
+	^ OrderedCollection withAll: shipsOrderedByRanking
+
+]
+
 { #category : 'accessing' }
 Board >> getWinner [
 

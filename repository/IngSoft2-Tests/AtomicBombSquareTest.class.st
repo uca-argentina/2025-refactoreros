@@ -16,7 +16,7 @@ AtomicBombSquareTest >> should: anErrorBlock raise: errorClass withMessageText: 
 ]
 
 { #category : 'tests' }
-AtomicBombSquareTest >> test01BWhenAShipLandsOnAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
+AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
 
 	| anAtomicBombSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -34,7 +34,7 @@ AtomicBombSquareTest >> test01BWhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 ]
 
 { #category : 'tests' }
-AtomicBombSquareTest >> test02BWhenAnAtomicBombSquareIsCreatedWithInvalidPositionThenFails [
+AtomicBombSquareTest >> testB02WhenAnAtomicBombSquareIsCreatedWithInvalidPositionThenFails [
 
 	| anAtomicBombSquare shipsPositions |
 	shipsPositions := Dictionary new.

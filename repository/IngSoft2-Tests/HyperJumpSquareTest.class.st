@@ -16,7 +16,7 @@ HyperJumpSquareTest >> should: anErrorBlock raise: errorClass withMessageText: e
 ]
 
 { #category : 'tests' }
-HyperJumpSquareTest >> test01BWhenAShipLandsOnHyperJumpSquareAndMovesAccordingToParsecsThenValid [
+HyperJumpSquareTest >> testB01WhenAShipLandsOnHyperJumpSquareAndMovesAccordingToParsecsThenValid [
 
 	| aHyperJumpSquare shipsPositions |
 	shipsPositions := Dictionary new.
@@ -32,7 +32,7 @@ HyperJumpSquareTest >> test01BWhenAShipLandsOnHyperJumpSquareAndMovesAccordingTo
 ]
 
 { #category : 'tests' }
-HyperJumpSquareTest >> test02BWhenMultipleShipsLandsOnHyperJumpSquareAndMovesAccordingToParsecsThenValid [
+HyperJumpSquareTest >> testB02WhenMultipleShipsLandsOnHyperJumpSquareAndMovesAccordingToParsecsThenValid [
 
 	| aHyperJumpSquare shipsPositions |
 	shipsPositions := Dictionary new.
@@ -52,7 +52,7 @@ HyperJumpSquareTest >> test02BWhenMultipleShipsLandsOnHyperJumpSquareAndMovesAcc
 ]
 
 { #category : 'tests' }
-HyperJumpSquareTest >> test03BWhenAHyperJumpSquareIsCreatedWithInvalidPositionThenFails [
+HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidPositionThenFails [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.

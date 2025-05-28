@@ -15,8 +15,8 @@ HyperSpaceJumpSquareTest >> should: anErrorBlock raise: errorClass withMessageTe
 		self assert: (error messageText) equals: errorMessage ]
 ]
 
-{ #category : 'as yet unclassified' }
-HyperSpaceJumpSquareTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositionIncreasesBy4ThenValid [
+{ #category : 'testing' }
+HyperSpaceJumpSquareTest >> testB01WhenAShipLandsOnAHyperJumpSquareAndItsPositionIncreasesBy4ThenValid [
 
 	| aHyperSpaceJumpSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -31,8 +31,8 @@ HyperSpaceJumpSquareTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositio
 	self assert: (shipsPositions at: 'Player 1') = 6
 ]
 
-{ #category : 'as yet unclassified' }
-HyperSpaceJumpSquareTest >> test02BWhenAHyperSpaceJumpSquareIsCreatedWithInvalidPositionThenFails [
+{ #category : 'testing' }
+HyperSpaceJumpSquareTest >> testB02WhenAHyperSpaceJumpSquareIsCreatedWithInvalidPositionThenFails [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.

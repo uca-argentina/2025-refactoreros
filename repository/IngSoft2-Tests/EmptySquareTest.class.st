@@ -16,7 +16,7 @@ EmptySquareTest >> should: anErrorBlock raise: errorClass withMessageText: error
 ]
 
 { #category : 'tests' }
-EmptySquareTest >> test01BWhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheSameThenValid [
+EmptySquareTest >> testB01WhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheSameThenValid [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.
@@ -31,7 +31,7 @@ EmptySquareTest >> test01BWhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheS
 ]
 
 { #category : 'tests' }
-EmptySquareTest >> test02BWhenAnEmptySquareIsCreatedWithInvalidPositionThenFails [
+EmptySquareTest >> testB02WhenAnEmptySquareIsCreatedWithInvalidPositionThenFails [
 
 	| anEmptySquare shipsPositions |
 	shipsPositions := Dictionary new.

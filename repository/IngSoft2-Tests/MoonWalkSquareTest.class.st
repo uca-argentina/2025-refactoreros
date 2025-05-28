@@ -16,7 +16,7 @@ MoonWalkSquareTest >> should: anErrorBlock raise: errorClass withMessageText: er
 ]
 
 { #category : 'tests' }
-MoonWalkSquareTest >> test01BWhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBackwardsThenValid [
+MoonWalkSquareTest >> testB01WhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBackwardsThenValid [
 
 	| aMoonWalkSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -34,7 +34,7 @@ MoonWalkSquareTest >> test01BWhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBa
 ]
 
 { #category : 'tests' }
-MoonWalkSquareTest >> test02BWhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveThenValid [
+MoonWalkSquareTest >> testB02WhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveThenValid [
 
 	| aMoonWalkSquare shipsPositions  |
 	shipsPositions := Dictionary new.
@@ -51,7 +51,7 @@ MoonWalkSquareTest >> test02BWhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveTh
 ]
 
 { #category : 'tests' }
-MoonWalkSquareTest >> test03BWhenAMoonWalkSquareIsCreatedWithInvalidPositionThenFails [
+MoonWalkSquareTest >> testB03WhenAMoonWalkSquareIsCreatedWithInvalidPositionThenFails [
 
 	| aMoonWalkSquare shipsPositions |
 	shipsPositions := Dictionary new.

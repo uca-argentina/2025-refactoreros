@@ -31,19 +31,18 @@ BattleManager >> battle: aShipA with: aShipB [
 	rollA := dice roll.
 	rollB := dice roll.
 
-	[rollA = rollB] whileTrue: [
+	[ rollA = rollB ] whileTrue: [
 		rollA := dice roll.
 		rollB := dice roll ].
 
 	loserShip := aShipA.
-	rollA > rollB ifTrue: [
-		loserShip := aShipB.
-	 ].
+	rollA > rollB ifTrue: [ loserShip := aShipB ].
 
 
-		(shields at: loserShip ) > 0 ifTrue: [
-			shields at: loserShip put: (shields at: loserShip) - 1 ].
-		^ loserShip 
+	(shields at: loserShip) > 0 ifTrue: [
+		shields at: loserShip put: (shields at: loserShip) - 1 ].
+	
+	^ loserShip
 ]
 
 { #category : 'actions' }
