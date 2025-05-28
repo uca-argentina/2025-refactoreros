@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : 'actions' }
-SquareGenerator >> addToList: aSquareList aSquareClass: aSquareClass times: aNumberOfTimes [
+SquareGenerator >> addToList: aSquareList squareSample: aSquareSample times: aNumberOfTimes [
 
-	aNumberOfTimes timesRepeat: [ aSquareList add: (aSquareClass new) ].
+	aNumberOfTimes timesRepeat: [ aSquareList add: aSquareSample copy].
 ]
 
 { #category : 'actions' }

@@ -11,21 +11,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'argument validation' }
-BlackHoleSquare class >> validateInitializedPosition: aPosition [
-
-	aPosition >= 1 ifFalse: [
-		Error signal:
-			'A square must be initialized with a position integer equal or higher than 1' ]
-]
-
-{ #category : 'accessing' }
-BlackHoleSquare class >> withPositionAt: aPosition [
-
-	self validateInitializedPosition: aPosition.
-	^ self new initializeWithPositionAt: aPosition
-]
-
 { #category : 'actions' }
 BlackHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
