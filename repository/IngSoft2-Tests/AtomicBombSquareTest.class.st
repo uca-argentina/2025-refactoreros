@@ -27,7 +27,7 @@ AtomicBombSquareTest >> test01BWhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 	anAtomicBombSquare := AtomicBombSquare withPositionAt: 5.
 
 	anAtomicBombSquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions values) = #(1 1 1).

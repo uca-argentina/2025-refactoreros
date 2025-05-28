@@ -27,10 +27,21 @@ HyperSpaceJumpSquare class >> withPositionAt: aPosition [
 ]
 
 { #category : 'actions' }
-HyperSpaceJumpSquare >> applyEffectTo: shipsPositions forShip: aShip [
+HyperSpaceJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	(shipsPositions at: aShip put: (shipsPositions at: aShip) + 4)
 
+]
+
+{ #category : 'actions' }
+HyperSpaceJumpSquare >> applyShieldEffectTo: shipShields forShip: aShip [
+
+	| currentShields |
+	currentShields := shipShields at: aShip.
+
+	(currentShields = 0)  ifFalse: [ 
+		shipShields at: aShip put: currentShields - 1.
+				 ].
 ]
 
 { #category : 'accessing' }

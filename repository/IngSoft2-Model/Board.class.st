@@ -107,7 +107,7 @@ Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCou
 
 	shipList := aNewGame.
 	lapsGoal := aLaps.
-	shipManager := ShipManager withShips: aNewGame andLapLenght: aSquareCount.
+	shipManager := ShipManager withShips: aNewGame andLapLenght: aSquareCount andDice: aDice.
 	dice := aDice.
 	squareCount := aSquareCount.
 	self createSquareList.
@@ -142,12 +142,17 @@ Board >> runGame [
 					                with: diceResult.
 
 				
-				nextSquarePosition := shipManager calculateLandingPositionFor: aShip movingTo: (nextPosition % squareCount).
-				nextSquare := squareList at: nextSquarePosition.
+
 				
 				shipManager moveShip: aShip to: nextPosition.
 				
+				nextSquarePosition := shipManager getShipPosition: aShip.
+				nextSquare := squareList at: nextSquarePosition.
+		
 				shipManager landShip: aShip atSquare: nextSquare.
+	
+				
+				shipManager checkBattles: aShip.
 				
 				gameFinished := shipManager
 					                hasShip: aShip

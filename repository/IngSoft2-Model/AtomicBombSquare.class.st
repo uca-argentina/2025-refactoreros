@@ -27,10 +27,18 @@ AtomicBombSquare class >> withPositionAt: aPosition [
 ]
 
 { #category : 'actions' }
-AtomicBombSquare >> applyEffectTo: shipsPositions forShip: aShip [
+AtomicBombSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	shipsPositions keysDo: [ :ship |
 		shipsPositions at: ship put: 1]
+]
+
+{ #category : 'actions' }
+AtomicBombSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
+
+	newShipShields keysAndValuesDo: [ :ship :shields |
+		(aShip = ship) ifFalse: [
+			(shields = 0) ifFalse: [ newShipShields at: ship put: shields - 1 ] ] ]
 ]
 
 { #category : 'accessing' }

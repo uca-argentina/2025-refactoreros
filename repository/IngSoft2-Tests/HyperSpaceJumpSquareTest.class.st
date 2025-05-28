@@ -25,7 +25,7 @@ HyperSpaceJumpSquareTest >> test01BWhenAShipLandsOnAHyperJumpSquareAndItsPositio
 	aHyperSpaceJumpSquare := HyperSpaceJumpSquare withPositionAt: 2.
 
 	aHyperSpaceJumpSquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions at: 'Player 1') = 6

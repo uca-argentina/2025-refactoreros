@@ -57,7 +57,7 @@ BoardTest >> test03AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInva
 
 	| aBoard dice wormhole aShipList |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	dice add: (LoadedDice withSetNumbers: #( 12 )).
 	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
 	aShipList := OrderedCollection withAll: 
 		             #( 'Player 1' 'Player 2' ).

@@ -24,7 +24,7 @@ EmptySquareTest >> test01BWhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheS
 
 	anEmptySquare := EmptySquare withPositionAt: 1.
 	anEmptySquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions at: 'Player 1') = 1

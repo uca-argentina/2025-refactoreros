@@ -27,7 +27,7 @@ MoonWalkSquareTest >> test01BWhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBa
 	aMoonWalkSquare := MoonWalkSquare withPositionAt: 6 andBackwardsPush: 4.
 
 	aMoonWalkSquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions values) = #(6 1 3).
@@ -44,7 +44,7 @@ MoonWalkSquareTest >> test02BWhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveTh
 	aMoonWalkSquare := MoonWalkSquare withPositionAt: 6 andBackwardsPush: 4.
 
 	aMoonWalkSquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions at: 'Player 1') = 6

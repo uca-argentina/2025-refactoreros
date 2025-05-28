@@ -17,15 +17,33 @@ BattleManager class >> withShips: aShipList andDice: aDice [
 ]
 
 { #category : 'actions' }
+BattleManager >> applyShieldEffectOf: nextSquare forShip: aShip [
+	| newShipShields |
+	newShipShields := shields copy.
+	nextSquare applyShieldEffectTo:newShipShields forShip: aShip.
+	shields := newShipShields.
+]
+
+{ #category : 'actions' }
 BattleManager >> battle: aShipA with: aShipB [
 
-	| rollA rollB |
+	| rollA rollB loserShip |
 	rollA := dice roll.
 	rollB := dice roll.
 
+	[rollA = rollB] whileTrue: [
+		rollA := dice roll.
+		rollB := dice roll ].
+
+	loserShip := aShipA.
 	rollA > rollB ifTrue: [
-		(shields at: aShipB) > 0 ifTrue: [
-			shields at: aShipB put: (shields at: aShipB) - 1 ] ]
+		loserShip := aShipB.
+	 ].
+
+
+		(shields at: loserShip ) > 0 ifTrue: [
+			shields at: loserShip put: (shields at: loserShip) - 1 ].
+		^ loserShip 
 ]
 
 { #category : 'actions' }

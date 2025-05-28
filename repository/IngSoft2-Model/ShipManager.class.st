@@ -8,29 +8,17 @@ Class {
 		'shipsPositions',
 		'shipsLaps',
 		'shipList',
-		'lapLength'
+		'lapLength',
+		'battleManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'initialization' }
-ShipManager class >> withShips: aShipList andLapLenght: aLapLength [
+ShipManager class >> withShips: aShipList andLapLenght: aLapLength andDice: aDice [
 
-	^ self new initializeWithShips: aShipList andLapLenght: aLapLength
-]
-
-{ #category : 'accessing' }
-ShipManager >> calculateLandingPositionFor: aShip movingTo: aPosition [
-
-	| shipCurrentPositon nextPosition |
-	shipCurrentPositon := shipsPositions at: aShip.
-
-	nextPosition := shipCurrentPositon + aPosition.
-
-	nextPosition > lapLength
-		ifTrue: [ ^ nextPosition % lapLength ].
-		^ nextPosition
+	^ self new initializeWithShips: aShipList andLapLenght: aLapLength andDice: aDice
 ]
 
 { #category : 'accessing' }
@@ -40,33 +28,25 @@ ShipManager >> calculateNextPositionFor: aShip with: diceResult [
 ]
 
 { #category : 'actions' }
-ShipManager >> correctBackwardsMovement: newShipsPositions [
+ShipManager >> checkBattles: aShip [
 
-	| lapsGoneBackwards squaresGoneBackwards |
-	newShipsPositions keysAndValuesDo: [ :ship :position |
-		
-		position <= 0 ifTrue: [
-			lapsGoneBackwards := (position // lapLength) abs.
-			squaresGoneBackwards := (position % lapLength) abs.
-
-			newShipsPositions at: ship put: lapLength - squaresGoneBackwards.
-
-			shipsLaps at: ship put: (shipsLaps at: ship) - lapsGoneBackwards.
-			
-			(squaresGoneBackwards = 0) ifFalse: [
-				shipsLaps at: ship put: (shipsLaps at: ship) - 1 ] .
-			
-			(shipsLaps at: ship ) <= 0 ifTrue: [ 
-				shipsLaps at: ship put: 0.
-				shipsPositions at: ship put: 1.
-				 ]
-			
-			
-			] ].
 	
-	^ newShipsPositions
+	| loser |
+	
+	shipsPositions keysAndValuesDo: [ :ship :position |
+		((shipsPositions at: ship) = (shipsPositions at: aShip) ) ifTrue: [ 
+				(ship = aShip) ifFalse: [ 
+					loser := battleManager battle: ship with: aShip.
+				 ].
+			 ].
+		 ].
+	
+	shipsPositions at:loser put: 1
+	
+	
 	
 
+	
 ]
 
 { #category : 'accessing' }
@@ -76,10 +56,10 @@ ShipManager >> getShipLap: arg1 [
 ]
 
 { #category : 'accessing' }
-ShipManager >> getShipPosition: arg1 [
+ShipManager >> getShipPosition: aShip [
 
 	^ shipsPositions
-		  at: arg1
+		  at: aShip
 		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
 ]
 
@@ -99,14 +79,15 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 ]
 
 { #category : 'intialization' }
-ShipManager >> initializeWithShips: aShipList andLapLenght: aLapLength [
+ShipManager >> initializeWithShips: aShipList andLapLenght: aLapLength andDice: aDice [
 
 	shipList := aShipList.
 	lapLength := aLapLength.
 	shipsPositions := Dictionary new.
 	shipList do: [ :aShip | shipsPositions at: aShip put: 1 ].
 	shipsLaps := Dictionary new.
-	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ]
+	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ].
+	battleManager := BattleManager withShips: aShipList  andDice: aDice.
 ]
 
 { #category : 'actions' }
@@ -114,9 +95,12 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 
 	| newShipsPositions |
 	newShipsPositions := shipsPositions copy.
-	nextSquare applyEffectTo: newShipsPositions forShip: aShip.
+	nextSquare applyPositionEffectTo: newShipsPositions forShip: aShip.
+	battleManager applyShieldEffectOf: nextSquare forShip: aShip.
+	
+	
 
-	newShipsPositions := self correctBackwardsMovement: newShipsPositions.
+	newShipsPositions := self recalculateBackwardsMovement: newShipsPositions.
 
 
 
@@ -136,7 +120,8 @@ ShipManager >> moveShip: aShip to: nextPosition [
 
 	shipsPositions
 		at: aShip
-		put: nextPosition - (lastTurnCompletedLaps * lapLength)
+		put: nextPosition - (lastTurnCompletedLaps * lapLength).
+		
 ]
 
 { #category : 'accessing' }
@@ -168,4 +153,34 @@ ShipManager >> placeTheShip: aShip position: nextPosition withLapLength: squareC
 			shipsPositions
 				at: aShip
 				put: 1 ] 
+]
+
+{ #category : 'actions' }
+ShipManager >> recalculateBackwardsMovement: newShipsPositions [
+
+	| lapsGoneBackwards squaresGoneBackwards |
+	newShipsPositions keysAndValuesDo: [ :ship :position |
+		
+		position <= 0 ifTrue: [
+			lapsGoneBackwards := (position // lapLength) abs.
+			squaresGoneBackwards := (position % lapLength) abs.
+
+			newShipsPositions at: ship put: lapLength - squaresGoneBackwards.
+
+			shipsLaps at: ship put: (shipsLaps at: ship) - lapsGoneBackwards.
+			
+			(squaresGoneBackwards = 0) ifFalse: [
+				shipsLaps at: ship put: (shipsLaps at: ship) - 1 ] .
+			
+			(shipsLaps at: ship ) <= 0 ifTrue: [ 
+				shipsLaps at: ship put: 0.
+				shipsPositions at: ship put: 1.
+				 ]
+			
+			
+			] ].
+	
+	^ newShipsPositions
+	
+
 ]

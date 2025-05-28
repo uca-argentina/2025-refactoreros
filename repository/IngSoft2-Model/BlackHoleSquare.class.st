@@ -27,9 +27,13 @@ BlackHoleSquare class >> withPositionAt: aPosition [
 ]
 
 { #category : 'actions' }
-BlackHoleSquare >> applyEffectTo: shipsPositions forShip: aShip [
+BlackHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	shipsPositions at: aShip put: (shipsPositions at: aShip) - 4
+]
+
+{ #category : 'actions' }
+BlackHoleSquare >> applyShieldEffectTo:newShipShields forShip: aShip [
 ]
 
 { #category : 'accessing' }

@@ -25,7 +25,7 @@ BlackHoleSquareTest >> test01BWhenAShipLandsOnABlackHoleSquareAndItsPositionDecr
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 6.
 
 	aBlackHoleSquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions at: 'Player 1') = 2

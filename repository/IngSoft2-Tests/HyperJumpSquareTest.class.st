@@ -25,7 +25,7 @@ HyperJumpSquareTest >> test01BWhenAShipLandsOnHyperJumpSquareAndMovesAccordingTo
 	aHyperJumpSquare := HyperJumpSquare withPositionAt: 2.
 
 	aHyperJumpSquare
-		applyEffectTo: shipsPositions
+		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
 
 	self assert: (shipsPositions at: 'Player 1') = 12
@@ -43,10 +43,10 @@ HyperJumpSquareTest >> test02BWhenMultipleShipsLandsOnHyperJumpSquareAndMovesAcc
 	
 	aHyperJumpSquare := HyperJumpSquare withPositionAt: 2.
 
-	aHyperJumpSquare applyEffectTo: shipsPositions forShip: 'Player 1'.
-	aHyperJumpSquare applyEffectTo: shipsPositions forShip: 'Player 2'.
-	aHyperJumpSquare applyEffectTo: shipsPositions forShip: 'Player 3'.
-	aHyperJumpSquare applyEffectTo: shipsPositions forShip: 'Player 4'.
+	aHyperJumpSquare applyPositionEffectTo: shipsPositions forShip: 'Player 1'.
+	aHyperJumpSquare applyPositionEffectTo: shipsPositions forShip: 'Player 2'.
+	aHyperJumpSquare applyPositionEffectTo: shipsPositions forShip: 'Player 3'.
+	aHyperJumpSquare applyPositionEffectTo: shipsPositions forShip: 'Player 4'.
 
 	self assert: (shipsPositions values) = #(12 10 8 6).
 ]

@@ -28,7 +28,7 @@ MoonWalkSquare class >> withPositionAt: aPosition andBackwardsPush: aNumberOfSqu
 ]
 
 { #category : 'actions' }
-MoonWalkSquare >> applyEffectTo: shipsPositions forShip: aShip [
+MoonWalkSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	
 	shipsPositions keysDo: [ :ship |
@@ -38,6 +38,10 @@ MoonWalkSquare >> applyEffectTo: shipsPositions forShip: aShip [
 	
 	"shipsPositions keysDo: [ :ship |
 		shipsPositions at: ship put: 1]"
+]
+
+{ #category : 'actions' }
+MoonWalkSquare >> applyShieldEffectTo:newShipShields forShip: aShip [
 ]
 
 { #category : 'accessing' }

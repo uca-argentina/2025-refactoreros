@@ -31,3 +31,31 @@ BattleManagerTest >> test02BWhenTwoShipsBattleAndLooserLose1ShieldThenValid [
 	
 	self assert: (aBattleManager getShieldsOf: (aShipList at: 2)) = 2
 ]
+
+{ #category : 'tests' }
+BattleManagerTest >> test02BWhenTwoShipsBattleAndTieAndTheyRollUntilOneWinsThenValid [
+
+	| aBattleManager aShipList dice |
+	
+	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
+	dice := LoadedDice withSetNumbers: #(2 2 3 3 6 1).
+	aBattleManager := BattleManager withShips: aShipList andDice: dice.
+	
+	aBattleManager battle: (aShipList at: 1) with: (aShipList at: 2).
+	
+	self assert: (aBattleManager getShieldsOf: (aShipList at: 2)) = 2
+]
+
+{ #category : 'tests' }
+BattleManagerTest >> test02BWhenTwoShipsBattleAndWinnerLosesAShieldThenInvalid [
+
+	| aBattleManager aShipList dice |
+	
+	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
+	dice := LoadedDice withSetNumbers: #(5 2).
+	aBattleManager := BattleManager withShips: aShipList andDice: dice.
+	
+	aBattleManager battle: (aShipList at: 1) with: (aShipList at: 2).
+	
+	self deny: (aBattleManager getShieldsOf: (aShipList at: 1)) = 2
+]

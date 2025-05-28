@@ -28,7 +28,7 @@ HyperJumpSquare class >> withPositionAt: aPosition [
 ]
 
 { #category : 'actions' }
-HyperJumpSquare >> applyEffectTo: shipsPositions forShip: aShip [
+HyperJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	| parsecList |
 	parsecList := #( 10 8 6 4 ).
@@ -38,6 +38,11 @@ HyperJumpSquare >> applyEffectTo: shipsPositions forShip: aShip [
 
 	index := index + 1.
 	index > parsecList size ifTrue: [ index := 1 ]
+]
+
+{ #category : 'actions' }
+HyperJumpSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
+
 ]
 
 { #category : 'accessing' }
