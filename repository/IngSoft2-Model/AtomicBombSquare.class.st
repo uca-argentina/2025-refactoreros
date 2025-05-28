@@ -4,9 +4,6 @@ A square that resets all ships positions (a dictionary: 'shipName' -> position) 
 Class {
 	#name : 'AtomicBombSquare',
 	#superclass : 'Object',
-	#instVars : [
-		'position'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -24,10 +21,4 @@ AtomicBombSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
 	newShipShields keysAndValuesDo: [ :ship :shields |
 		(aShip = ship) ifFalse: [
 			(shields = 0) ifFalse: [ newShipShields at: ship put: shields - 1 ] ] ]
-]
-
-{ #category : 'accessing' }
-AtomicBombSquare >> initializeWithPositionAt: aPosition [
-
-	position := aPosition
 ]

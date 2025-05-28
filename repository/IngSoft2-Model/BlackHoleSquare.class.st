@@ -4,9 +4,6 @@ A square that resets all ships positions (a dictionary: 'shipName' -> position) 
 Class {
 	#name : 'BlackHoleSquare',
 	#superclass : 'Object',
-	#instVars : [
-		'position'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -19,10 +16,4 @@ BlackHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 { #category : 'actions' }
 BlackHoleSquare >> applyShieldEffectTo:newShipShields forShip: aShip [
-]
-
-{ #category : 'accessing' }
-BlackHoleSquare >> initializeWithPositionAt: aPosition [
-
-	position := aPosition
 ]

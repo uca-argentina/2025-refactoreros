@@ -28,9 +28,3 @@ HyperSpaceJumpSquare >> applyShieldEffectTo: shipShields forShip: aShip [
 		shipShields at: aShip put: currentShields - 1.
 				 ].
 ]
-
-{ #category : 'accessing' }
-HyperSpaceJumpSquare >> initializeWithPositionAt: aPosition [
-
-	position := aPosition
-]

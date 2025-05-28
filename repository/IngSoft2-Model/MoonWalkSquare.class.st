@@ -12,19 +12,10 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'argument validation' }
-MoonWalkSquare class >> validateInitializedPosition: aPosition [
-
-	aPosition >= 1 ifFalse: [
-		Error signal:
-			'A square must be initialized with a position integer equal or higher than 1' ]
-]
-
 { #category : 'accessing' }
-MoonWalkSquare class >> withPositionAt: aPosition andBackwardsPush: aNumberOfSquares [
+MoonWalkSquare class >> withBackwardsPush: aNumberOfSquares [
 
-	self validateInitializedPosition: aPosition.
-	^ self new initializeWithPositionAt: aPosition andBackwardsPush: aNumberOfSquares
+	^ self new initializeWithBackwardsPush: aNumberOfSquares
 ]
 
 { #category : 'actions' }
@@ -45,8 +36,7 @@ MoonWalkSquare >> applyShieldEffectTo:newShipShields forShip: aShip [
 ]
 
 { #category : 'accessing' }
-MoonWalkSquare >> initializeWithPositionAt: aPosition andBackwardsPush: aNumberOfSquares [
+MoonWalkSquare >> initializeWithBackwardsPush: aNumberOfSquares [
 
-	position := aPosition.
 	backwardsPush := aNumberOfSquares.
 ]
