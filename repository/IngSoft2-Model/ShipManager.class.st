@@ -18,7 +18,7 @@ Class {
 { #category : 'initialization' }
 ShipManager class >> withShips: aShipList andLapLenght: aLapLength andDice: aDice [
 
-	^ self new initializeWithShips: aShipList andLapLenght: aLapLength andDice: aDice
+	^ self new initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice
 ]
 
 { #category : 'accessing' }
@@ -79,7 +79,7 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 ]
 
 { #category : 'intialization' }
-ShipManager >> initializeWithShips: aShipList andLapLenght: aLapLength andDice: aDice [
+ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
 
 	shipList := aShipList.
 	lapLength := aLapLength.
@@ -98,12 +98,7 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 	nextSquare applyPositionEffectTo: newShipsPositions forShip: aShip.
 	battleManager applyShieldEffectOf: nextSquare forShip: aShip.
 	
-	
-
 	newShipsPositions := self recalculateBackwardsMovement: newShipsPositions.
-
-
-
 
 	shipsPositions := newShipsPositions
 ]
@@ -163,7 +158,7 @@ ShipManager >> recalculateBackwardsMovement: newShipsPositions [
 		
 		position <= 0 ifTrue: [
 			lapsGoneBackwards := (position // lapLength) abs.
-			squaresGoneBackwards := (position % lapLength) abs.
+			squaresGoneBackwards := (position abs % lapLength).
 
 			newShipsPositions at: ship put: lapLength - squaresGoneBackwards.
 

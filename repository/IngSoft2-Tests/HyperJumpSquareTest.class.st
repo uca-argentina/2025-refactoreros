@@ -32,7 +32,7 @@ HyperJumpSquareTest >> testB01WhenAShipLandsOnHyperJumpSquareAndMovesAccordingTo
 ]
 
 { #category : 'tests' }
-HyperJumpSquareTest >> testB02WhenMultipleShipsLandsOnHyperJumpSquareAndMovesAccordingToParsecsThenValid [
+HyperJumpSquareTest >> testB02WhenShipsLandSequentiallyOnHyperJumpSquareAndMoveAccordingToParsecsThenValid [
 
 	| aHyperJumpSquare shipsPositions |
 	shipsPositions := Dictionary new.

@@ -49,40 +49,14 @@ BlackHoleSquareTest >> testB03WhenAShipLandsOnBlackHoleThatForcesItToLoseALapAnd
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager withShips: aShipList andLapLenght: 10.
+	aShipManager := ShipManager withShips: aShipList andLapLenght: 10 andDice: (LoadedDice withSetNumbers: #(0)).
+	
 	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
 
 	aShipManager moveShip: (aShipList at: 1) to: 12.
-
-	"aShipManager landShip: (aShipList at: 1) atSquare: aBlackHoleSquare ."
-
 	aShipManager landShip:(aShipList at: 1)  atSquare: aBlackHoleSquare.
-		
 	aShipResultingLap := aShipManager getShipLap: 'Player 1'.
 
 	self assert: (aShipResultingLap = 0 ).
 	self assert: ((aShipManager getShipPosition: 'Player 1' )= 8)
-]
-
-{ #category : 'tests' }
-BlackHoleSquareTest >> testB04WhenAShipLandsOnBlackHoleAtASquareBeforeNumber5AndResultingPositionIsAtPreviousLapThenValid [
-
-	| aBlackHoleSquare aShipList aShipManager aShipResultingPosition |
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager withShips: aShipList andLapLenght: 10.
-	aBlackHoleSquare := BlackHoleSquare withPositionAt: 2.
-
-	aShipManager
-		placeTheShip: (aShipList at: 1)
-		position: 12
-		withLapLength: 10.
-
-	"aShipManager landShip: (aShipList at: 1) atSquare: aBlackHoleSquare ."
-	aShipManager
-		placeTheShip: (aShipList at: 1)
-		position: (aShipManager getShipPosition: (aShipList at: 1)) - 4
-		withLapLength: 10.
-	aShipResultingPosition := aShipManager getShipPosition: 'Player 1'.
-
-	self assert: aShipResultingPosition = 8
 ]
