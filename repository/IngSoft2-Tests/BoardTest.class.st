@@ -16,120 +16,108 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-BoardTest >> test01AWhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
+BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-		          andWormhole: wormhole.
+					 andLaps: 1
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self assert: aBoard getWinner = 'Player 1'
 ]
 
 { #category : 'tests' }
-BoardTest >> test02AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
+BoardTest >> testA02WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
 
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	dice add: (LoadedDice withSetNumbers: #( 11 1)).
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll:
 		             #( 'Player 1' 'Player 2' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-		          andWormhole: wormhole.
+					 andLaps: 1
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self assert: aBoard getWinner = 'Player 1'
 ]
 
 { #category : 'tests' }
-BoardTest >> test03AWhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
+BoardTest >> testA03WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
 
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 1 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	dice add: (LoadedDice withSetNumbers: #( 12 )).
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: 
 		             #( 'Player 1' 'Player 2' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-		          andWormhole: wormhole.
+					 andLaps: 1
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self deny: aBoard getWinner = 'Player 2'
 ]
 
 { #category : 'tests' }
-BoardTest >> test04AWhenBoardGameFinishesAndWinnerIsPastFinalSquareThenValid [
+BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
-	| aBoard dice wormhole aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-		          andWormhole: wormhole.
-	aBoard runGame.
-	self assert: (aBoard getPositionOfShip: 'Player 1') >= 10
-]
-
-{ #category : 'tests' }
-BoardTest >> test05AWhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
-
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll:
 		             #( 'Player 1' 'Player 2' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-		          andWormhole: wormhole.
+					 andLaps: 1
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self deny: (aBoard getPositionOfShip: 'Player 2') >= 10
+	self deny: (aBoard getShipPosition: 'Player 2') >= 10
 ]
 
 { #category : 'tests' }
-BoardTest >> test06AWhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
+BoardTest >> testA06WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
 
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-		          andWormhole: wormhole.
+					 andLaps: 1
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self
-		should: [ aBoard getPositionOfShip: 'Player 2' ]
+		should: [ aBoard getShipPosition: 'Player 2' ]
 		raise: Error
 		withMessageText: 'There is no ship with such name'
 ]
 
 { #category : 'tests' }
-BoardTest >> test07AWhenBoardIsCreatedWithEmptyShipListItFails [
+BoardTest >> testA07WhenBoardIsCreatedWithEmptyShipListItFails [
 
-	| dice wormhole aShipList |
+	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #(  ).
 	self
 		should: [
@@ -137,17 +125,18 @@ BoardTest >> test07AWhenBoardIsCreatedWithEmptyShipListItFails [
 				gameWithShipList: aShipList
 				andDice: dice
 				andSquareCount: 10
-				andWormhole: wormhole ]
+				andLaps: 1
+				andSquareGenerator: squareGenerator ]
 		raise: Error
 		withMessageText: 'At least one ship is required'
 ]
 
 { #category : 'tests' }
-BoardTest >> test08AWhenBoardIsCreatedWithZeroDieThenFails [
+BoardTest >> testA08WhenBoardIsCreatedWithZeroDieThenFails [
 
-	| dice wormhole aShipList |
+	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
@@ -155,18 +144,19 @@ BoardTest >> test08AWhenBoardIsCreatedWithZeroDieThenFails [
 				gameWithShipList: aShipList
 				andDice: dice
 				andSquareCount: 10
-				andWormhole: wormhole ]
+				andLaps: 1
+				andSquareGenerator: squareGenerator ]
 		raise: Error
 		withMessageText: 'At least one die is required'
 ]
 
 { #category : 'tests' }
-BoardTest >> test09AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
+BoardTest >> testA09WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 
-	| dice wormhole aShipList |
+	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
@@ -174,24 +164,154 @@ BoardTest >> test09AWhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 				gameWithShipList: aShipList
 				andDice: dice
 				andSquareCount: 0
-				andWormhole: wormhole ]
+				andLaps: 1
+				andSquareGenerator: squareGenerator ]
 		raise: Error
 		withMessageText: 'Square count should be equal or higher than 2'
 ]
 
 { #category : 'tests' }
-BoardTest >> test10AWhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
+BoardTest >> testA10WhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
 
-	| aBoard dice wormhole aShipList |
+	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
-	wormhole := WormHole withEntranceAt: 2 andExitAt: 9.
+	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-		          andWormhole: wormhole.
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: aBoard isGameFinished 
+	self assert: aBoard isGameFinished
+]
+
+{ #category : 'tests' }
+BoardTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 30 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 3
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: aBoard getWinner = 'Player 1'
+]
+
+{ #category : 'tests' }
+BoardTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10)).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: ((aBoard getShipLap: 'Player 1' )= 1)
+]
+
+{ #category : 'tests' }
+BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15)).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: ((aBoard getShipPosition: 'Player 1' )= 6)
+]
+
+{ #category : 'tests' }
+BoardTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
+
+	| dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	
+	self should: [ Board
+		gameWithShipList: aShipList
+		andDice: dice
+		andSquareCount: 10
+		andLaps: 0
+		andSquareGenerator: squareGenerator] raise: Error withMessageText: 'Lap count must be equal or higher than 1'
+]
+
+{ #category : 'tests' }
+BoardTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 5 8 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
+
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	
+	self assert: (aBoard getShipRankings: aShipList) asArray equals: #('Player 2' 'Player 1').
+
+]
+
+{ #category : 'tests' }
+BoardTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThenValid [
+
+	| aBoard dice squareGenerator aShipList aShip |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 12 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+	aShip := aShipList at: 1.
+
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+
+	self assert: (aBoard getShipPosition: aShip) = 3
 ]

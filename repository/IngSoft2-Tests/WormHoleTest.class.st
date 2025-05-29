@@ -16,7 +16,7 @@ WormHoleTest >> should: anErrorBlock raise: errorClass withMessageText: errorMes
 ]
 
 { #category : 'tests' }
-WormHoleTest >> test01AWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitPosition [
+WormHoleTest >> testA01WhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitPosition [
 
 	| aWormHole aPosition |
 	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
@@ -27,7 +27,7 @@ WormHoleTest >> test01AWhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsEx
 ]
 
 { #category : 'tests' }
-WormHoleTest >> test02AWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntrancePosition [
+WormHoleTest >> testA02WhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntrancePosition [
 
 	| aWormHole aPosition |
 	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
@@ -38,7 +38,7 @@ WormHoleTest >> test02AWhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntran
 ]
 
 { #category : 'tests' }
-WormHoleTest >> test04AWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
+WormHoleTest >> testA04WhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 
 	self
 		should: [ WormHole withEntranceAt: 0 andExitAt: 1 ]
@@ -47,43 +47,10 @@ WormHoleTest >> test04AWhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 ]
 
 { #category : 'tests' }
-WormHoleTest >> test05AWhenBlackHoleIsCreatedWithExitBeforeEntranceThenItFails [
+WormHoleTest >> testA05WhenBlackHoleIsCreatedWithExitBeforeEntranceThenItFails [
 
 	self
 		should: [ WormHole withEntranceAt: 3 andExitAt: 1 ]
 		raise: Error
 		withMessageText: 'Entrace should be located before exit'
-]
-
-{ #category : 'tests' }
-WormHoleTest >> test06AWhenAWormholeValidatesItsEntrancePositionThenValid [
-
-	| aWormHole aPosition |
-	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
-	aPosition := 2.
-
-
-	self assert: (aWormHole isAWormHoleEnd: aPosition)
-]
-
-{ #category : 'tests' }
-WormHoleTest >> test07AWhenAWormholeValidatesItsExitPositionThenValid [
-
-	| aWormHole aPosition |
-	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
-	aPosition := 4.
-
-
-	self assert: (aWormHole isAWormHoleEnd: aPosition)
-]
-
-{ #category : 'tests' }
-WormHoleTest >> test08AWhenAWormholeValidatesANonEndPositionThenInvalid [
-
-	| aWormHole aPosition |
-	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
-	aPosition := 3.
-
-
-	self deny: (aWormHole isAWormHoleEnd: aPosition)
 ]

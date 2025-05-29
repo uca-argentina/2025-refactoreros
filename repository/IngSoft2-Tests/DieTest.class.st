@@ -16,7 +16,7 @@ DieTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-DieTest >> test01AWhenADieRollItFallsOnAValidNumber [
+DieTest >> testA01WhenADieRollItFallsOnAValidNumber [
 
 	| aDie value |
 	aDie := Die withFaces: 6.
@@ -27,7 +27,7 @@ DieTest >> test01AWhenADieRollItFallsOnAValidNumber [
 ]
 
 { #category : 'tests' }
-DieTest >> test02AWhenADieHasOneFaceThenAlwaysReturnsOne [
+DieTest >> testA02WhenADieHasOneFaceThenAlwaysReturnsOne [
 
 	| aDie value |
 	aDie := Die withFaces: 1.
@@ -37,7 +37,7 @@ DieTest >> test02AWhenADieHasOneFaceThenAlwaysReturnsOne [
 ]
 
 { #category : 'tests' }
-DieTest >> test03AWhenADieHasZeroFacesThenCreationFails [
+DieTest >> testA03WhenADieHasZeroFacesThenCreationFails [
 
 	self
 		should: [ Die withFaces: 0 ]
