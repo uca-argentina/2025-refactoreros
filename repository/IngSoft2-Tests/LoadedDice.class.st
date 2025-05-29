@@ -18,10 +18,11 @@ LoadedDice class >> withSetNumbers: aCollectionOfNumbers [
 ]
 
 { #category : 'initialization' }
-LoadedDice >> initializeLoadedDice: anArrayOfNumbers [
-
+LoadedDice >> initializeLoadedDice: aCollectionOfNumbers [
 
 	numbers := OrderedCollection withAll: aCollectionOfNumbers.
+
+
 
 ]
 

@@ -16,7 +16,6 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-
 BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
 	| aBoard dice squareGenerator aShipList |
@@ -28,14 +27,13 @@ BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-					    andLaps: 1
+					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self assert: aBoard getWinner = 'Player 1'
 ]
 
 { #category : 'tests' }
-
 BoardTest >> testA02WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
 
 	| aBoard dice squareGenerator aShipList |
@@ -48,14 +46,13 @@ BoardTest >> testA02WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenVali
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-					    andLaps: 1
+					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self assert: aBoard getWinner = 'Player 1'
 ]
 
 { #category : 'tests' }
-
 BoardTest >> testA03WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
 
 	| aBoard dice squareGenerator aShipList |
@@ -68,14 +65,13 @@ BoardTest >> testA03WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInva
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-					    andLaps: 1
+					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self deny: aBoard getWinner = 'Player 2'
 ]
 
 { #category : 'tests' }
-
 BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
 	| aBoard dice squareGenerator aShipList |
@@ -88,7 +84,7 @@ BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-					    andLaps: 1
+					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self deny: (aBoard getShipPosition: 'Player 2') >= 10
@@ -106,7 +102,7 @@ BoardTest >> testA06WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-					    andLaps: 1
+					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self
@@ -162,7 +158,6 @@ BoardTest >> testA09WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-  
 	self
 		should: [
 			Board
@@ -245,7 +240,7 @@ BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
 	squareGenerator := EmptySquareGenerator new.
 
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-  
+
 	aBoard := Board
 		          gameWithShipList: aShipList
 		          andDice: dice
