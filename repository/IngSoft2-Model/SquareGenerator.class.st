@@ -40,7 +40,7 @@ SquareGenerator >> createSquares: squareCount [
 		times: (squareCount * moonwalkProbability) asInteger.
 	self
 		addToList: squareList
-		squareSample: (HyperJumpSquare withParsecsPerSquare: 5)
+		squareSample: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #(20 15 12 8 5))
 		times: (squareCount * hyperJumpProbability) asInteger.
 	self
 		addToList: squareList
