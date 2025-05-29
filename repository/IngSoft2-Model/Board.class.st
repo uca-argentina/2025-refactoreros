@@ -129,19 +129,6 @@ Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCou
 ]
 
 { #category : 'actions' }
-Board >> newLapAdjustedPositionForShip: aShip thatLandedOn: aPosition [
-
-	| lapAdjustedPosition |
-	shipManager
-		placeTheShip: aShip
-		position: aPosition 
-		withLapLength: squareCount.
-
-	lapAdjustedPosition := shipManager getShipPosition: aShip.
-	^ lapAdjustedPosition
-]
-
-{ #category : 'actions' }
 Board >> runGame [
 
 	| diceResult nextPosition nextSquare nextSquarePosition |

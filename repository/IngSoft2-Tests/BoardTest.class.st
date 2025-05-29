@@ -252,7 +252,7 @@ BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
 ]
 
 { #category : 'tests' }
-BoardTest >> testB04WhenSBoardIsCreatedWithInvalidLapCountThenFails [
+BoardTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 
 	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
