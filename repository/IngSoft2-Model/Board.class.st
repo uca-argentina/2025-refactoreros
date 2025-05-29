@@ -5,14 +5,15 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
+		'shipCount',
 		'squareCount',
 		'shipList',
+		'finalShipAndPosition',
 		'dice',
 		'gameFinished',
+		'winner',
 		'wormhole',
-		'lapsGoal',
-		'shipManager',
-		'squareList'
+		'shipsPositions'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -62,10 +63,46 @@ Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCou
 		  andSquareGenerator: squareGenerator
 ]
 
+{ #category : 'intialization' }
+Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
+
+	self checkValidDiceCollection: aDiceCollection.
+	self checkValidSquareCount: aSquareCount.
+	self checkValidShipList: aShipList.
+
+	^ self new
+		  newGameWithShipList: aShipList
+		  andDice: aDiceCollection
+		  andSquareCount: aSquareCount
+		  andWormhole: aWormhole 
+]
+
+{ #category : 'actions' }
+Board >> checkIfShipWon: aShip [
+
+	(shipsPositions at: aShip) >= squareCount ifTrue: [
+		gameFinished := true.
+		winner := aShip ].
+]
+
+{ #category : 'initialization' }
+Board >> createShipsPositions [
+
+	1 to: shipCount do: [ :i | shipsPositions at: (shipList at: i) put: 1 ]
+]
+
 { #category : 'actions' }
 Board >> generateDiceResult [
 
 	^ (dice collect: [ :die | die roll ]) sum
+]
+
+{ #category : 'accessing' }
+Board >> getPositionOfShip: aShipName [
+
+	^ shipsPositions
+		  at: aShipName
+		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
 ]
 
 { #category : 'accessing' }
@@ -126,6 +163,19 @@ Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCou
 	squareList :=  squareGenerator createSquares: squareCount.
 	gameFinished := false.
 	"wormhole := aWormhole"
+]
+
+{ #category : 'initialization' }
+Board >> newGameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andWormhole: aWormhole [
+
+	shipCount := aShipList size.
+	shipList := aShipList.
+	shipsPositions := Dictionary new.
+	self createShipsPositions.
+	dice := aDiceCollection.
+	squareCount := aSquareCount.
+	gameFinished := false.
+	wormhole := aWormhole
 ]
 
 { #category : 'actions' }
