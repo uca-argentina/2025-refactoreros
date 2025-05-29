@@ -48,12 +48,6 @@ BattleManager >> battle: aShipA with: aShipB [
 	^ loserShip
 ]
 
-{ #category : 'actions' }
-BattleManager >> getShieldsOf: aShip [
-
-	^ shields at: aShip
-]
-
 { #category : 'testing' }
 BattleManager >> hasShields: aShip [
 	^ (shields at: aShip) > 0
