@@ -54,6 +54,11 @@ BattleManager >> getShieldsOf: aShip [
 	^ shields at: aShip
 ]
 
+{ #category : 'testing' }
+BattleManager >> hasShields: aShip [
+	^ (shields at: aShip) > 0
+]
+
 { #category : 'initialization' }
 BattleManager >> initializeWithShips: aShipList andDice: aDice [
 
@@ -65,4 +70,9 @@ BattleManager >> initializeWithShips: aShipList andDice: aDice [
 	
 	1 to: (aShipList size) do: [ :i |
 	 shields at: (aShipList at: i) put: shieldsAtStart ]
+]
+
+{ #category : 'accessing' }
+BattleManager >> rechargeShields: aShip [
+	shields at:aShip put: 3
 ]

@@ -38,11 +38,17 @@ ShipManager >> checkBattles: aShip [
 		((shipsPositions at: ship) = (shipsPositions at: aShip) ) ifTrue: [ 
 				(ship = aShip) ifFalse: [ 
 					loser := battleManager battle: ship with: aShip.
+						shipsPositions at:loser put: 1.
+						(battleManager hasShields: loser) ifFalse:[
+						shipTurnSkips at: loser put:(2).].
 				 ].
 			 ].
 		 ].
 	
-	shipsPositions at:loser put: 1
+
+	
+	
+	
 	
 	
 	
@@ -80,8 +86,19 @@ ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 ]
 
 { #category : 'testing' }
-ShipManager >> hasTurns: aShip [
-	^ ((shipTurnSkips at: aShip) = 0)
+ShipManager >> hasTurnSkips: aShip [
+
+	| currentTurnSkips |
+	currentTurnSkips := shipTurnSkips at: aShip.
+
+	(currentTurnSkips = 1 )ifTrue: [
+			battleManager rechargeShields: aShip ].
+		
+	(currentTurnSkips > 0) ifTrue: [
+		shipTurnSkips at: aShip put: currentTurnSkips - 1.
+		^ true ].
+
+	^ false
 ]
 
 { #category : 'intialization' }
@@ -127,37 +144,6 @@ ShipManager >> moveShip: aShip to: nextPosition [
 		
 ]
 
-{ #category : 'accessing' }
-ShipManager >> placeTheShip: aShip position: nextPosition withLapLength: squareCount [
-
-	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
-	shipCurrentPosition := shipsPositions at: aShip.
-	shipCurrentLaps := shipsLaps at: aShip.
-	lastTurnCompletedLaps := nextPosition abs // squareCount.
-	
-	(nextPosition >= 1 and: nextPosition < squareCount) ifTrue: [ 
-		shipsPositions at: aShip put: nextPosition ].
-
-	nextPosition >= squareCount
-		ifTrue: [
-			shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
-			shipsPositions
-				at: aShip
-				put: nextPosition - (lastTurnCompletedLaps * squareCount) ].
-			
-	(nextPosition <= 0 and: shipCurrentLaps >= 1) ifTrue: [ 
-		 shipsLaps at: aShip put: (shipCurrentLaps - (lastTurnCompletedLaps + 1)).
-			shipsPositions
-				at: aShip
-				put: squareCount - nextPosition abs ] .
-			
-	(nextPosition <= 0 and: shipCurrentLaps = 0) ifTrue: [ 
-		 shipsLaps at: aShip put: 0.
-			shipsPositions
-				at: aShip
-				put: 1 ] 
-]
-
 { #category : 'actions' }
 ShipManager >> recalculateBackwardsMovement: newShipsPositions [
 
@@ -186,4 +172,12 @@ ShipManager >> recalculateBackwardsMovement: newShipsPositions [
 	^ newShipsPositions
 	
 
+]
+
+{ #category : 'actions' }
+ShipManager >> skipTurnAndRechargeShields: aShip [
+
+	
+	shipTurnSkips at:aShip put:1.
+	battleManager rechargeShields: aShip.
 ]

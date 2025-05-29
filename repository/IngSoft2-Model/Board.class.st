@@ -147,7 +147,7 @@ Board >> runGame [
 	| diceResult nextPosition nextSquare nextSquarePosition |
 	[ gameFinished ] whileFalse: [
 		shipList do: [ :aShip |
-			(gameFinished and: (shipManager hasTurns: aShip)) ifFalse: [
+			((gameFinished not) and: (shipManager hasTurnSkips: aShip) not) ifTrue: [
 				
 	
 				diceResult := self generateDiceResult.
