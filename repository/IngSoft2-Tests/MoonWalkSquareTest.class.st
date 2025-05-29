@@ -60,3 +60,19 @@ MoonWalkSquareTest >> testB03WhenAMoonWalkSquareIsCreatedWithInvalidSquaresToPus
 		raise: Error
 		withMessageText: 'Squares to push backwards must be equal or higher than 1'
 ]
+
+{ #category : 'tests' }
+MoonWalkSquareTest >> testB04WhenAShipLandsAloneOnAMoonWalkSquareAndItsShieldsRemainTheSameThenValid [
+
+	| aMoonWalkSquare shipsShields  |
+	shipsShields := Dictionary new.
+	shipsShields at: 'Player 1' put: 3.
+
+	aMoonWalkSquare := MoonWalkSquare withBackwardsPush: 2.
+
+	aMoonWalkSquare
+		applyShieldEffectTo: shipsShields 
+		forShip: 'Player 1'.
+
+	self assert: (shipsShields values) = #(3).
+]
