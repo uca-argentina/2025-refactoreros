@@ -19,6 +19,5 @@ AtomicBombSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 AtomicBombSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
 
 	newShipShields keysAndValuesDo: [ :ship :shields |
-		(aShip = ship) ifFalse: [
-			(shields = 0) ifFalse: [ newShipShields at: ship put: shields - 1 ] ] ]
+			(shields = 0) ifFalse: [ newShipShields at: ship put: shields - 1 ] ]
 ]

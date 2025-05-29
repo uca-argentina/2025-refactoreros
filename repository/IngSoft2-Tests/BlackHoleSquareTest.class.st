@@ -22,7 +22,7 @@ BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecr
 ]
 
 { #category : 'tests' }
-BlackHoleSquareTest >> testB03WhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
+BlackHoleSquareTest >> testB02WhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
 
 	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).

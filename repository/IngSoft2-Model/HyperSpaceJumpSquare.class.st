@@ -25,6 +25,6 @@ HyperSpaceJumpSquare >> applyShieldEffectTo: shipShields forShip: aShip [
 	currentShields := shipShields at: aShip.
 
 	(currentShields = 0)  ifFalse: [ 
-		shipShields at: aShip put: currentShields - 1.
+		shipShields at: aShip put: (currentShields - 1).
 				 ].
 ]
