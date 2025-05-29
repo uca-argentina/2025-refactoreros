@@ -102,6 +102,7 @@ Board >> getShipRankings: ships [
 ]
 
 { #category : 'accessing' }
+
 Board >> getWinner [
 
 	gameFinished
