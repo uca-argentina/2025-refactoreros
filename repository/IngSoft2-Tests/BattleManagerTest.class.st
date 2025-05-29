@@ -64,3 +64,22 @@ BattleManagerTest >> testB04WhenTwoShipsBattleAndLoserReturnsToFirstPositionThen
 	
 	self assert: (aShipManager getShipPosition: (aShipList at: 2)) = 1
 ]
+
+{ #category : 'tests' }
+BattleManagerTest >> testB05WhenBattleManagerRechargesAShipWithoutShieldsAndShipHasShieldsThenValid [
+
+	| aShipList dice aBattleManager anAtomicBombsquare |
+	
+	aShipList := OrderedCollection withAll: #( 'Player 1').
+	dice := LoadedDice withSetNumbers: #(1).
+	aBattleManager := BattleManager withShips: aShipList andDice: dice. 
+	anAtomicBombsquare := AtomicBombSquare new.
+	
+	"Use atomicBomb Squares to set shields to 0"
+	aBattleManager applyShieldEffectOf: anAtomicBombsquare forShip: (aShipList at:1).
+	aBattleManager applyShieldEffectOf: anAtomicBombsquare forShip: (aShipList at:1).
+	aBattleManager applyShieldEffectOf: anAtomicBombsquare forShip: (aShipList at:1).
+	
+	aBattleManager rechargeShields: (aShipList at:1).
+	self assert: ( aBattleManager hasShields:(aShipList at:1)).
+]

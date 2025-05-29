@@ -71,6 +71,7 @@ HyperJumpSquareTest >> testB04WhenAShipsLandOnHyperJumpAndRemainsWithTheSameShie
 	shipsShields := Dictionary new.
 	shipsShields at: 'Player 1' put: 3.
 
+
 	aHyperJumpSquare := HyperJumpSquare withParsecsPerSquare: 1 andParsecsRewards: #(10 5 2).
 
 	aHyperJumpSquare

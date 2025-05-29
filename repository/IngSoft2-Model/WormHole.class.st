@@ -41,12 +41,6 @@ WormHole >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitPositio
 	exitPosition := anExitPosition
 ]
 
-{ #category : 'testing' }
-WormHole >> isAWormHoleEnd: aPosition [
-
-	^ aPosition = entrancePosition or: aPosition = exitPosition
-]
-
 { #category : 'accessing' }
 WormHole >> oppositeEnd: aPosition [
 
