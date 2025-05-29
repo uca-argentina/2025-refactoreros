@@ -292,3 +292,26 @@ BoardTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid 
 	self assert: (aBoard getShipRankings: aShipList) asArray equals: #('Player 2' 'Player 1').
 
 ]
+
+{ #category : 'tests' }
+BoardTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThenValid [
+
+	| aBoard dice squareGenerator aShipList aShip |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 12 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+	aShip := aShipList at: 1.
+
+	aBoard := Board
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+
+	self assert: (aBoard getShipPosition: aShip) = 3
+]
