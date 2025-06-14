@@ -32,9 +32,7 @@ WormHoleTest >> testA02WhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntran
 	| aWormHole aPosition |
 	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
 	aPosition := 4.
-
-
-	self assert: (aWormHole oppositeEnd: aPosition) = 2
+	self assert: (aWormHole oppositeEnd: aPosition) equals: 2
 ]
 
 { #category : 'tests' }

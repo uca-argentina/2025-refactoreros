@@ -36,7 +36,7 @@ MoonWalkSquareTest >> testB01WhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBa
 { #category : 'tests' }
 MoonWalkSquareTest >> testB02WhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveThenValid [
 
-	| aMoonWalkSquare shipsPositions  |
+	| aMoonWalkSquare shipsPositions |
 	shipsPositions := Dictionary new.
 	shipsPositions at: 'Player 1' put: 6.
 	shipsPositions at: 'Player 2' put: 5.
@@ -46,8 +46,7 @@ MoonWalkSquareTest >> testB02WhenAShipLandsOnAMoonWalkSquareAndShipDoesNotMoveTh
 	aMoonWalkSquare
 		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
-
-	self assert: (shipsPositions at: 'Player 1') = 6
+	self assert: (shipsPositions at: 'Player 1') equals: 6
 ]
 
 { #category : 'tests' }

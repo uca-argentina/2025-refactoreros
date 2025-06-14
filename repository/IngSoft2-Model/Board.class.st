@@ -8,7 +8,6 @@ Class {
 		'squareCount',
 		'dice',
 		'gameFinished',
-		'wormhole',
 		'lapsGoal',
 		'shipManager',
 		'squareList',

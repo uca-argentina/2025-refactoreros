@@ -4,9 +4,6 @@ A square that increases landed ship position in ""4"" squares. (Positions: a dic
 Class {
 	#name : 'HyperSpaceJumpSquare',
 	#superclass : 'Object',
-	#instVars : [
-		'position'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }

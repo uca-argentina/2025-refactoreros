@@ -5,7 +5,6 @@ Class {
 	#name : 'MoonWalkSquare',
 	#superclass : 'Object',
 	#instVars : [
-		'position',
 		'backwardsPush'
 	],
 	#category : 'IngSoft2-Model',

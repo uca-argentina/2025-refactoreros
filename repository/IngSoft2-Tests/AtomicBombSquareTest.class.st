@@ -36,7 +36,7 @@ AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 { #category : 'tests' }
 AtomicBombSquareTest >> testB02WhenAShipLandsOnAnAtomicBombSquareAndAllShipsLoseOneShieldThenValid [
 
-	| anAtomicBombSquare shipsShields  |
+	| anAtomicBombSquare shipsShields |
 	shipsShields := Dictionary new.
 	shipsShields at: 'Player 1' put: 3.
 	shipsShields at: 'Player 2' put: 3.
@@ -45,8 +45,7 @@ AtomicBombSquareTest >> testB02WhenAShipLandsOnAnAtomicBombSquareAndAllShipsLose
 	anAtomicBombSquare := AtomicBombSquare new.
 
 	anAtomicBombSquare
-		applyShieldEffectTo: shipsShields 
+		applyShieldEffectTo: shipsShields
 		forShip: 'Player 1'.
-
-	self assert: (shipsShields values) = #(2 2 2).
+	self assert: shipsShields values equals: #( 2 2 2 )
 ]
