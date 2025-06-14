@@ -56,29 +56,6 @@ ShipManager >> checkBattles: aShip [
 	
 ]
 
-{ #category : 'accessing' }
-ShipManager >> getShipLap: arg1 [
-
-	^ shipsLaps at: arg1
-]
-
-{ #category : 'accessing' }
-ShipManager >> getShipPosition: aShip [
-
-	^ shipsPositions
-		  at: aShip
-		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
-]
-
-{ #category : 'accessing' }
-ShipManager >> getWinner [
-
-	| tmp1 |
-	tmp1 := shipsLaps associations asSortedCollection: [ :arg1 :arg2 |
-		        arg1 value > arg2 value ].
-	^ (tmp1 at: 1) key
-]
-
 { #category : 'actions' }
 ShipManager >> hasShip: aShip reachedLapGoal: lapsGoal [
 
@@ -112,7 +89,7 @@ ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: 
 	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ].
 	shipTurnSkips := Dictionary new.
 	shipList do: [:aShip | shipTurnSkips at: aShip put: 0 ].
-	battleManager := BattleManager withShips: aShipList  andDice: aDice.
+	battleManager := BattleManager with: aShipList  and: aDice.
 ]
 
 { #category : 'actions' }
@@ -174,10 +151,33 @@ ShipManager >> recalculateBackwardsMovement: newShipsPositions [
 
 ]
 
+{ #category : 'accessing' }
+ShipManager >> shipLap: arg1 [
+
+	^ shipsLaps at: arg1
+]
+
+{ #category : 'accessing' }
+ShipManager >> shipPosition: aShip [
+
+	^ shipsPositions
+		  at: aShip
+		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
+]
+
 { #category : 'actions' }
 ShipManager >> skipTurnAndRechargeShields: aShip [
 
 	
 	shipTurnSkips at:aShip put:1.
 	battleManager rechargeShields: aShip.
+]
+
+{ #category : 'accessing' }
+ShipManager >> winner [
+
+	| rankedShips |
+	rankedShips := shipsLaps associations asSortedCollection: [ :aShip :anotherShip |
+		        aShip value > anotherShip value ].
+	^ (rankedShips at: 1) key
 ]

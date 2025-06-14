@@ -12,7 +12,7 @@ BattleManagerTest >> testB01WhenTheGameStartsAndTheShipHasShieldsThenValid [
 	
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	dice := LoadedDice withSetNumbers: #(5 2).
-	aBattleManager := BattleManager withShips: aShipList andDice: dice.
+	aBattleManager := BattleManager with: aShipList and: dice.
 	
 	self assert: (aBattleManager hasShields: (aShipList at: 1))
 	
@@ -25,7 +25,7 @@ BattleManagerTest >> testB02WhenAShipLooses3TimesAndHasNoShieldsThenValid [
 	
 	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
 	dice := LoadedDice withSetNumbers: #(5 2 5 2 5 2).
-	aBattleManager := BattleManager withShips: aShipList andDice: dice.
+	aBattleManager := BattleManager with: aShipList and: dice.
 	
 	aBattleManager battle: (aShipList at: 1) with: (aShipList at: 2).
 	aBattleManager battle: (aShipList at: 1) with: (aShipList at: 2).
@@ -41,7 +41,7 @@ BattleManagerTest >> testB03WhenTwoShipsBattleAndTieAndTheyRollUntilOneWinsThenV
 	
 	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
 	dice := LoadedDice withSetNumbers: #(2 2 3 3 6 1).
-	aBattleManager := BattleManager withShips: aShipList andDice: dice.
+	aBattleManager := BattleManager with: aShipList and: dice.
 	
 	loser := aBattleManager battle: (aShipList at: 1) with: (aShipList at: 2).
 	
@@ -62,7 +62,7 @@ BattleManagerTest >> testB04WhenTwoShipsBattleAndLoserReturnsToFirstPositionThen
 	aShipManager moveShip: (aShipList at: 2) to: 5. 
 	aShipManager checkBattles: (aShipList at: 2).
 	
-	self assert: (aShipManager getShipPosition: (aShipList at: 2)) = 1
+	self assert: (aShipManager shipPosition: (aShipList at: 2)) = 1
 ]
 
 { #category : 'tests' }
@@ -72,7 +72,7 @@ BattleManagerTest >> testB05WhenBattleManagerRechargesAShipWithoutShieldsAndShip
 	
 	aShipList := OrderedCollection withAll: #( 'Player 1').
 	dice := LoadedDice withSetNumbers: #(1).
-	aBattleManager := BattleManager withShips: aShipList andDice: dice. 
+	aBattleManager := BattleManager with: aShipList and: dice.
 	anAtomicBombsquare := AtomicBombSquare new.
 	
 	"Use atomicBomb Squares to set shields to 0"

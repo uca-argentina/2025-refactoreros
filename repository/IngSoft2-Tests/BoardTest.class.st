@@ -30,7 +30,7 @@ BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: aBoard getWinner = 'Player 1'
+	self assert: aBoard winner = 'Player 1'
 ]
 
 { #category : 'tests' }
@@ -49,7 +49,7 @@ BoardTest >> testA02WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenVali
 					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: aBoard getWinner = 'Player 1'
+	self assert: aBoard winner = 'Player 1'
 ]
 
 { #category : 'tests' }
@@ -68,7 +68,7 @@ BoardTest >> testA03WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInva
 					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self deny: aBoard getWinner = 'Player 2'
+	self deny: aBoard winner = 'Player 2'
 ]
 
 { #category : 'tests' }
@@ -87,7 +87,7 @@ BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 					 andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self deny: (aBoard getShipPosition: 'Player 2') >= 10
+	self deny: (aBoard shipPosition: 'Player 2') >= 10
 ]
 
 { #category : 'tests' }
@@ -106,7 +106,7 @@ BoardTest >> testA06WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self
-		should: [ aBoard getShipPosition: 'Player 2' ]
+		should: [ aBoard shipPosition: 'Player 2' ]
 		raise: Error
 		withMessageText: 'There is no ship with such name'
 ]
@@ -206,7 +206,7 @@ BoardTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 		          andLaps: 3
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: aBoard getWinner = 'Player 1'
+	self assert: aBoard winner = 'Player 1'
 ]
 
 { #category : 'tests' }
@@ -227,7 +227,7 @@ BoardTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 		          andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: ((aBoard getShipLap: 'Player 1' )= 1)
+	self assert: ((aBoard shipLap: 'Player 1' )= 1)
 ]
 
 { #category : 'tests' }
@@ -248,7 +248,7 @@ BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
 		          andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: ((aBoard getShipPosition: 'Player 1' )= 6)
+	self assert: ((aBoard shipPosition: 'Player 1' )= 6)
 ]
 
 { #category : 'tests' }
@@ -289,7 +289,7 @@ BoardTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid 
 		          andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	
-	self assert: (aBoard getShipRankings: aShipList) asArray equals: #('Player 2' 'Player 1').
+	self assert: (aBoard shipRankings: aShipList) asArray equals: #('Player 2' 'Player 1').
 
 ]
 

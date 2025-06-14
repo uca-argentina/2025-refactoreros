@@ -6,20 +6,20 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'squareCount',
-		'shipList',
 		'dice',
 		'gameFinished',
 		'wormhole',
 		'lapsGoal',
 		'shipManager',
-		'squareList'
+		'squareList',
+		'ships'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'validation' }
-Board class >> checkValidDiceCollection: aDiceCollection [
+Board class >> checkValidDice: aDiceCollection [
 
 	aDiceCollection isNotEmpty ifFalse: [
 		Error signal: 'At least one die is required' ]
@@ -33,7 +33,7 @@ Board class >> checkValidLapCount: aNumberOfLaps [
 ]
 
 { #category : 'validation' }
-Board class >> checkValidShipList: aShipList [
+Board class >> checkValidShips: aShipList [
 
 	aShipList isNotEmpty ifFalse: [
 		Error signal: 'At least one ship is required' ]
@@ -47,19 +47,35 @@ Board class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Board class >> gameWithShipList: aShipList andDice: aDiceCollection andSquareCount: aSquareCount andLaps: aNumberOfLaps andSquareGenerator: squareGenerator [
+Board class >> gameWith: ships and: dice and: aSquareCount and: aLapCount and: squareGenerator [
 
-	self checkValidDiceCollection: aDiceCollection.
+	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
-	self checkValidShipList: aShipList.
-	self checkValidLapCount: aNumberOfLaps .
+	self checkValidShips: ships.
+	self checkValidLapCount: aLapCount .
 
 	^ self new
-		  newGameWithShipList: aShipList
-		  andDice: aDiceCollection
-		  andSquareCount: aSquareCount
-		  andLaps: aNumberOfLaps
-		  andSquareGenerator: squareGenerator
+		  initializeWith: ships
+		  and: dice
+		  and: aSquareCount
+		  and: aLapCount
+		  and: squareGenerator
+]
+
+{ #category : 'intialization' }
+Board class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCount andLaps: aLapCount andSquareGenerator: squareGenerator [
+
+	self checkValidDice: dice.
+	self checkValidSquareCount: aSquareCount.
+	self checkValidShips: ships.
+	self checkValidLapCount: aLapCount .
+
+	^ self new
+		  initializeWith: ships
+		  and: dice
+		  and: aSquareCount
+		  and: aLapCount
+		  and: squareGenerator
 ]
 
 { #category : 'actions' }
@@ -68,45 +84,17 @@ Board >> generateDiceResult [
 	^ (dice collect: [ :die | die roll ]) sum
 ]
 
-{ #category : 'accessing' }
-Board >> getShipLap: aShip [
+{ #category : 'initialization' }
+Board >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount and: squareGenerator [
 
-	^ shipManager getShipLap: aShip
-]
-
-{ #category : 'accessing' }
-Board >> getShipPosition: aShip [
-
-	^ shipManager getShipPosition: aShip
-]
-
-{ #category : 'accessing' }
-Board >> getShipRankings: ships [
-	| shipsOrderedByRanking |
-
-	shipsOrderedByRanking := ships
-		sorted: [:s1 :s2 | 
-		| lap1 lap2 pos1 pos2 |
-		lap1 := shipManager getShipLap: s1.
-		lap2 := shipManager getShipLap: s2.
-		lap1 = lap2
-			ifTrue: [
-				pos1 := shipManager getShipPosition: s1.
-				pos2 := shipManager getShipPosition: s2.
-				pos1 > pos2
-			]
-			ifFalse: [lap1 > lap2]].
-
-	^ OrderedCollection withAll: shipsOrderedByRanking
-
-]
-
-{ #category : 'accessing' }
-Board >> getWinner [
-
-	gameFinished
-		ifTrue: [ ^ shipManager getWinner ]
-		ifFalse: [ Error signal: 'The game is still being played' ]
+	ships := aSetOfShips.
+	lapsGoal := aLapCount.
+	shipManager := ShipManager withShips: aSetOfShips andLapLenght: aSquareCount andDice: aDice.
+	dice := aDice.
+	squareCount := aSquareCount.
+	squareList :=  squareGenerator createSquares: squareCount.
+	gameFinished := false.
+	"wormhole := aWormhole"
 ]
 
 { #category : 'testing' }
@@ -115,25 +103,12 @@ Board >> isGameFinished [
 	^ gameFinished
 ]
 
-{ #category : 'initialization' }
-Board >> newGameWithShipList: aNewGame andDice: aDice andSquareCount: aSquareCount andLaps: aLaps  andSquareGenerator: squareGenerator [
-
-	shipList := aNewGame.
-	lapsGoal := aLaps.
-	shipManager := ShipManager withShips: aNewGame andLapLenght: aSquareCount andDice: aDice.
-	dice := aDice.
-	squareCount := aSquareCount.
-	squareList :=  squareGenerator createSquares: squareCount.
-	gameFinished := false.
-	"wormhole := aWormhole"
-]
-
 { #category : 'actions' }
 Board >> runGame [
 
 	| diceResult nextPosition nextSquare nextSquarePosition |
 	[ gameFinished ] whileFalse: [
-		shipList do: [ :aShip |
+		ships do: [ :aShip |
 			((gameFinished not) and: (shipManager hasTurnSkips: aShip) not) ifTrue: [
 				
 	
@@ -147,7 +122,7 @@ Board >> runGame [
 				
 				shipManager moveShip: aShip to: nextPosition.
 				
-				nextSquarePosition := shipManager getShipPosition: aShip.
+				nextSquarePosition := shipManager shipPosition: aShip.
 				nextSquare := squareList at: nextSquarePosition.
 		
 				shipManager landShip: aShip atSquare: nextSquare.
@@ -158,4 +133,45 @@ Board >> runGame [
 				gameFinished := shipManager
 					                hasShip: aShip
 					                reachedLapGoal: lapsGoal ] ] ]
+]
+
+{ #category : 'accessing' }
+Board >> shipLap: aShip [
+
+	^ shipManager shipLap: aShip
+]
+
+{ #category : 'accessing' }
+Board >> shipPosition: aShip [
+
+	^ shipManager shipPosition: aShip
+]
+
+{ #category : 'accessing' }
+Board >> shipRankings: aSetOfShips [
+	| shipsOrderedByRanking |
+
+	shipsOrderedByRanking := aSetOfShips
+		sorted: [:aShip :anotherShip | 
+		| lap1 lap2 pos1 pos2 |
+		lap1 := shipManager shipLap: aShip.
+		lap2 := shipManager shipLap: anotherShip.
+		lap1 = lap2
+			ifTrue: [
+				pos1 := shipManager shipPosition: aShip.
+				pos2 := shipManager shipPosition: anotherShip.
+				pos1 > pos2
+			]
+			ifFalse: [lap1 > lap2]].
+
+	^ OrderedCollection withAll: shipsOrderedByRanking
+
+]
+
+{ #category : 'accessing' }
+Board >> winner [
+
+	gameFinished
+		ifTrue: [ ^ shipManager winner ]
+		ifFalse: [ Error signal: 'The game is still being played' ]
 ]

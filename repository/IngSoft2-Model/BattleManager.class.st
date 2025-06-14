@@ -6,17 +6,17 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'shields',
-		'dice'
+		'dice',
+		'startingShields'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'initialization' }
-BattleManager class >> withShips: aShipList andDice: aDice [
-	
-	^ self new initializeWithShips: aShipList andDice: aDice
+BattleManager class >> with: ships and: dice [
 
+	^ self new initializeWithShips: ships andDice: dice
 ]
 
 { #category : 'actions' }
@@ -56,17 +56,17 @@ BattleManager >> hasShields: aShip [
 { #category : 'initialization' }
 BattleManager >> initializeWithShips: aShipList andDice: aDice [
 
-	| shieldsAtStart |
-	shieldsAtStart := 3.
+	startingShields := 3.
 
 	shields := Dictionary new.
 	dice := aDice.
 	
 	1 to: (aShipList size) do: [ :i |
-	 shields at: (aShipList at: i) put: shieldsAtStart ]
+	 shields at: (aShipList at: i) put: startingShields ]
 ]
 
 { #category : 'accessing' }
 BattleManager >> rechargeShields: aShip [
-	shields at:aShip put: 3
+
+	shields at: aShip put: startingShields
 ]

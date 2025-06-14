@@ -18,11 +18,9 @@ SquareGenerator >> addToList: aSquareList squareSample: aSquareSample times: aNu
 SquareGenerator >> createSquares2: squareCount [
 
 	| squareList |
-
-
 	squareList := OrderedCollection new.
 
-	squareCount timesRepeat: [  squareList add:((self squareType)copy)].
+	squareCount timesRepeat: [ squareList add: self squareType copy ].
 
 	^ squareList
 ]
