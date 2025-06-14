@@ -27,10 +27,10 @@ BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
-					 andLaps: 1
+		          andLaps: 1
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
-	self assert: aBoard winner = 'Player 1'
+	self assert: aBoard winner equals: 'Player 1'
 ]
 
 { #category : 'tests' }

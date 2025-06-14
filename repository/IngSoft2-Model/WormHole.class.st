@@ -20,7 +20,7 @@ WormHole class >> checkAboveZeroForEntrance: anEntrancePosition andExit: anExitP
 ]
 
 { #category : 'argument validation' }
-WormHole class >> checkEntrance: anEntrancePosition IsBeforeExit: anExitPosition [
+WormHole class >> checkEntrance: anEntrancePosition isBeforeExit: anExitPosition [
 
 	(anEntrancePosition < anExitPosition ) ifFalse: [ Error signal: 'Entrace should be located before exit']
 ]
@@ -29,7 +29,7 @@ WormHole class >> checkEntrance: anEntrancePosition IsBeforeExit: anExitPosition
 WormHole class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 
 	self checkAboveZeroForEntrance: anEntrancePosition andExit: anExitPosition.
-	self checkEntrance: anEntrancePosition  IsBeforeExit: anExitPosition. 
+	self checkEntrance: anEntrancePosition  isBeforeExit: anExitPosition. 
 	
 	^ self new intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition
 ]

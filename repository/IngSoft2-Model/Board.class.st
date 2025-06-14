@@ -108,30 +108,29 @@ Board >> runGame [
 	| diceResult nextPosition nextSquare nextSquarePosition |
 	[ gameFinished ] whileFalse: [
 		ships do: [ :aShip |
-			((gameFinished not) and: (shipManager hasTurnSkips: aShip) not) ifTrue: [
-				
-	
-				diceResult := self generateDiceResult.
-				nextPosition := shipManager
-					                calculateNextPositionFor: aShip
-					                with: diceResult.
+			(gameFinished not and: (shipManager hasTurnSkips: aShip) not)
+				ifTrue: [
+					diceResult := self generateDiceResult.
+					nextPosition := shipManager
+						                calculateNextPositionFor: aShip
+						                with: diceResult.
 
-				
 
-				
-				shipManager moveShip: aShip to: nextPosition.
-				
-				nextSquarePosition := shipManager shipPosition: aShip.
-				nextSquare := squareList at: nextSquarePosition.
-		
-				shipManager landShip: aShip atSquare: nextSquare.
-	
-				
-				shipManager checkBattles: aShip.
-				
-				gameFinished := shipManager
-					                hasShip: aShip
-					                reachedLapGoal: lapsGoal ] ] ]
+
+
+					shipManager moveShip: aShip to: nextPosition.
+
+					nextSquarePosition := shipManager shipPosition: aShip.
+					nextSquare := squareList at: nextSquarePosition.
+
+					shipManager landShip: aShip atSquare: nextSquare.
+
+
+					shipManager checkBattles: aShip.
+
+					gameFinished := shipManager
+						                hasShip: aShip
+						                reachedLapGoal: lapsGoal ] ] ]
 ]
 
 { #category : 'accessing' }

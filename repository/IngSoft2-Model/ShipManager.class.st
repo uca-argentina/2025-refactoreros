@@ -168,9 +168,9 @@ ShipManager >> shipPosition: aShip [
 { #category : 'actions' }
 ShipManager >> skipTurnAndRechargeShields: aShip [
 
-	
+
 	shipTurnSkips at:aShip put:1.
-	battleManager rechargeShields: aShip.
+	battleManager rechargeShields: aShip
 ]
 
 { #category : 'accessing' }
