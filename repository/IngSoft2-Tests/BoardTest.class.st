@@ -313,5 +313,5 @@ BoardTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThe
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 
-	self assert: (aBoard getShipPosition: aShip) = 3
+	self assert: (aBoard shipPosition: aShip) equals: 3
 ]
