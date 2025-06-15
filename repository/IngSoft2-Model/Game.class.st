@@ -76,6 +76,12 @@ Game class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCount
 		  and: squareGenerator
 ]
 
+{ #category : 'action' }
+Game >> checkForActiveGame [
+
+	self isGameFinished ifTrue: [ Error signal: 'The game has finished' ]
+]
+
 { #category : 'actions' }
 Game >> generateDiceResult [
 
