@@ -1,12 +1,12 @@
 Class {
-	#name : 'BoardTest',
+	#name : 'GameTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'failure tests' }
-BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
+GameTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
 
 	self
 		should: anErrorBlock
@@ -16,14 +16,14 @@ BoardTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessag
 ]
 
 { #category : 'tests' }
-BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
+GameTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 
 	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aBoard := Board
+	aBoard := Game
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
@@ -34,45 +34,7 @@ BoardTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 ]
 
 { #category : 'tests' }
-BoardTest >> testA02WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
-
-	| aBoard dice squareGenerator aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 11 1)).
-	squareGenerator := EmptySquareGenerator new.
-	aShipList := OrderedCollection withAll:
-		             #( 'Player 1' 'Player 2' ).
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-					 andLaps: 1
-		          andSquareGenerator: squareGenerator.
-	aBoard runGame.
-	self assert: aBoard winner = 'Player 1'
-]
-
-{ #category : 'tests' }
-BoardTest >> testA03WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
-
-	| aBoard dice squareGenerator aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 12 )).
-	squareGenerator := EmptySquareGenerator new.
-	aShipList := OrderedCollection withAll: 
-		             #( 'Player 1' 'Player 2' ).
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-					 andLaps: 1
-		          andSquareGenerator: squareGenerator.
-	aBoard runGame.
-	self deny: aBoard winner = 'Player 2'
-]
-
-{ #category : 'tests' }
-BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
+GameTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
 	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
@@ -80,7 +42,7 @@ BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll:
 		             #( 'Player 1' 'Player 2' ).
-	aBoard := Board
+	aBoard := Game
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
@@ -91,14 +53,14 @@ BoardTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid 
 ]
 
 { #category : 'tests' }
-BoardTest >> testA06WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
+GameTest >> testA06WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
 
 	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aBoard := Board
+	aBoard := Game
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
@@ -112,7 +74,7 @@ BoardTest >> testA06WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFail
 ]
 
 { #category : 'tests' }
-BoardTest >> testA07WhenBoardIsCreatedWithEmptyShipListItFails [
+GameTest >> testA07WhenBoardIsCreatedWithEmptyShipListItFails [
 
 	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
@@ -121,7 +83,7 @@ BoardTest >> testA07WhenBoardIsCreatedWithEmptyShipListItFails [
 	aShipList := OrderedCollection withAll: #(  ).
 	self
 		should: [
-			Board
+			Game
 				gameWithShipList: aShipList
 				andDice: dice
 				andSquareCount: 10
@@ -132,7 +94,7 @@ BoardTest >> testA07WhenBoardIsCreatedWithEmptyShipListItFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> testA08WhenBoardIsCreatedWithZeroDieThenFails [
+GameTest >> testA08WhenBoardIsCreatedWithZeroDieThenFails [
 
 	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
@@ -140,7 +102,7 @@ BoardTest >> testA08WhenBoardIsCreatedWithZeroDieThenFails [
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
-			Board
+			Game
 				gameWithShipList: aShipList
 				andDice: dice
 				andSquareCount: 10
@@ -151,7 +113,7 @@ BoardTest >> testA08WhenBoardIsCreatedWithZeroDieThenFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> testA09WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
+GameTest >> testA09WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 
 	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
@@ -160,7 +122,7 @@ BoardTest >> testA09WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
-			Board
+			Game
 				gameWithShipList: aShipList
 				andDice: dice
 				andSquareCount: 0
@@ -171,14 +133,14 @@ BoardTest >> testA09WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> testA10WhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
+GameTest >> testA10WhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
 
 	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := EmptySquareGenerator new.
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aBoard := Board
+	aBoard := Game
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
@@ -189,70 +151,7 @@ BoardTest >> testA10WhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
 ]
 
 { #category : 'tests' }
-BoardTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
-
-	| aBoard dice squareGenerator aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 30 )).
-
-	squareGenerator := EmptySquareGenerator new.
-
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-		          andLaps: 3
-		          andSquareGenerator: squareGenerator.
-	aBoard runGame.
-	self assert: aBoard winner = 'Player 1'
-]
-
-{ #category : 'tests' }
-BoardTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
-
-	| aBoard dice squareGenerator aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10)).
-
-	squareGenerator := EmptySquareGenerator new.
-
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-		          andLaps: 1
-		          andSquareGenerator: squareGenerator.
-	aBoard runGame.
-	self assert: ((aBoard shipLap: 'Player 1' )= 1)
-]
-
-{ #category : 'tests' }
-BoardTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
-
-	| aBoard dice squareGenerator aShipList |
-	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15)).
-
-	squareGenerator := EmptySquareGenerator new.
-
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-
-	aBoard := Board
-		          gameWithShipList: aShipList
-		          andDice: dice
-		          andSquareCount: 10
-		          andLaps: 1
-		          andSquareGenerator: squareGenerator.
-	aBoard runGame.
-	self assert: ((aBoard shipPosition: 'Player 1' )= 6)
-]
-
-{ #category : 'tests' }
-BoardTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
+GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 
 	| dice squareGenerator aShipList |
 	dice := OrderedCollection new.
@@ -263,7 +162,7 @@ BoardTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 
 	
-	self should: [ Board
+	self should: [ Game
 		gameWithShipList: aShipList
 		andDice: dice
 		andSquareCount: 10
@@ -272,7 +171,7 @@ BoardTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 ]
 
 { #category : 'tests' }
-BoardTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
+GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 
 	| aBoard dice squareGenerator aShipList |
 	dice := OrderedCollection new.
@@ -282,7 +181,7 @@ BoardTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid 
 
 	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
 
-	aBoard := Board
+	aBoard := Game
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10
@@ -294,7 +193,7 @@ BoardTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid 
 ]
 
 { #category : 'tests' }
-BoardTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThenValid [
+GameTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThenValid [
 
 	| aBoard dice squareGenerator aShipList aShip |
 	dice := OrderedCollection new.
@@ -305,7 +204,7 @@ BoardTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThe
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 	aShip := aShipList at: 1.
 
-	aBoard := Board
+	aBoard := Game
 		          gameWithShipList: aShipList
 		          andDice: dice
 		          andSquareCount: 10

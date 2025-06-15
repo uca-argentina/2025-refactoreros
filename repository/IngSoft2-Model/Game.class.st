@@ -1,8 +1,8 @@
 "
-Creates a game board.
+A spaceship game.
 "
 Class {
-	#name : 'Board',
+	#name : 'Game',
 	#superclass : 'Object',
 	#instVars : [
 		'squareCount',
@@ -18,35 +18,35 @@ Class {
 }
 
 { #category : 'validation' }
-Board class >> checkValidDice: aDiceCollection [
+Game class >> checkValidDice: aDiceCollection [
 
 	aDiceCollection isNotEmpty ifFalse: [
 		Error signal: 'At least one die is required' ]
 ]
 
 { #category : 'validation' }
-Board class >> checkValidLapCount: aNumberOfLaps [
+Game class >> checkValidLapCount: aNumberOfLaps [
 
 	aNumberOfLaps >= 1 ifFalse: [
 		Error signal: 'Lap count must be equal or higher than 1' ]
 ]
 
 { #category : 'validation' }
-Board class >> checkValidShips: aShipList [
+Game class >> checkValidShips: aShipList [
 
 	aShipList isNotEmpty ifFalse: [
 		Error signal: 'At least one ship is required' ]
 ]
 
 { #category : 'validation' }
-Board class >> checkValidSquareCount: aSquareCount [
+Game class >> checkValidSquareCount: aSquareCount [
 
 	aSquareCount >= 2 ifFalse: [
 		Error signal: 'Square count should be equal or higher than 2' ]
 ]
 
 { #category : 'intialization' }
-Board class >> gameWith: ships and: dice and: aSquareCount and: aLapCount and: squareGenerator [
+Game class >> gameWith: ships and: dice and: aSquareCount and: aLapCount and: squareGenerator [
 
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
@@ -62,7 +62,7 @@ Board class >> gameWith: ships and: dice and: aSquareCount and: aLapCount and: s
 ]
 
 { #category : 'intialization' }
-Board class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCount andLaps: aLapCount andSquareGenerator: squareGenerator [
+Game class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCount andLaps: aLapCount andSquareGenerator: squareGenerator [
 
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
@@ -78,13 +78,13 @@ Board class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCoun
 ]
 
 { #category : 'actions' }
-Board >> generateDiceResult [
+Game >> generateDiceResult [
 
 	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'initialization' }
-Board >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount and: squareGenerator [
+Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount and: squareGenerator [
 
 	ships := aSetOfShips.
 	lapsGoal := aLapCount.
@@ -97,13 +97,13 @@ Board >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount
 ]
 
 { #category : 'testing' }
-Board >> isGameFinished [ 
+Game >> isGameFinished [ 
 
 	^ gameFinished
 ]
 
 { #category : 'actions' }
-Board >> runGame [
+Game >> runGame [
 
 	| diceResult nextPosition nextSquare nextSquarePosition |
 	[ gameFinished ] whileFalse: [
@@ -134,19 +134,19 @@ Board >> runGame [
 ]
 
 { #category : 'accessing' }
-Board >> shipLap: aShip [
+Game >> shipLap: aShip [
 
 	^ shipManager shipLap: aShip
 ]
 
 { #category : 'accessing' }
-Board >> shipPosition: aShip [
+Game >> shipPosition: aShip [
 
 	^ shipManager shipPosition: aShip
 ]
 
 { #category : 'accessing' }
-Board >> shipRankings: aSetOfShips [
+Game >> shipRankings: aSetOfShips [
 	| shipsOrderedByRanking |
 
 	shipsOrderedByRanking := aSetOfShips
@@ -167,7 +167,7 @@ Board >> shipRankings: aSetOfShips [
 ]
 
 { #category : 'accessing' }
-Board >> winner [
+Game >> winner [
 
 	gameFinished
 		ifTrue: [ ^ shipManager winner ]
