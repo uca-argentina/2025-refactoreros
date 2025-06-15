@@ -5,7 +5,6 @@ Class {
 	#name : 'Game',
 	#superclass : 'Object',
 	#instVars : [
-		'squareCount',
 		'dice',
 		'gameFinished',
 		'lapsGoal',
@@ -90,8 +89,7 @@ Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount 
 	lapsGoal := aLapCount.
 	shipManager := ShipManager withShips: aSetOfShips andLapLenght: aSquareCount andDice: aDice.
 	dice := aDice.
-	squareCount := aSquareCount.
-	squareList :=  squareGenerator createSquares: squareCount.
+	squareList :=  squareGenerator createSquares: aSquareCount.
 	gameFinished := false.
 	"wormhole := aWormhole"
 ]

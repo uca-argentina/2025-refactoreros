@@ -34,6 +34,42 @@ GameTest >> testA01WhenBoardGameWithMockDieIsRanAndAShipWinsThenValid [
 ]
 
 { #category : 'tests' }
+GameTest >> testA02WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip1WinsThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 11 1 )).
+	squareGenerator := EmptySquareGenerator new.
+	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
+	aBoard := Game
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: aBoard winner equals: 'Player 1'
+]
+
+{ #category : 'tests' }
+GameTest >> testA03WhenBoardGameWithTwoShipsAndMockDieIsRanAndShip2WinsThenInvalid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 12 )).
+	squareGenerator := EmptySquareGenerator new.
+	aShipList := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
+	aBoard := Game
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self deny: aBoard winner equals: 'Player 2'
+]
+
+{ #category : 'tests' }
 GameTest >> testA05WhenBoardGameFinishesAnd2ndShipIsPastFinalSquareThenInvalid [
 
 	| aBoard dice squareGenerator aShipList |
@@ -148,6 +184,69 @@ GameTest >> testA10WhenBoardGameWithValidMockDieIsRanAndFinishesThenValid [
 		          andSquareGenerator: squareGenerator.
 	aBoard runGame.
 	self assert: aBoard isGameFinished
+]
+
+{ #category : 'tests' }
+GameTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 30 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	aBoard := Game
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 3
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: aBoard winner equals: 'Player 1'
+]
+
+{ #category : 'tests' }
+GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 10 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	aBoard := Game
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: (aBoard shipLap: 'Player 1') equals: 1
+]
+
+{ #category : 'tests' }
+GameTest >> testB03WhenShipsLapsIncreasesAndPositionCirclesBackThenValid [
+
+	| aBoard dice squareGenerator aShipList |
+	dice := OrderedCollection new.
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
+
+	squareGenerator := EmptySquareGenerator new.
+
+	aShipList := OrderedCollection withAll: #( 'Player 1' ).
+
+	aBoard := Game
+		          gameWithShipList: aShipList
+		          andDice: dice
+		          andSquareCount: 10
+		          andLaps: 1
+		          andSquareGenerator: squareGenerator.
+	aBoard runGame.
+	self assert: (aBoard shipPosition: 'Player 1') equals: 6
 ]
 
 { #category : 'tests' }
