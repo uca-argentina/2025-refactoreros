@@ -101,6 +101,25 @@ Game >> isGameFinished [
 ]
 
 { #category : 'actions' }
+Game >> play [
+
+	| diceResult nextPosition nextSquare aShip |
+	self checkForActiveGame.
+	aShip := ships removeFirst.
+	(shipManager hasTurnSkips: aShip) ifTrue: [ Error signal: aShip, ' must skip this turn' ].
+	diceResult := self generateDiceResult.
+	nextPosition := shipManager
+		                calculateNextPositionFor: aShip
+		                with: diceResult.
+	shipManager moveShip: aShip to: nextPosition.
+	nextSquare := squareList at: (shipManager shipPosition: aShip).
+	shipManager landShip: aShip atSquare: nextSquare.
+	shipManager checkBattles: aShip.
+	gameFinished := shipManager hasShip: aShip reachedLapGoal: lapsGoal.
+	ships add: aShip
+]
+
+{ #category : 'actions' }
 Game >> runGame [
 
 	| diceResult nextPosition nextSquare nextSquarePosition |
