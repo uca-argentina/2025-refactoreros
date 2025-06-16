@@ -17,6 +17,4 @@ BlackHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 { #category : 'actions' }
 BlackHoleSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
-
-	
 ]

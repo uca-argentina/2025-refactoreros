@@ -80,7 +80,8 @@ Game class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCount
 { #category : 'action' }
 Game >> checkForActiveGame [
 
-	self isGameFinished ifTrue: [ Error signal: 'The game has finished' ]
+	self isGameFinished ifTrue: [ Error signal: 'The game has finished' ].
+	^ true
 ]
 
 { #category : 'actions' }
@@ -100,14 +101,12 @@ Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount 
 		               andDice: aDice.
 	dice := aDice.
 	squareList := squareGenerator createSquares: aSquareCount.
-	gameFinished := false
-	"wormhole := aWormhole"
 ]
 
 { #category : 'testing' }
 Game >> isGameFinished [
 
-	^ gameFinished
+	^ shipManager hasAnyShipReachedLaps: lapsGoal
 ]
 
 { #category : 'actions' }
@@ -126,7 +125,6 @@ Game >> play [
 	nextSquare := squareList at: (shipManager shipPosition: aShip).
 	shipManager landShip: aShip atSquare: nextSquare.
 	shipManager checkBattles: aShip.
-	gameFinished := shipManager hasShip: aShip reachedLapGoal: lapsGoal.
 	ships add: aShip
 ]
 
@@ -175,7 +173,7 @@ Game >> skip [
 { #category : 'accessing' }
 Game >> winner [
 
-	gameFinished
-		ifTrue: [ ^ shipManager winner ]
-		ifFalse: [ Error signal: 'The game is still being played' ]
+	self isGameFinished ifFalse: [
+		Error signal: 'The game is still being played' ].
+	^ shipManager winner
 ]
