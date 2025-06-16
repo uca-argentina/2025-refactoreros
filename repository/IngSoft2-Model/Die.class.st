@@ -27,5 +27,6 @@ Die >> initializeWithFaces: aNumber [
 
 { #category : 'action' }
 Die >> roll [
+
 	^ (1 to: faces) atRandom
 ]

@@ -12,13 +12,12 @@ Class {
 { #category : 'actions' }
 AtomicBombSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
-	shipsPositions keysDo: [ :ship |
-		shipsPositions at: ship put: 1]
+	shipsPositions keysDo: [ :ship | shipsPositions at: ship put: 1 ]
 ]
 
 { #category : 'actions' }
 AtomicBombSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
 
 	newShipShields keysAndValuesDo: [ :ship :shields |
-			(shields = 0) ifFalse: [ newShipShields at: ship put: shields - 1 ] ]
+		shields = 0 ifFalse: [ newShipShields at: ship put: shields - 1 ] ]
 ]

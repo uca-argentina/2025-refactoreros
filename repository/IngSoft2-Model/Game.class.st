@@ -94,10 +94,13 @@ Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount 
 
 	ships := aSetOfShips.
 	lapsGoal := aLapCount.
-	shipManager := ShipManager withShips: aSetOfShips andLapLenght: aSquareCount andDice: aDice.
+	shipManager := ShipManager
+		               withShips: aSetOfShips
+		               andLapLenght: aSquareCount
+		               andDice: aDice.
 	dice := aDice.
-	squareList :=  squareGenerator createSquares: aSquareCount.
-	gameFinished := false.
+	squareList := squareGenerator createSquares: aSquareCount.
+	gameFinished := false
 	"wormhole := aWormhole"
 ]
 
@@ -110,14 +113,15 @@ Game >> isGameFinished [
 { #category : 'actions' }
 Game >> play [
 
-	| diceResult nextPosition nextSquare aShip |
+	| diceOutcome nextPosition nextSquare aShip |
 	self checkForActiveGame.
 	aShip := ships removeFirst.
-	(shipManager hasTurnSkips: aShip) ifTrue: [ Error signal: aShip, ' must skip this turn' ].
-	diceResult := self generateDiceResult.
+	(shipManager hasTurnSkips: aShip) ifTrue: [
+		Error signal: aShip , ' must skip this turn' ].
+	diceOutcome := self generateDiceResult.
 	nextPosition := shipManager
-		                calculateNextPositionFor: aShip
-		                with: diceResult.
+		                obtainNextPositionFor: aShip
+		                with: diceOutcome.
 	shipManager moveShip: aShip to: nextPosition.
 	nextSquare := squareList at: (shipManager shipPosition: aShip).
 	shipManager landShip: aShip atSquare: nextSquare.
@@ -136,7 +140,7 @@ Game >> runGame [
 				ifTrue: [
 					diceResult := self generateDiceResult.
 					nextPosition := shipManager
-						                calculateNextPositionFor: aShip
+						                obtainNextPositionFor: aShip
 						                with: diceResult.
 
 

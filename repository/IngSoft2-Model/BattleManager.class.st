@@ -22,9 +22,10 @@ BattleManager class >> with: ships and: dice [
 
 { #category : 'actions' }
 BattleManager >> applyShieldEffectOf: nextSquare forShip: aShip [
+
 	| newShipShields |
 	newShipShields := shields copy.
-	nextSquare applyShieldEffectTo:newShipShields forShip: aShip.
+	nextSquare applyShieldEffectTo: newShipShields forShip: aShip.
 	shields := newShipShields
 ]
 
@@ -51,6 +52,7 @@ BattleManager >> battle: aShipA with: aShipB [
 
 { #category : 'testing' }
 BattleManager >> hasShields: aShip [
+
 	^ (shields at: aShip) > 0
 ]
 
@@ -62,8 +64,8 @@ BattleManager >> initializeWithShips: aShipList andDice: aDice [
 	shields := Dictionary new.
 	dice := aDice.
 
-	1 to: (aShipList size) do: [ :i |
-	 shields at: (aShipList at: i) put: startingShields ]
+	1 to: aShipList size do: [ :i |
+	shields at: (aShipList at: i) put: startingShields ]
 ]
 
 { #category : 'accessing' }

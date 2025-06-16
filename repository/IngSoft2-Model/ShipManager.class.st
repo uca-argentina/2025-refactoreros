@@ -23,28 +23,17 @@ ShipManager class >> withShips: aShipList andLapLenght: aLapLength andDice: aDic
 	^ self new initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice
 ]
 
-{ #category : 'accessing' }
-ShipManager >> calculateNextPositionFor: aShip with: diceResult [
-
-	^ (shipsPositions at: aShip) + diceResult
-]
-
 { #category : 'actions' }
 ShipManager >> checkBattles: aShip [
 
-
 	| loser |
-
-	shipsPositions keysAndValuesDo: [ :ship :position |
-		((shipsPositions at: ship) = (shipsPositions at: aShip) ) ifTrue: [
-				(ship = aShip) ifFalse: [
-					loser := battleManager battle: ship with: aShip.
-						shipsPositions at:loser put: 1.
-						(battleManager hasShields: loser) ifFalse:[
-						shipTurnSkips at: loser put:(2).].
-				 ].
-			 ].
-		 ]
+	shipsPositions keysAndValuesDo: [ :anotherShip :position |
+		(shipsPositions at: anotherShip) = (shipsPositions at: aShip) ifTrue: [
+			anotherShip = aShip ifFalse: [
+				loser := battleManager battle: anotherShip with: aShip .
+				shipsPositions at: loser put: 1.
+				(battleManager hasShields: loser) ifFalse: [
+					shipTurnSkips at: loser put: 2 ] ] ] ]
 ]
 
 { #category : 'actions' }
@@ -109,6 +98,12 @@ ShipManager >> moveShip: aShip to: nextPosition [
 	shipsPositions
 		at: aShip
 		put: nextPosition - (lastTurnCompletedLaps * lapLength)
+]
+
+{ #category : 'accessing' }
+ShipManager >> obtainNextPositionFor: aShip with: diceResult [
+
+	^ (shipsPositions at: aShip) + diceResult
 ]
 
 { #category : 'actions' }

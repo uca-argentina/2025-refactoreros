@@ -11,8 +11,12 @@ Class {
 
 { #category : 'actions' }
 EmptySquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
+
+	
 ]
 
 { #category : 'actions' }
-EmptySquare >> applyShieldEffectTo:newShipShields forShip: aShip [
+EmptySquare >> applyShieldEffectTo: newShipShields forShip: aShip [
+
+	
 ]
