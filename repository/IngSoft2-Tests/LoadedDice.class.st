@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'numbers'
 	],
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'initialization' }
@@ -20,10 +21,7 @@ LoadedDice class >> withSetNumbers: aCollectionOfNumbers [
 { #category : 'initialization' }
 LoadedDice >> initializeLoadedDice: aCollectionOfNumbers [
 
-	numbers := OrderedCollection withAll: aCollectionOfNumbers.
-
-
-
+	numbers := OrderedCollection withAll: aCollectionOfNumbers
 ]
 
 { #category : 'action' }

@@ -1,8 +1,9 @@
 Class {
 	#name : 'AtomicBombSquareTest',
 	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'asserting' }
@@ -18,7 +19,7 @@ AtomicBombSquareTest >> should: anErrorBlock raise: errorClass withMessageText: 
 { #category : 'tests' }
 AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
 
-	| anAtomicBombSquare shipsPositions  |
+	| anAtomicBombSquare shipsPositions |
 	shipsPositions := Dictionary new.
 	shipsPositions at: 'Player 1' put: 5.
 	shipsPositions at: 'Player 2' put: 3.
@@ -29,8 +30,7 @@ AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 	anAtomicBombSquare
 		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
-
-	self assert: (shipsPositions values) = #(1 1 1).
+	self assert: shipsPositions values equals: #( 1 1 1 )
 ]
 
 { #category : 'tests' }

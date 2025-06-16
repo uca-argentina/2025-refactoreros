@@ -1,8 +1,9 @@
 Class {
 	#name : 'MoonWalkSquareTest',
 	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'asserting' }
@@ -18,7 +19,7 @@ MoonWalkSquareTest >> should: anErrorBlock raise: errorClass withMessageText: er
 { #category : 'tests' }
 MoonWalkSquareTest >> testB01WhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBackwardsThenValid [
 
-	| aMoonWalkSquare shipsPositions  |
+	| aMoonWalkSquare shipsPositions |
 	shipsPositions := Dictionary new.
 	shipsPositions at: 'Player 1' put: 6.
 	shipsPositions at: 'Player 2' put: 5.
@@ -29,8 +30,7 @@ MoonWalkSquareTest >> testB01WhenAShipLandsOnAMoonWalkSquareAndAllOtherShipsGoBa
 	aMoonWalkSquare
 		applyPositionEffectTo: shipsPositions
 		forShip: 'Player 1'.
-
-	self assert: (shipsPositions values) = #(6 1 3).
+	self assert: shipsPositions values equals: #( 6 1 3 )
 ]
 
 { #category : 'tests' }
@@ -63,15 +63,12 @@ MoonWalkSquareTest >> testB03WhenAMoonWalkSquareIsCreatedWithInvalidSquaresToPus
 { #category : 'tests' }
 MoonWalkSquareTest >> testB04WhenAShipLandsAloneOnAMoonWalkSquareAndItsShieldsRemainTheSameThenValid [
 
-	| aMoonWalkSquare shipsShields  |
+	| aMoonWalkSquare shipsShields |
 	shipsShields := Dictionary new.
 	shipsShields at: 'Player 1' put: 3.
 
 	aMoonWalkSquare := MoonWalkSquare withBackwardsPush: 2.
 
-	aMoonWalkSquare
-		applyShieldEffectTo: shipsShields 
-		forShip: 'Player 1'.
-
-	self assert: (shipsShields values) = #(3).
+	aMoonWalkSquare applyShieldEffectTo: shipsShields forShip: 'Player 1'.
+	self assert: shipsShields values equals: #( 3 )
 ]

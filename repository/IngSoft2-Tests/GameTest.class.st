@@ -1,8 +1,9 @@
 Class {
 	#name : 'GameTest',
 	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'failure tests' }
@@ -260,7 +261,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 
 	aShipList := OrderedCollection withAll: #( 'Player 1' ).
 
-	
+
 	self should: [ Game
 		gameWithShipList: aShipList
 		andDice: dice
@@ -286,9 +287,8 @@ GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 		          andSquareCount: 10
 		          andLaps: 1
 		          andSquareGenerator: squareGenerator.
-	
-	self assert: (aBoard shipRankings: aShipList) asArray equals: #('Player 2' 'Player 1').
 
+	self assert: (aBoard shipRankings: aShipList) asArray equals: #('Player 2' 'Player 1')
 ]
 
 { #category : 'tests' }

@@ -1,8 +1,9 @@
 Class {
 	#name : 'DieTest',
 	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'asserting' }
@@ -32,7 +33,7 @@ DieTest >> testA02WhenADieHasOneFaceThenAlwaysReturnsOne [
 	| aDie value |
 	aDie := Die withFaces: 1.
 	value := aDie roll.
-	
+
 	self assert: value equals: 1
 ]
 
@@ -43,5 +44,4 @@ DieTest >> testA03WhenADieHasZeroFacesThenCreationFails [
 		should: [ Die withFaces: 0 ]
 		raise: Error
 		withMessageText: 'Invalid number of faces'
-
 ]

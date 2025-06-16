@@ -9,8 +9,9 @@ Class {
 		'dice',
 		'startingShields'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-game',
+	#package : 'IngSoft2-Model',
+	#tag : 'game'
 }
 
 { #category : 'initialization' }
@@ -24,7 +25,7 @@ BattleManager >> applyShieldEffectOf: nextSquare forShip: aShip [
 	| newShipShields |
 	newShipShields := shields copy.
 	nextSquare applyShieldEffectTo:newShipShields forShip: aShip.
-	shields := newShipShields.
+	shields := newShipShields
 ]
 
 { #category : 'actions' }
@@ -44,7 +45,7 @@ BattleManager >> battle: aShipA with: aShipB [
 
 	(shields at: loserShip) > 0 ifTrue: [
 		shields at: loserShip put: (shields at: loserShip) - 1 ].
-	
+
 	^ loserShip
 ]
 
@@ -60,7 +61,7 @@ BattleManager >> initializeWithShips: aShipList andDice: aDice [
 
 	shields := Dictionary new.
 	dice := aDice.
-	
+
 	1 to: (aShipList size) do: [ :i |
 	 shields at: (aShipList at: i) put: startingShields ]
 ]

@@ -12,8 +12,9 @@ Class {
 		'squareList',
 		'ships'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-game',
+	#package : 'IngSoft2-Model',
+	#tag : 'game'
 }
 
 { #category : 'validation' }
@@ -101,7 +102,7 @@ Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount 
 ]
 
 { #category : 'testing' }
-Game >> isGameFinished [ 
+Game >> isGameFinished [
 
 	^ gameFinished
 ]
@@ -173,7 +174,7 @@ Game >> shipRankings: aSetOfShips [
 	| shipsOrderedByRanking |
 
 	shipsOrderedByRanking := aSetOfShips
-		sorted: [:aShip :anotherShip | 
+		sorted: [:aShip :anotherShip |
 		| lap1 lap2 pos1 pos2 |
 		lap1 := shipManager shipLap: aShip.
 		lap2 := shipManager shipLap: anotherShip.
@@ -186,7 +187,6 @@ Game >> shipRankings: aSetOfShips [
 			ifFalse: [lap1 > lap2]].
 
 	^ OrderedCollection withAll: shipsOrderedByRanking
-
 ]
 
 { #category : 'accessing' }

@@ -4,14 +4,15 @@ Returns a list of randomly distributed squares based on probabilities.
 Class {
 	#name : 'SquareGenerator',
 	#superclass : 'Object',
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-game',
+	#package : 'IngSoft2-Model',
+	#tag : 'game'
 }
 
 { #category : 'actions' }
 SquareGenerator >> addToList: aSquareList squareSample: aSquareSample times: aNumberOfTimes [
 
-	aNumberOfTimes timesRepeat: [ aSquareList add: aSquareSample copy].
+	aNumberOfTimes timesRepeat: [ aSquareList add: aSquareSample copy]
 ]
 
 { #category : 'actions' }

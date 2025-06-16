@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'backwardsPush'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-SquareType',
+	#package : 'IngSoft2-Model',
+	#tag : 'SquareType'
 }
 
 { #category : 'actions' }
@@ -29,12 +30,12 @@ MoonWalkSquare class >> withBackwardsPush: aNumberOfSquares [
 { #category : 'actions' }
 MoonWalkSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
-	
+
 	shipsPositions keysDo: [ :ship |
 		(aShip = ship) ifFalse: [ shipsPositions at: ship put: (shipsPositions at: ship) - backwardsPush]]
-	
+
 	"shipsPositions at: aShip put: (shipsPositions at: aShip) - 4"
-	
+
 	"shipsPositions keysDo: [ :ship |
 		shipsPositions at: ship put: 1]"
 ]
@@ -46,5 +47,5 @@ MoonWalkSquare >> applyShieldEffectTo:newShipShields forShip: aShip [
 { #category : 'accessing' }
 MoonWalkSquare >> initializeWithBackwardsPush: aNumberOfSquares [
 
-	backwardsPush := aNumberOfSquares.
+	backwardsPush := aNumberOfSquares
 ]

@@ -1,8 +1,9 @@
 Class {
 	#name : 'WormHoleTest',
 	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'asserting' }
@@ -21,9 +22,7 @@ WormHoleTest >> testA01WhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsEx
 	| aWormHole aPosition |
 	aWormHole := WormHole withEntranceAt: 2 andExitAt: 4.
 	aPosition := 2.
-
-
-	self assert: (aWormHole oppositeEnd: aPosition) = 4
+	self assert: (aWormHole oppositeEnd: aPosition) equals: 4
 ]
 
 { #category : 'tests' }

@@ -4,8 +4,9 @@ A square that resets all ships positions (a dictionary: 'shipName' -> position) 
 Class {
 	#name : 'BlackHoleSquare',
 	#superclass : 'Object',
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-SquareType',
+	#package : 'IngSoft2-Model',
+	#tag : 'SquareType'
 }
 
 { #category : 'actions' }

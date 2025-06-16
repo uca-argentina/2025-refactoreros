@@ -8,8 +8,9 @@ Class {
 		'entrancePosition',
 		'exitPosition'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-squareType',
+	#package : 'IngSoft2-Model',
+	#tag : 'squareType'
 }
 
 { #category : 'argument validation' }
@@ -29,8 +30,8 @@ WormHole class >> checkEntrance: anEntrancePosition isBeforeExit: anExitPosition
 WormHole class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 
 	self checkAboveZeroForEntrance: anEntrancePosition andExit: anExitPosition.
-	self checkEntrance: anEntrancePosition  isBeforeExit: anExitPosition. 
-	
+	self checkEntrance: anEntrancePosition  isBeforeExit: anExitPosition.
+
 	^ self new intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition
 ]
 
@@ -45,5 +46,5 @@ WormHole >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitPositio
 WormHole >> oppositeEnd: aPosition [
 
 	aPosition = entrancePosition ifTrue: [ ^ exitPosition ].
-	aPosition = exitPosition ifTrue: [ ^ entrancePosition ].
+	aPosition = exitPosition ifTrue: [ ^ entrancePosition ]
 ]

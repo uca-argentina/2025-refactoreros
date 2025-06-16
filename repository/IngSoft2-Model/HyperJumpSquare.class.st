@@ -9,8 +9,9 @@ Class {
 		'parsecsPerSquare',
 		'parsecsList'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-SquareType',
+	#package : 'IngSoft2-Model',
+	#tag : 'SquareType'
 }
 
 { #category : 'actions' }
@@ -24,7 +25,7 @@ HyperJumpSquare class >> checkValidParsecsPerSquareNumber: numberOfParsecsPerSqu
 HyperJumpSquare class >> withParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList [
 
 	self checkValidParsecsPerSquareNumber: numberOfParsecsPerSquare.
-	^ self new initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList 
+	^ self new initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList
 ]
 
 { #category : 'actions' }
@@ -38,7 +39,6 @@ HyperJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 { #category : 'actions' }
 HyperJumpSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
-
 ]
 
 { #category : 'initialization' }
