@@ -35,7 +35,7 @@ WormHoleTest >> testA02WhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntran
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testA04WhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
+WormHoleTest >> testA04WhenAWormholeHoleIsCreatedWithAPositionBelowZeroThenItFails [
 
 	self
 		should: [ WormHole withEntranceAt: 0 andExitAt: 1 ]
@@ -44,7 +44,7 @@ WormHoleTest >> testA04WhenBlackHoleIsCreatedWithAPositionBelowZeroThenItFails [
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testA05WhenBlackHoleIsCreatedWithExitBeforeEntranceThenItFails [
+WormHoleTest >> testA05WhenWormHoleIsCreatedWithExitBeforeEntranceThenItFails [
 
 	self
 		should: [ WormHole withEntranceAt: 3 andExitAt: 1 ]

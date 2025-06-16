@@ -130,37 +130,6 @@ Game >> play [
 	ships add: aShip
 ]
 
-{ #category : 'actions' }
-Game >> runGame [
-
-	| diceResult nextPosition nextSquare nextSquarePosition |
-	[ gameFinished ] whileFalse: [
-		ships do: [ :aShip |
-			(gameFinished not and: (shipManager hasTurnSkips: aShip) not)
-				ifTrue: [
-					diceResult := self generateDiceResult.
-					nextPosition := shipManager
-						                obtainNextPositionFor: aShip
-						                with: diceResult.
-
-
-
-
-					shipManager moveShip: aShip to: nextPosition.
-
-					nextSquarePosition := shipManager shipPosition: aShip.
-					nextSquare := squareList at: nextSquarePosition.
-
-					shipManager landShip: aShip atSquare: nextSquare.
-
-
-					shipManager checkBattles: aShip.
-
-					gameFinished := shipManager
-						                hasShip: aShip
-						                reachedLapGoal: lapsGoal ] ] ]
-]
-
 { #category : 'accessing' }
 Game >> shipLap: aShip [
 
@@ -191,6 +160,16 @@ Game >> shipRankings: aSetOfShips [
 			ifFalse: [lap1 > lap2]].
 
 	^ OrderedCollection withAll: shipsOrderedByRanking
+]
+
+{ #category : 'actions' }
+Game >> skip [
+
+	| aShip |
+	self checkForActiveGame.
+	aShip := ships removeFirst.
+	shipManager skipTurnAndRechargeShields: aShip.
+	ships add: aShip
 ]
 
 { #category : 'accessing' }
