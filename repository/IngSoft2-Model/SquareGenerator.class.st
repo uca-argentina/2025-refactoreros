@@ -65,7 +65,7 @@ SquareGenerator >> createSquares: squareCount [
 	| squareList |
 	squareList := OrderedCollection new.
 
-	squareCount timesRepeat: [ squareList add: self squareType copy ].
+	squareCount timesRepeat: [ squareList add: self squareType deepCopy ].
 
 	^ squareList
 ]
