@@ -4,9 +4,9 @@ A square that resets all ships positions (a dictionary: 'shipName' -> position) 
 Class {
 	#name : 'AtomicBombSquare',
 	#superclass : 'Object',
-	#category : 'IngSoft2-Model-No',
+	#category : 'IngSoft2-Model-SquareType',
 	#package : 'IngSoft2-Model',
-	#tag : 'No'
+	#tag : 'SquareType'
 }
 
 { #category : 'actions' }

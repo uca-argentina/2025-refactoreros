@@ -8,9 +8,9 @@ Class {
 		'entrancePosition',
 		'exitPosition'
 	],
-	#category : 'IngSoft2-Model-squareType',
+	#category : 'IngSoft2-Model-SquareType',
 	#package : 'IngSoft2-Model',
-	#tag : 'squareType'
+	#tag : 'SquareType'
 }
 
 { #category : 'argument validation' }
