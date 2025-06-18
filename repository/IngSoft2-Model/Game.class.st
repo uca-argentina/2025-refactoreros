@@ -6,7 +6,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'dice',
-		'gameFinished',
 		'lapsGoal',
 		'shipManager',
 		'squareList',
