@@ -2,7 +2,7 @@
 A wormhole has an entry and an exit that both trasnform a player's ship position if lands on either entry or exit. 
 "
 Class {
-	#name : 'WormHole',
+	#name : 'WormHoleSquare',
 	#superclass : 'Object',
 	#instVars : [
 		'entrancePosition',
@@ -14,20 +14,20 @@ Class {
 }
 
 { #category : 'argument validation' }
-WormHole class >> checkAboveZeroForEntrance: anEntrancePosition andExit: anExitPosition [
+WormHoleSquare class >> checkAboveZeroForEntrance: anEntrancePosition andExit: anExitPosition [
 
 	(anEntrancePosition > 0 and: anExitPosition > 0) ifFalse: [
 		Error signal: 'Positions should be numbers above zero' ]
 ]
 
 { #category : 'argument validation' }
-WormHole class >> checkEntrance: anEntrancePosition isBeforeExit: anExitPosition [
+WormHoleSquare class >> checkEntrance: anEntrancePosition isBeforeExit: anExitPosition [
 
 	(anEntrancePosition < anExitPosition ) ifFalse: [ Error signal: 'Entrace should be located before exit']
 ]
 
 { #category : 'initialization' }
-WormHole class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
+WormHoleSquare class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 
 	self checkAboveZeroForEntrance: anEntrancePosition andExit: anExitPosition.
 	self checkEntrance: anEntrancePosition  isBeforeExit: anExitPosition.
@@ -35,15 +35,28 @@ WormHole class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 	^ self new intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition
 ]
 
+{ #category : 'actions' }
+WormHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
+
+	| currentPosition |
+	currentPosition := shipsPositions at: aShip.
+	shipsPositions at: aShip put: (self oppositeEnd: currentPosition)
+
+]
+
+{ #category : 'actions' }
+WormHoleSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
+]
+
 { #category : 'accessing' }
-WormHole >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition [
+WormHoleSquare >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 
 	entrancePosition := anEntrancePosition.
 	exitPosition := anExitPosition
 ]
 
 { #category : 'accessing' }
-WormHole >> oppositeEnd: aPosition [
+WormHoleSquare >> oppositeEnd: aPosition [
 
 	aPosition = entrancePosition ifTrue: [ ^ exitPosition ].
 	aPosition = exitPosition ifTrue: [ ^ entrancePosition ]
