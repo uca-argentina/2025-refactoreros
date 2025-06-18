@@ -49,6 +49,16 @@ SquareGenerator class >> with: squaresAndProbability [
 	^ self new initializeWith: squaresAndProbability
 ]
 
+{ #category : 'instance creation' }
+SquareGenerator class >> withOnlyEmptySquares [
+
+	| squaresAndProbability |
+	squaresAndProbability := Dictionary new.
+	squaresAndProbability at: EmptySquare new put:1.
+
+	^ self new initializeWith: squaresAndProbability
+]
+
 { #category : 'actions' }
 SquareGenerator >> createSquares: squareCount [
 

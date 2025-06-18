@@ -45,7 +45,7 @@ Game class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Game class >> gameWith: ships and: dice and: aSquareCount and: aLapCount and: squareGenerator [
+Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoard: aListOfSquares [
 
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
@@ -57,23 +57,25 @@ Game class >> gameWith: ships and: dice and: aSquareCount and: aLapCount and: sq
 		  and: dice
 		  and: aSquareCount
 		  and: aLapCount
-		  and: squareGenerator
+		  and: aListOfSquares
 ]
 
 { #category : 'intialization' }
-Game class >> gameWithShipList: ships andDice: dice andSquareCount: aSquareCount andLaps: aLapCount andSquareGenerator: squareGenerator [
+Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
 
+	| aListOfSquares |
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
 	self checkValidShips: ships.
 	self checkValidLapCount: aLapCount .
 
+	aListOfSquares := squareGenerator createSquares: aSquareCount.
 	^ self new
 		  initializeWith: ships
 		  and: dice
 		  and: aSquareCount
 		  and: aLapCount
-		  and: squareGenerator
+		  and: aListOfSquares
 ]
 
 { #category : 'action' }
@@ -90,7 +92,7 @@ Game >> generateDiceResult [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount and: squareGenerator [
+Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount and: aSquareList [
 
 	ships := aSetOfShips.
 	lapsGoal := aLapCount.
@@ -99,7 +101,7 @@ Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount 
 		               andLapLenght: aSquareCount
 		               andDice: aDice.
 	dice := aDice.
-	squareList := squareGenerator createSquares: aSquareCount.
+	squareList := aSquareList .
 ]
 
 { #category : 'testing' }
