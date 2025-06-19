@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'lapLength',
 		'shipList',
-		'shipTurnSkips'
+		'shipTurnSkips',
+		'dice'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -16,11 +17,43 @@ ShipManager2 class >> withShips: aShipList andLapLenght: aLapLength andDice: aDi
 	^ self new initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice
 ]
 
+{ #category : 'actions' }
+ShipManager2 >> checkBattles: aShip [
+
+	| otherShips loserShip |
+	otherShips := shipList reject: [ :ship | ship = aShip ].
+
+	otherShips do: [ :ship |
+		(ship position hasEqualPosition: aShip position) ifTrue: [
+			loserShip := aShip battle: ship with: dice.
+			loserShip loseAShield.
+			loserShip goToFirstSquare.
+			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
+
+]
+
+{ #category : 'testing' }
+ShipManager2 >> hasTurnSkips: aShip [
+
+	| currentTurnSkips |
+	currentTurnSkips := shipTurnSkips at: aShip.
+
+	(currentTurnSkips = 1 ) ifTrue: [
+			aShip rechargeShields].
+
+	(currentTurnSkips > 0) ifTrue: [
+		shipTurnSkips at: aShip put: (currentTurnSkips - 1).
+		^ true ].
+
+	^ false
+]
+
 { #category : 'initialization' }
 ShipManager2 >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
 
 	shipList := aShipList.
 	lapLength := aLapLength.
+	dice := aDice.
 	
 	shipTurnSkips := Dictionary new.
 	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ].

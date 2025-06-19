@@ -17,18 +17,7 @@ Position class >> at: aPosition and: aLap and: aLapLegth [
 ]
 
 { #category : 'arithmetic' }
-Position >> + aPosition [
-
-	| newPosition newLap |
-	
-	newPosition := (position + aPosition position) % lapLength.
-	newLap := lap + (aPosition position // lapLength).
-
-	^ (self class at: newPosition and: newLap and: lapLength)
-]
-
-{ #category : 'arithmetic' }
-Position >> - aPosition [
+Position >> decreaseBy: aPosition [
 
 	| newPosition newLap lapsGoneBackwards squaresGoneBackwards |
 	
@@ -57,12 +46,6 @@ Position >> - aPosition [
 	^ (self class at: newPosition and: newLap and: lapLength)
 ]
 
-{ #category : 'comparing' }
-Position >> = aPositon [
-
-	^ position = (aPositon position)
-]
-
 { #category : 'actions' }
 Position >> goToStartOfLap [
 	
@@ -71,6 +54,23 @@ Position >> goToStartOfLap [
 	
 	
 	^ (self class at: newPosition and: lap and: lapLength)
+]
+
+{ #category : 'comparing' }
+Position >> hasEqualPosition: aPositon [
+
+	^ position = (aPositon position)
+]
+
+{ #category : 'arithmetic' }
+Position >> incrementBy: aPosition [
+
+	| newPosition newLap |
+	
+	newPosition := (position + aPosition position) % lapLength.
+	newLap := lap + (aPosition position // lapLength).
+
+	^ (self class at: newPosition and: newLap and: lapLength)
 ]
 
 { #category : 'initialization' }

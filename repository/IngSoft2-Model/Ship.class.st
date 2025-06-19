@@ -23,6 +23,11 @@ Ship >> goToFirstSquare [
 ]
 
 { #category : 'accessing' }
+Ship >> hasShields [
+	^ shields > 0
+]
+
+{ #category : 'accessing' }
 Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 
 	playerName := aPlayerName.
@@ -42,22 +47,27 @@ Ship >> loseAShield [
 { #category : 'actions' }
 Ship >> moveBackwardsBy: aPosition [
 
-	position := position - aPosition.
+	position := position decreaseBy: aPosition.
 ]
 
 { #category : 'actions' }
 Ship >> moveForwardBy: aPosition [
 
-	position := position + aPosition.
+	position := position incrementBy: aPosition.
 ]
 
 { #category : 'actions' }
 Ship >> obtainNextPosition: aPosition [
 
-	^ position + aPosition 
+	^ position incrementBy: aPosition 
 ]
 
 { #category : 'accessing' }
 Ship >> position [
 	^ position 
+]
+
+{ #category : 'actions' }
+Ship >> rechargeShields [
+	shields := maxShields.
 ]
