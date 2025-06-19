@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : 'actions' }
+AtomicBombSquare >> applyEffectTo: shipList forShip: aShip [
+
+	shipList do: [ :ship |
+		ship goToFirstSquare.
+		ship loseAShield ]
+]
+
+{ #category : 'actions' }
 AtomicBombSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	shipsPositions keysDo: [ :ship | shipsPositions at: ship put: 1 ]

@@ -17,6 +17,11 @@ Ship class >> for: aPlayerName startingAt: aPostion with: aNumberOfShields [
 	^ self new initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields
 ]
 
+{ #category : 'actions' }
+Ship >> goToFirstSquare [
+	position := position goToStartOfLap.
+]
+
 { #category : 'accessing' }
 Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 
@@ -27,7 +32,32 @@ Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 ]
 
 { #category : 'actions' }
+Ship >> loseAShield [
+
+	shields > 0 ifTrue: [
+		shields := shields - 1.
+		].
+]
+
+{ #category : 'actions' }
+Ship >> moveBackwardsBy: aPosition [
+
+	position := position - aPosition.
+]
+
+{ #category : 'actions' }
+Ship >> moveForwardBy: aPosition [
+
+	position := position + aPosition.
+]
+
+{ #category : 'actions' }
 Ship >> obtainNextPosition: aPosition [
 
-	^ position modifyBy: aPosition 
+	^ position + aPosition 
+]
+
+{ #category : 'accessing' }
+Ship >> position [
+	^ position 
 ]

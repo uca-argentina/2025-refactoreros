@@ -29,6 +29,18 @@ HyperJumpSquare class >> withParsecsPerSquare: numberOfParsecsPerSquare andParse
 ]
 
 { #category : 'actions' }
+HyperJumpSquare >> applyEffectTo: shipList forShip: aShip [
+
+
+	aShip moveForwardBy: (Position at:((parsecsList at: currentParsecRewardIndex) // parsecsPerSquare )  and:0 and:0 ).
+
+	currentParsecRewardIndex := currentParsecRewardIndex + 1.
+	currentParsecRewardIndex > parsecsList size ifTrue: [ currentParsecRewardIndex := 1 ]
+
+
+]
+
+{ #category : 'actions' }
 HyperJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	shipsPositions at: aShip put: (shipsPositions at: aShip) + ((parsecsList at: currentParsecRewardIndex) // parsecsPerSquare ).

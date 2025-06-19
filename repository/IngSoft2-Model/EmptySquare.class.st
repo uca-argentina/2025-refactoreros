@@ -10,6 +10,10 @@ Class {
 }
 
 { #category : 'actions' }
+EmptySquare >> applyEffectTo: shipList forShip: aShip [
+]
+
+{ #category : 'actions' }
 EmptySquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 ]
 

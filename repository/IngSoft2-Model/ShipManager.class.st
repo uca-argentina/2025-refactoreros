@@ -59,16 +59,6 @@ ShipManager >> hasTurnSkips: aShip [
 	^ false
 ]
 
-{ #category : 'initialization' }
-ShipManager >> initializeWithShips2: aShipList andLapLength: aLapLength andDice: aDice [
-
-	shipList := aShipList.
-	lapLength := aLapLength.
-	
-	shipTurnSkips := Dictionary new.
-	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ].
-]
-
 { #category : 'intialization' }
 ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
 
@@ -110,16 +100,6 @@ ShipManager >> moveShip: aShip to: nextPosition [
 	shipsPositions
 		at: aShip
 		put: nextPosition - (lastTurnCompletedLaps * lapLength)
-]
-
-{ #category : 'accessing' }
-ShipManager >> obtainNextPositionFor2: aShip with: diceResult [
-
-	| aPosition |
-
-	aPosition := Position at: diceResult and: 0 and: lapLength.
-
-	^ aShip obtainNextPosition: aPosition
 ]
 
 { #category : 'accessing' }

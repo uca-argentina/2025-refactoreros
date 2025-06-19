@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : 'actions' }
+HyperSpaceJumpSquare >> applyEffectTo: shipList forShip: aShip [
+
+	aShip moveForwardBy: (Position at: 4 and: 0 and: 0).
+	aShip loseAShield
+]
+
+{ #category : 'actions' }
 HyperSpaceJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	(shipsPositions at: aShip put: (shipsPositions at: aShip) + 4)

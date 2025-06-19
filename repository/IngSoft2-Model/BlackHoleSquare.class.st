@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'actions' }
+BlackHoleSquare >> applyEffectTo: shipList forShip: aShip [
+
+	aShip moveBackwardsBy: (Position at: 4 and: 0 and: 0)
+]
+
+{ #category : 'actions' }
 BlackHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 
 	shipsPositions at: aShip put: (shipsPositions at: aShip) - 4
