@@ -33,6 +33,12 @@ ShipManager2 >> checkBattles: aShip [
 ]
 
 { #category : 'testing' }
+ShipManager2 >> hasAnyShipReachedLaps: lapsGoal [
+
+	^ shipList anySatisfy: [ :ship | ship hasReachedLap: lapsGoal ]
+]
+
+{ #category : 'testing' }
 ShipManager2 >> hasTurnSkips: aShip [
 
 	| currentTurnSkips |

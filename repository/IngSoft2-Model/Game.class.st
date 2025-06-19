@@ -96,7 +96,7 @@ Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount 
 
 	ships := aSetOfShips.
 	lapsGoal := aLapCount.
-	shipManager := ShipManager
+	shipManager := ShipManager2
 		               withShips: aSetOfShips
 		               andLapLenght: aSquareCount
 		               andDice: aDice.

@@ -22,6 +22,11 @@ Ship >> goToFirstSquare [
 	position := position goToStartOfLap.
 ]
 
+{ #category : 'testing' }
+Ship >> hasReachedLap: lapsGoal [
+	^ (position lap) = lapsGoal
+]
+
 { #category : 'accessing' }
 Ship >> hasShields [
 	^ shields > 0

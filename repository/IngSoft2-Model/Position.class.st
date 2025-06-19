@@ -16,6 +16,12 @@ Position class >> at: aPosition and: aLap and: aLapLegth [
 	^ self new initializeWith: aPosition and: aLap and: aLapLegth
 ]
 
+{ #category : 'accessing' }
+Position class >> atStartWith: aLapLegth [
+
+	^ self new initializeWith: 1 and: 0 and: aLapLegth
+]
+
 { #category : 'arithmetic' }
 Position >> decreaseBy: aPosition [
 
@@ -67,7 +73,7 @@ Position >> incrementBy: aPosition [
 
 	| newPosition newLap |
 	
-	newPosition := (position + aPosition position) % lapLength.
+	newPosition := (position + (aPosition position)) % lapLength.
 	newLap := lap + (aPosition position // lapLength).
 
 	^ (self class at: newPosition and: newLap and: lapLength)
@@ -79,6 +85,12 @@ Position >> initializeWith: aPosition and: aLap and: aLapLength [
 	position := aPosition.
 	lap := aLap.
 	lapLength := aLapLength
+]
+
+{ #category : 'accessing' }
+Position >> lap [
+
+	^ lap
 ]
 
 { #category : 'accessing' }

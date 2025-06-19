@@ -23,7 +23,8 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add:( Ship for:'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
