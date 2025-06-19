@@ -52,10 +52,9 @@ SquareGeneratorTest >> testB02WhenSquaresCreatedFollowTheProbabilityDistribution
 	squaresWithProbability at: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #( 10 5 2 )) put:0.08.
 	squaresWithProbability at: AtomicBombSquare new put:0.02.
 
-
 	squareGenerator := SquareGenerator with: squaresWithProbability.
-
 	squareList := squareGenerator createSquares: squareCount.
+	
 	self count: EmptySquare in: squareList closeTo: 0.4 precision: 0.05.
 	self count: BlackHoleSquare in: squareList closeTo: 0.2 precision: 0.05.
 	self count: HyperSpaceJumpSquare in: squareList closeTo: 0.2 precision: 0.05.
@@ -76,11 +75,9 @@ SquareGeneratorTest >> testB03WhenProbabilitiesDoNotAddUpToOneAndTheRemainingAre
 	squaresWithProbability at: BlackHoleSquare new  put:0.2.
 	squaresWithProbability at: HyperSpaceJumpSquare new put:0.2.
 
-
-
 	squareGenerator := SquareGenerator with: squaresWithProbability.
-
 	squareList := squareGenerator createSquares: squareCount.
+	
 	self count: EmptySquare in: squareList closeTo: 0.6 precision: 0.05.
 	self count: BlackHoleSquare in: squareList closeTo: 0.2 precision: 0.05.
 	self count: HyperSpaceJumpSquare in: squareList closeTo: 0.2 precision: 0.05.
@@ -96,14 +93,12 @@ SquareGeneratorTest >> testB04WhenProbabilitiesDoNotAddUpToOneAndThereIsNoProbab
 	| squareCount squareGenerator squareList squaresWithProbability |
 	squareCount := 1000.
 	squaresWithProbability := Dictionary new.
-	squaresWithProbability at: BlackHoleSquare new  put:0.2.
-	squaresWithProbability at: HyperSpaceJumpSquare new put:0.2.
-
-
+	squaresWithProbability at: BlackHoleSquare new  put: 0.2.
+	squaresWithProbability at: HyperSpaceJumpSquare new put: 0.2.
 
 	squareGenerator := SquareGenerator with: squaresWithProbability.
-
 	squareList := squareGenerator createSquares: squareCount.
+	
 	self count: EmptySquare in: squareList closeTo: 0.6 precision: 0.05.
 	self count: BlackHoleSquare in: squareList closeTo: 0.2 precision: 0.05.
 	self count: HyperSpaceJumpSquare in: squareList closeTo: 0.2 precision: 0.05.

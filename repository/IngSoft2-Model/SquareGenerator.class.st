@@ -46,6 +46,7 @@ SquareGenerator class >> checkProbabilitiesAddToOne: squaresAndProbability [
 SquareGenerator class >> with: squaresAndProbability [
 
 	self checkProbabilitiesAddToOne: squaresAndProbability.
+	
 	^ self new initializeWith: squaresAndProbability
 ]
 
@@ -54,7 +55,7 @@ SquareGenerator class >> withOnlyEmptySquares [
 
 	| squaresAndProbability |
 	squaresAndProbability := Dictionary new.
-	squaresAndProbability at: EmptySquare new put:1.
+	squaresAndProbability at: EmptySquare new put: 1.
 
 	^ self new initializeWith: squaresAndProbability
 ]
@@ -72,7 +73,8 @@ SquareGenerator >> createSquares: squareCount [
 
 { #category : 'initialization' }
 SquareGenerator >> initializeWith: squaresAndProbability [
-	squaresWithProbability := squaresAndProbability.
+
+	squaresWithProbability := squaresAndProbability
 ]
 
 { #category : 'actions' }
@@ -88,7 +90,6 @@ SquareGenerator >> squareType [
 	
 	sampleList := squaresWithProbability keys.
 	probabilityList := squaresWithProbability values.
-
 
 	1 to: probabilityList size do: [ :i |
 		sumResult := sumResult + (probabilityList at: i).

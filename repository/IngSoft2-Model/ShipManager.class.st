@@ -49,7 +49,7 @@ ShipManager >> hasTurnSkips: aShip [
 	| currentTurnSkips |
 	currentTurnSkips := shipTurnSkips at: aShip.
 
-	(currentTurnSkips = 1 )ifTrue: [
+	(currentTurnSkips = 1 ) ifTrue: [
 			battleManager rechargeShields: aShip ].
 
 	(currentTurnSkips > 0) ifTrue: [
@@ -57,6 +57,16 @@ ShipManager >> hasTurnSkips: aShip [
 		^ true ].
 
 	^ false
+]
+
+{ #category : 'initialization' }
+ShipManager >> initializeWithShips2: aShipList andLapLength: aLapLength andDice: aDice [
+
+	shipList := aShipList.
+	lapLength := aLapLength.
+	
+	shipTurnSkips := Dictionary new.
+	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ].
 ]
 
 { #category : 'intialization' }
@@ -100,6 +110,16 @@ ShipManager >> moveShip: aShip to: nextPosition [
 	shipsPositions
 		at: aShip
 		put: nextPosition - (lastTurnCompletedLaps * lapLength)
+]
+
+{ #category : 'accessing' }
+ShipManager >> obtainNextPositionFor2: aShip with: diceResult [
+
+	| aPosition |
+
+	aPosition := Position at: diceResult and: 0 and: lapLength.
+
+	^ aShip obtainNextPosition: aPosition
 ]
 
 { #category : 'accessing' }

@@ -41,7 +41,7 @@ MoonWalkSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
 ]
 
 { #category : 'actions' }
-MoonWalkSquare >> applyShieldEffectTo:newShipShields forShip: aShip [
+MoonWalkSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
 ]
 
 { #category : 'accessing' }
