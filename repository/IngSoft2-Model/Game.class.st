@@ -122,8 +122,8 @@ Game >> play [
 	nextPosition := shipManager
 		                obtainNextPositionFor: aShip
 		                with: diceOutcome.
-	shipManager moveShip: aShip to: nextPosition.
-	nextSquare := squareList at: (shipManager shipPosition: aShip).
+	shipManager moveShip: aShip to: diceOutcome.
+	nextSquare := squareList at: (nextPosition square).
 	shipManager landShip: aShip atSquare: nextSquare.
 	shipManager checkBattles: aShip.
 	ships add: aShip

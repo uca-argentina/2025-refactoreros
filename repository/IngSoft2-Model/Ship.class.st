@@ -68,6 +68,12 @@ Ship >> obtainNextPosition: aPosition [
 ]
 
 { #category : 'accessing' }
+Ship >> playerName [
+
+	^ playerName
+]
+
+{ #category : 'accessing' }
 Ship >> position [
 	^ position 
 ]
@@ -75,4 +81,9 @@ Ship >> position [
 { #category : 'actions' }
 Ship >> rechargeShields [
 	shields := maxShields.
+]
+
+{ #category : 'accessing' }
+Ship >> square [
+	^ position 
 ]

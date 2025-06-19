@@ -2,9 +2,9 @@ Class {
 	#name : 'Position',
 	#superclass : 'Object',
 	#instVars : [
-		'position',
 		'lap',
-		'lapLength'
+		'lapLength',
+		'square'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -27,7 +27,7 @@ Position >> decreaseBy: aPosition [
 
 	| newPosition newLap lapsGoneBackwards squaresGoneBackwards |
 	
-	newPosition := position - aPosition position.
+	newPosition := square - aPosition square.
 	newLap := lap.
 	
 	
@@ -65,7 +65,7 @@ Position >> goToStartOfLap [
 { #category : 'comparing' }
 Position >> hasEqualPosition: aPositon [
 
-	^ position = (aPositon position)
+	^ square = (aPositon square)
 ]
 
 { #category : 'arithmetic' }
@@ -73,16 +73,16 @@ Position >> incrementBy: aPosition [
 
 	| newPosition newLap |
 	
-	newPosition := (position + (aPosition position)) % lapLength.
-	newLap := lap + (aPosition position // lapLength).
+	newPosition := ((aPosition square) + square ) % lapLength.
+	newLap := lap + (aPosition square // lapLength).
 
 	^ (self class at: newPosition and: newLap and: lapLength)
 ]
 
 { #category : 'initialization' }
-Position >> initializeWith: aPosition and: aLap and: aLapLength [
+Position >> initializeWith: aSquare and: aLap and: aLapLength [
 
-	position := aPosition.
+	square := aSquare.
 	lap := aLap.
 	lapLength := aLapLength
 ]
@@ -94,7 +94,7 @@ Position >> lap [
 ]
 
 { #category : 'accessing' }
-Position >> position [
+Position >> square [
 
-	^ position
+	^ square
 ]

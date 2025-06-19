@@ -39,7 +39,7 @@ WormHoleSquare class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosi
 WormHoleSquare >> applyEffectTo: shipList forShip: aShip [
 
 	| currentPosition |
-	currentPosition := aShip position.
+	currentPosition := aShip square.
 
 	currentPosition = entrancePosition
 		ifTrue: [ aShip moveForwardBy: exitPosition - entrancePosition ]
