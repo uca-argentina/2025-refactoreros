@@ -91,10 +91,20 @@ ShipManager2 >> obtainNextPositionFor: aShip with: diceResult [
 ]
 
 { #category : 'accessing' }
+ShipManager2 >> shipPosition: aShipName [
+
+	| aShip |
+	aShip := shipList detect: [ :ship | ship playerName = aShipName ].
+	aShip ifNil: [ Error signal: 'There is no ship with such name' ].
+
+	^ aShip position square
+]
+
+{ #category : 'accessing' }
 ShipManager2 >> winner [
 
 	| rankedShips |
 	rankedShips := shipList asSortedCollection: [ :aShip :anotherShip |
-		               aShip square > anotherShip square ].
+		               aShip position square > anotherShip position square ].
 	^ (rankedShips at: 1) playerName
 ]

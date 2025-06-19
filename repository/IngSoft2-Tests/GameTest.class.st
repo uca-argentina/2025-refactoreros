@@ -42,8 +42,9 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 12 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
-		
+	ships := OrderedCollection new.
+	ships add:( Ship for:'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
+	ships add:( Ship for:'Player 2' startingAt: (Position atStartWith: 10)  with: 3).
 		aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
@@ -61,8 +62,13 @@ GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOne
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
-		aGame := Game
+	"ships := OrderedCollection withAll: #( 'Player 1' 'Player 2' )."
+	ships := OrderedCollection new.
+	ships add:
+		(Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	ships add:
+		(Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
+	aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
 		         with: 10

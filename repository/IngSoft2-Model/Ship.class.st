@@ -82,8 +82,3 @@ Ship >> position [
 Ship >> rechargeShields [
 	shields := maxShields.
 ]
-
-{ #category : 'accessing' }
-Ship >> square [
-	^ position 
-]
