@@ -96,7 +96,7 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 	self
 		should: [ aGame shipPosition: 'Player 2' ]
 		raise: Error
-		withMessageText: 'There is no ship with such name'
+		withMessageText: 'There is no such ship at current game'
 ]
 
 { #category : 'tests' }
@@ -119,7 +119,7 @@ GameTest >> testA05WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails
 	self
 		should: [ aGame shipPosition: 'Player 2' ]
 		raise: Error
-		withMessageText: 'There is no ship with such name'
+		withMessageText: 'There is no such ship at current game'
 ]
 
 { #category : 'tests' }

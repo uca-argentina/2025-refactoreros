@@ -37,16 +37,19 @@ Ship >> battle: anotherShip with: aDice [
 
 { #category : 'actions' }
 Ship >> goToFirstSquare [
-	position := position goToStartOfLap.
+
+	position := position goToStartOfLap
 ]
 
 { #category : 'testing' }
 Ship >> hasReachedLap: lapsGoal [
-	^ (position lap) = lapsGoal
+
+	^ position lap = lapsGoal
 ]
 
 { #category : 'accessing' }
 Ship >> hasShields [
+
 	^ shields > 0
 ]
 
@@ -74,15 +77,9 @@ Ship >> moveBackwardsBy: aPosition [
 ]
 
 { #category : 'actions' }
-Ship >> moveForwardBy: aPosition [
+Ship >> moveForwardBy: aSquareDistance [
 
-	position := position incrementBy: aPosition.
-]
-
-{ #category : 'actions' }
-Ship >> obtainNextPosition: aPosition [
-
-	^ position incrementBy: aPosition 
+	position := position incrementBy: aSquareDistance.
 ]
 
 { #category : 'accessing' }

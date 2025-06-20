@@ -70,12 +70,12 @@ Position >> hasEqualPosition: aPositon [
 ]
 
 { #category : 'arithmetic' }
-Position >> incrementBy: aPosition [
+Position >> incrementBy: aSquareDistance [
 
 	| newPosition newLap |
 	
-	newPosition := ((aPosition square) + square ) % lapLength.
-	newLap := lap + (aPosition square // lapLength).
+	newPosition := (aSquareDistance + square) % lapLength.
+	newLap := lap + (aSquareDistance // lapLength).
 
 	^ (self class at: newPosition and: newLap and: lapLength)
 ]

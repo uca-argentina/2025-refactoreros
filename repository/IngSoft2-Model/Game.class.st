@@ -113,17 +113,14 @@ Game >> isGameFinished [
 { #category : 'actions' }
 Game >> play [
 
-	| diceOutcome nextPosition nextSquare aShip |
+	| diceOutcome nextSquare aShip |
 	self checkForActiveGame.
 	aShip := ships removeFirst.
 	(shipManager hasTurnSkips: aShip) ifTrue: [
 		Error signal: aShip , ' must skip this turn' ].
 	diceOutcome := self generateDiceResult.
-	nextPosition := shipManager
-		                obtainNextPositionFor: aShip
-		                with: diceOutcome.
 	shipManager moveShip: aShip to: diceOutcome.
-	nextSquare := squareList at: (nextPosition square).
+	nextSquare := squareList at: (shipManager shipPosition: aShip).
 	shipManager landShip: aShip atSquare: nextSquare.
 	ships add: aShip
 ]

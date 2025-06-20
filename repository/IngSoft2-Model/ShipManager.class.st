@@ -58,12 +58,12 @@ ShipManager >> hasTurnSkips: aShip [
 { #category : 'initialization' }
 ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
 
-	shipList := aShipList.
+	shipList := aShipList copy.
 	lapLength := aLapLength.
 	dice := aDice.
-	
+
 	shipTurnSkips := Dictionary new.
-	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ].
+	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ]
 ]
 
 { #category : 'actions' }
@@ -75,28 +75,16 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 
 { #category : 'actions' }
 ShipManager >> moveShip: aShip to: diceResult [
-	| aPosition |
 
-	aPosition := Position at: diceResult and: 0 and: lapLength.
-
-	aShip moveForwardBy: aPosition
-]
-
-{ #category : 'accessing' }
-ShipManager >> obtainNextPositionFor: aShip with: diceResult [
-
-	| aPosition |
-
-	aPosition := Position at: diceResult and: 0 and: lapLength.
-
-	^ aShip obtainNextPosition: aPosition
+	aShip moveForwardBy: diceResult
+	
 ]
 
 { #category : 'accessing' }
 ShipManager >> shipLap: anotherShip [
 
 	| aShip |
-	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no ship with such name' ].
+	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no such ship at current game' ].
 
 	^ aShip position lap
 ]
@@ -105,7 +93,7 @@ ShipManager >> shipLap: anotherShip [
 ShipManager >> shipPosition: anotherShip [
 
 	| aShip |
-	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no ship with such name' ].
+	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no such ship at current game' ].
 
 	^ aShip position square
 ]
