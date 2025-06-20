@@ -62,12 +62,9 @@ GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOne
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	"ships := OrderedCollection withAll: #( 'Player 1' 'Player 2' )."
 	ships := OrderedCollection new.
-	ships add:
-		(Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
-	ships add:
-		(Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	ships add: (Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
@@ -75,7 +72,8 @@ GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOne
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	self deny: (aGame shipPosition: 'Player 1') >= 10
+	
+	self deny: (aGame shipPosition: (ships at: 1)) >= 10
 ]
 
 { #category : 'tests' }
@@ -85,7 +83,8 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
@@ -93,6 +92,7 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
+	
 	self
 		should: [ aGame shipPosition: 'Player 2' ]
 		raise: Error
@@ -106,7 +106,8 @@ GameTest >> testA05WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
@@ -114,6 +115,7 @@ GameTest >> testA05WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
+	
 	self
 		should: [ aGame shipPosition: 'Player 2' ]
 		raise: Error
@@ -186,7 +188,8 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 		aGame := Game
 		         gamePlayedBy: ships
 		         throwing: dice
@@ -194,6 +197,7 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
+	
 	self assert: aGame isGameFinished
 ]
 
@@ -206,7 +210,8 @@ GameTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 
 	aGame := Game
 		         gamePlayedBy: ships
@@ -215,6 +220,7 @@ GameTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 		         and: 3
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
+	
 	self assert: aGame winner equals: 'Player 1'
 ]
 
@@ -227,7 +233,8 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 
 		aGame := Game
 		         gamePlayedBy: ships
@@ -236,7 +243,8 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	self assert: (aGame shipLap: 'Player 1') equals: 1
+	
+	self assert: (aGame shipLap: (ships at: 1)) equals: 1
 ]
 
 { #category : 'tests' }
@@ -248,7 +256,8 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 
 		aGame := Game
 		         gamePlayedBy: ships
@@ -257,7 +266,7 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	self assert: (aGame shipPosition: 'Player 1') equals: 6
+	self assert: (aGame shipPosition: (ships at: 1)) equals: 6
 ]
 
 { #category : 'tests' }
@@ -292,7 +301,9 @@ GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection withAll: #( 'Player 1' 'Player 2' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	ships add: (Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
 	
 	aGame := Game
 		         gamePlayedBy: ships
@@ -301,9 +312,7 @@ GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 
-	self
-		assert: (aGame shipRankings: ships) asArray
-		equals: #( 'Player 2' 'Player 1' )
+	self assert: ((aGame shipRankings: ships) at: 1) equals: (ships at: 2)
 ]
 
 { #category : 'tests' }
@@ -315,7 +324,8 @@ GameTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThen
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 	aShip := ships at: 1.
 
 	aGame := Game

@@ -91,11 +91,19 @@ ShipManager2 >> obtainNextPositionFor: aShip with: diceResult [
 ]
 
 { #category : 'accessing' }
-ShipManager2 >> shipPosition: aShipName [
+ShipManager2 >> shipLap: anotherShip [
 
 	| aShip |
-	aShip := shipList detect: [ :ship | ship playerName = aShipName ].
-	aShip ifNil: [ Error signal: 'There is no ship with such name' ].
+	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no ship with such name' ].
+
+	^ aShip position lap
+]
+
+{ #category : 'accessing' }
+ShipManager2 >> shipPosition: anotherShip [
+
+	| aShip |
+	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no ship with such name' ].
 
 	^ aShip position square
 ]
