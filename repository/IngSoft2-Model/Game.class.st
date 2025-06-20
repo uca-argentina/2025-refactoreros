@@ -45,37 +45,37 @@ Game class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoard: aListOfSquares [
+Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoard: squares [
 
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
 	self checkValidShips: ships.
-	self checkValidLapCount: aLapCount .
+	self checkValidLapCount: aLapCount.
 
 	^ self new
 		  initializeWith: ships
-		  and: dice
-		  and: aSquareCount
+		  throwing: dice
+		  with: aSquareCount
 		  and: aLapCount
-		  and: aListOfSquares
+		  withABoard: squares
 ]
 
 { #category : 'intialization' }
 Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
 
-	| aListOfSquares |
+	| squares |
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
 	self checkValidShips: ships.
-	self checkValidLapCount: aLapCount .
+	self checkValidLapCount: aLapCount.
 
-	aListOfSquares := squareGenerator createSquares: aSquareCount.
+	squares := squareGenerator createSquares: aSquareCount.
 	^ self new
 		  initializeWith: ships
-		  and: dice
-		  and: aSquareCount
+		  throwing: dice
+		  with: aSquareCount
 		  and: aLapCount
-		  and: aListOfSquares
+		  withABoard: squares
 ]
 
 { #category : 'action' }
@@ -92,16 +92,16 @@ Game >> generateDiceResult [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: aSetOfShips and: aDice and: aSquareCount and: aLapCount and: aSquareList [
+Game >> initializeWith: aSetOfShips throwing: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
 
 	ships := aSetOfShips.
 	lapsGoal := aLapCount.
 	shipManager := ShipManager
 		               withShips: aSetOfShips
-		               andLapLenght: aSquareCount
+		               andLapLenght: aSquareList size
 		               andDice: aDice.
 	dice := aDice.
-	squareList := aSquareList .
+	squareList := aSquareList
 ]
 
 { #category : 'testing' }
@@ -125,7 +125,6 @@ Game >> play [
 	shipManager moveShip: aShip to: diceOutcome.
 	nextSquare := squareList at: (nextPosition square).
 	shipManager landShip: aShip atSquare: nextSquare.
-	shipManager checkBattles: aShip.
 	ships add: aShip
 ]
 

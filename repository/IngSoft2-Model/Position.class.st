@@ -6,8 +6,9 @@ Class {
 		'lapLength',
 		'square'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-game',
+	#package : 'IngSoft2-Model',
+	#tag : 'game'
 }
 
 { #category : 'accessing' }

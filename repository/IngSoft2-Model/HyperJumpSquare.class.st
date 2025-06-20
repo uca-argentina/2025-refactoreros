@@ -40,19 +40,6 @@ HyperJumpSquare >> applyEffectTo: shipList forShip: aShip [
 
 ]
 
-{ #category : 'actions' }
-HyperJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
-
-	shipsPositions at: aShip put: (shipsPositions at: aShip) + ((parsecsList at: currentParsecRewardIndex) // parsecsPerSquare ).
-
-	currentParsecRewardIndex := currentParsecRewardIndex + 1.
-	currentParsecRewardIndex > parsecsList size ifTrue: [ currentParsecRewardIndex := 1 ]
-]
-
-{ #category : 'actions' }
-HyperJumpSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
-]
-
 { #category : 'initialization' }
 HyperJumpSquare >> initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList [
 	parsecsPerSquare := numberOfParsecsPerSquare.

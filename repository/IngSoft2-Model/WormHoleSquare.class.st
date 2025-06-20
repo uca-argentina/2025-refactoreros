@@ -48,19 +48,6 @@ WormHoleSquare >> applyEffectTo: shipList forShip: aShip [
 
 ]
 
-{ #category : 'actions' }
-WormHoleSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
-
-	| currentPosition |
-	currentPosition := shipsPositions at: aShip.
-	shipsPositions at: aShip put: (self oppositeEnd: currentPosition)
-
-]
-
-{ #category : 'actions' }
-WormHoleSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
-]
-
 { #category : 'accessing' }
 WormHoleSquare >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitPosition [
 

@@ -7,8 +7,9 @@ Class {
 		'shipTurnSkips',
 		'dice'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-game',
+	#package : 'IngSoft2-Model',
+	#tag : 'game'
 }
 
 { #category : 'initialization' }
@@ -69,6 +70,7 @@ ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: 
 ShipManager >> landShip: aShip atSquare: nextSquare [
 
 	nextSquare applyEffectTo: shipList forShip: aShip.
+	self checkBattles: aShip
 ]
 
 { #category : 'actions' }

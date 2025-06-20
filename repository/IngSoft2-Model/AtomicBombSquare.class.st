@@ -16,16 +16,3 @@ AtomicBombSquare >> applyEffectTo: shipList forShip: aShip [
 		ship goToFirstSquare.
 		ship loseAShield ]
 ]
-
-{ #category : 'actions' }
-AtomicBombSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
-
-	shipsPositions keysDo: [ :ship | shipsPositions at: ship put: 1 ]
-]
-
-{ #category : 'actions' }
-AtomicBombSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
-
-	newShipShields keysAndValuesDo: [ :ship :shields |
-		shields = 0 ifFalse: [ newShipShields at: ship put: shields - 1 ] ]
-]
