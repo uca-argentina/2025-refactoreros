@@ -12,5 +12,5 @@ Class {
 { #category : 'actions' }
 BlackHoleSquare >> applyEffectTo: shipList forShip: aShip [
 
-	aShip moveBackwardsBy: (Position at: 4 and: 0 and: 0)
+	aShip moveBackwardsBy: 4
 ]

@@ -24,11 +24,11 @@ Position class >> atStartWith: aLapLegth [
 ]
 
 { #category : 'arithmetic' }
-Position >> decreaseBy: aPosition [
+Position >> decreaseBy: aSquareDistance [
 
 	| newPosition newLap lapsGoneBackwards squaresGoneBackwards |
 	
-	newPosition := square - aPosition square.
+	newPosition := square - aSquareDistance.
 	newLap := lap.
 	
 	
@@ -70,7 +70,7 @@ Position >> hasEqualPosition: aPositon [
 ]
 
 { #category : 'arithmetic' }
-Position >> incrementBy: aSquareDistance [
+Position >> increaseBy: aSquareDistance [
 
 	| newPosition newLap |
 	

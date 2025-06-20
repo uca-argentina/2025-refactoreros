@@ -25,12 +25,12 @@ SquareGeneratorTest >> testB01WhenASquareGeneratorCreatesSquareAndSquareListSize
 	| squareCount squareGenerator squareList squaresWithProbability |
 	squareCount := 100.
 	squaresWithProbability := Dictionary new.
-	squaresWithProbability at: EmptySquare new put:0.4.
-	squaresWithProbability at: BlackHoleSquare new  put:0.2.
-	squaresWithProbability at: HyperSpaceJumpSquare new put:0.2.
-	squaresWithProbability at: (MoonWalkSquare withBackwardsPush:1) put:0.1.
-	squaresWithProbability at: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #( 10 5 2 )) put:0.08.
-	squaresWithProbability at: AtomicBombSquare new put:0.02.
+	squaresWithProbability at: EmptySquare new put: 0.4.
+	squaresWithProbability at: BlackHoleSquare new  put: 0.2.
+	squaresWithProbability at: HyperSpaceJumpSquare new put: 0.2.
+	squaresWithProbability at: (MoonWalkSquare withBackwardsPush: 1) put: 0.1.
+	squaresWithProbability at: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #( 10 5 2 )) put: 0.08.
+	squaresWithProbability at: AtomicBombSquare new put: 0.02.
 
 
 	squareGenerator := SquareGenerator with: squaresWithProbability.

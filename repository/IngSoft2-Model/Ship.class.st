@@ -79,7 +79,7 @@ Ship >> moveBackwardsBy: aPosition [
 { #category : 'actions' }
 Ship >> moveForwardBy: aSquareDistance [
 
-	position := position incrementBy: aSquareDistance.
+	position := position increaseBy: aSquareDistance.
 ]
 
 { #category : 'accessing' }
