@@ -31,10 +31,8 @@ ShipManager >> checkBattles: aShip [
 		(shipsPositions at: anotherShip) = (shipsPositions at: aShip)
 			ifTrue: [
 				anotherShip = aShip ifFalse: [
-					loser := battleManager battle: anotherShip with: aShip.
 					shipsPositions at: loser put: 1.
-					(battleManager hasShields: loser) ifFalse: [
-						shipTurnSkips at: loser put: 2 ] ] ] ]
+					]] ]
 ]
 
 { #category : 'testing' }
@@ -49,8 +47,6 @@ ShipManager >> hasTurnSkips: aShip [
 	| currentTurnSkips |
 	currentTurnSkips := shipTurnSkips at: aShip.
 
-	(currentTurnSkips = 1 ) ifTrue: [
-			battleManager rechargeShields: aShip ].
 
 	(currentTurnSkips > 0) ifTrue: [
 		shipTurnSkips at: aShip put: currentTurnSkips - 1.
@@ -70,7 +66,6 @@ ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: 
 	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ].
 	shipTurnSkips := Dictionary new.
 	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ].
-	battleManager := BattleManager with: aShipList and: aDice
 ]
 
 { #category : 'actions' }
@@ -79,7 +74,6 @@ ShipManager >> landShip: aShip atSquare: nextSquare [
 	| newShipsPositions |
 	newShipsPositions := shipsPositions copy.
 	nextSquare applyPositionEffectTo: newShipsPositions forShip: aShip.
-	battleManager applyShieldEffectOf: nextSquare forShip: aShip.
 
 	newShipsPositions := self recalculateBackwardsMovement:
 		                     newShipsPositions.
@@ -149,7 +143,6 @@ ShipManager >> shipPosition: aShip [
 ShipManager >> skipTurnAndRechargeShields: aShip [
 
 	shipTurnSkips at: aShip put: 1.
-	battleManager rechargeShields: aShip
 ]
 
 { #category : 'accessing' }
