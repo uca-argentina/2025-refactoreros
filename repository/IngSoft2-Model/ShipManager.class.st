@@ -1,20 +1,14 @@
-"
-Responsible for maintaining and managing ships lap and current lap position information as dictionaries. 
-"
 Class {
 	#name : 'ShipManager',
 	#superclass : 'Object',
 	#instVars : [
-		'shipsPositions',
-		'shipsLaps',
-		'shipList',
 		'lapLength',
-		'battleManager',
-		'shipTurnSkips'
+		'shipList',
+		'shipTurnSkips',
+		'dice'
 	],
-	#category : 'IngSoft2-Model-game',
-	#package : 'IngSoft2-Model',
-	#tag : 'game'
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
 }
 
 { #category : 'initialization' }
@@ -26,19 +20,22 @@ ShipManager class >> withShips: aShipList andLapLenght: aLapLength andDice: aDic
 { #category : 'actions' }
 ShipManager >> checkBattles: aShip [
 
-	| loser |
-	shipsPositions keysAndValuesDo: [ :anotherShip :position |
-		(shipsPositions at: anotherShip) = (shipsPositions at: aShip)
-			ifTrue: [
-				anotherShip = aShip ifFalse: [
-					shipsPositions at: loser put: 1.
-					]] ]
+	| otherShips loserShip |
+	otherShips := shipList reject: [ :ship | ship = aShip ].
+
+	otherShips do: [ :ship |
+		(ship position hasEqualPosition: aShip position) ifTrue: [
+			loserShip := aShip battle: ship with: dice.
+			loserShip loseAShield.
+			loserShip goToFirstSquare.
+			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
+
 ]
 
 { #category : 'testing' }
 ShipManager >> hasAnyShipReachedLaps: lapsGoal [
 
-	^ shipsLaps anySatisfy: [ :currentLap | currentLap >= lapsGoal ]
+	^ shipList anySatisfy: [ :ship | ship hasReachedLap: lapsGoal ]
 ]
 
 { #category : 'testing' }
@@ -47,23 +44,23 @@ ShipManager >> hasTurnSkips: aShip [
 	| currentTurnSkips |
 	currentTurnSkips := shipTurnSkips at: aShip.
 
+	(currentTurnSkips = 1 ) ifTrue: [
+			aShip rechargeShields].
 
 	(currentTurnSkips > 0) ifTrue: [
-		shipTurnSkips at: aShip put: currentTurnSkips - 1.
+		shipTurnSkips at: aShip put: (currentTurnSkips - 1).
 		^ true ].
 
 	^ false
 ]
 
-{ #category : 'intialization' }
+{ #category : 'initialization' }
 ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
 
 	shipList := aShipList.
 	lapLength := aLapLength.
-	shipsPositions := Dictionary new.
-	shipList do: [ :aShip | shipsPositions at: aShip put: 1 ].
-	shipsLaps := Dictionary new.
-	shipList do: [ :aShip | shipsLaps at: aShip put: 0 ].
+	dice := aDice.
+	
 	shipTurnSkips := Dictionary new.
 	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ].
 ]
@@ -71,86 +68,51 @@ ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: 
 { #category : 'actions' }
 ShipManager >> landShip: aShip atSquare: nextSquare [
 
-	| newShipsPositions |
-	newShipsPositions := shipsPositions copy.
-	nextSquare applyPositionEffectTo: newShipsPositions forShip: aShip.
-
-	newShipsPositions := self recalculateBackwardsMovement:
-		                     newShipsPositions.
-
-	shipsPositions := newShipsPositions
+	nextSquare applyEffectTo: shipList forShip: aShip.
 ]
 
 { #category : 'actions' }
-ShipManager >> moveShip: aShip to: nextPosition [
+ShipManager >> moveShip: aShip to: diceResult [
+	| aPosition |
 
-	| shipCurrentPosition shipCurrentLaps lastTurnCompletedLaps |
-	shipCurrentPosition := shipsPositions at: aShip.
-	shipCurrentLaps := shipsLaps at: aShip.
-	lastTurnCompletedLaps := nextPosition // lapLength.
+	aPosition := Position at: diceResult and: 0 and: lapLength.
 
-	shipsLaps at: aShip put: shipCurrentLaps + lastTurnCompletedLaps.
-
-	shipsPositions
-		at: aShip
-		put: nextPosition - (lastTurnCompletedLaps * lapLength)
+	aShip moveForwardBy: aPosition
 ]
 
 { #category : 'accessing' }
 ShipManager >> obtainNextPositionFor: aShip with: diceResult [
 
-	^ (shipsPositions at: aShip) + diceResult
-]
+	| aPosition |
 
-{ #category : 'actions' }
-ShipManager >> recalculateBackwardsMovement: newShipsPositions [
+	aPosition := Position at: diceResult and: 0 and: lapLength.
 
-	| lapsGoneBackwards squaresGoneBackwards |
-	newShipsPositions keysAndValuesDo: [ :ship :position |
-		position <= 0 ifTrue: [
-			lapsGoneBackwards := (position // lapLength) abs.
-			squaresGoneBackwards := position abs % lapLength.
-
-			newShipsPositions at: ship put: lapLength - squaresGoneBackwards.
-
-			shipsLaps at: ship put: (shipsLaps at: ship) - lapsGoneBackwards.
-
-			squaresGoneBackwards = 0 ifFalse: [
-				shipsLaps at: ship put: (shipsLaps at: ship) - 1 ].
-
-			(shipsLaps at: ship) <= 0 ifTrue: [
-				shipsLaps at: ship put: 0.
-				shipsPositions at: ship put: 1 ] ] ].
-
-	^ newShipsPositions
+	^ aShip obtainNextPosition: aPosition
 ]
 
 { #category : 'accessing' }
-ShipManager >> shipLap: aShip [
+ShipManager >> shipLap: anotherShip [
 
-	^ shipsLaps at: aShip
+	| aShip |
+	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no ship with such name' ].
+
+	^ aShip position lap
 ]
 
 { #category : 'accessing' }
-ShipManager >> shipPosition: aShip [
+ShipManager >> shipPosition: anotherShip [
 
-	^ shipsPositions
-		  at: aShip
-		  ifAbsent: [ Error signal: 'There is no ship with such name' ]
-]
+	| aShip |
+	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no ship with such name' ].
 
-{ #category : 'actions' }
-ShipManager >> skipTurnAndRechargeShields: aShip [
-
-	shipTurnSkips at: aShip put: 1.
+	^ aShip position square
 ]
 
 { #category : 'accessing' }
 ShipManager >> winner [
 
 	| rankedShips |
-	rankedShips := shipsLaps associations asSortedCollection: [
-		               :aShip
-		               :anotherShip | aShip value > anotherShip value ].
-	^ (rankedShips at: 1) key
+	rankedShips := shipList asSortedCollection: [ :aShip :anotherShip |
+		               aShip position square > anotherShip position square ].
+	^ (rankedShips at: 1) playerName
 ]
