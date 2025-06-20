@@ -19,33 +19,38 @@ AtomicBombSquareTest >> should: anErrorBlock raise: errorClass withMessageText: 
 { #category : 'tests' }
 AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
 
-	| anAtomicBombSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 5.
-	shipsPositions at: 'Player 2' put: 3.
-	shipsPositions at: 'Player 3' put: 9.
+	| anAtomicBombSquare ships |
+	
+	ships := OrderedCollection new.
+	ships add:( Ship for: 'Player 1' startingAt: (Position at: 5 and: 0 and: 10)  with: 3).
+	ships add:( Ship for: 'Player 2' startingAt: (Position at: 3 and: 0 and: 10)  with: 3).
+	ships add:( Ship for: 'Player 3' startingAt: (Position at: 9 and: 0 and: 10)  with: 3).
 
 	anAtomicBombSquare := AtomicBombSquare new.
 
 	anAtomicBombSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 1'.
-	self assert: shipsPositions values equals: #( 1 1 1 )
+		applyEffectTo: ships
+		forShip: (ships at: 1).
+		
+	self assert: (ships allSatisfy: [ :ship | ship position square = 1 ])
+
 ]
 
 { #category : 'tests' }
 AtomicBombSquareTest >> testB02WhenAShipLandsOnAnAtomicBombSquareAndAllShipsLoseOneShieldThenValid [
 
-	| anAtomicBombSquare shipsShields |
-	shipsShields := Dictionary new.
-	shipsShields at: 'Player 1' put: 3.
-	shipsShields at: 'Player 2' put: 3.
-	shipsShields at: 'Player 3' put: 3.
+	| anAtomicBombSquare ships|
+	
+	ships := OrderedCollection new.
+	ships add:( Ship for: 'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
+	ships add:( Ship for: 'Player 2' startingAt: (Position atStartWith: 10)  with: 3).
+	ships add:( Ship for: 'Player 3' startingAt: (Position atStartWith: 10)  with: 3).
 
 	anAtomicBombSquare := AtomicBombSquare new.
 
 	anAtomicBombSquare
-		applyShieldEffectTo: shipsShields
-		forShip: 'Player 1'.
-	self assert: shipsShields values equals: #( 2 2 2 )
+		applyEffectTo: ships
+		forShip: (ships at: 1).
+		
+	self assert: (ships allSatisfy: [ :ship | ship shields = 2 ])
 ]

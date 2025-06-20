@@ -9,33 +9,16 @@ Class {
 { #category : 'tests' }
 BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecreasesBy4ThenValid [
 
-	| aBlackHoleSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 6.
+	| aBlackHoleSquare ships|
+	
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position at: 6 and: 0 and: 10)  with: 3).
 
 	aBlackHoleSquare := BlackHoleSquare new.
 
 	aBlackHoleSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 1'.
-	self assert: (shipsPositions at: 'Player 1') equals: 2
-]
-
-{ #category : 'tests' }
-BlackHoleSquareTest >> testB02WhenAShipLandsOnBlackHoleThatForcesItToLoseALapAndLapDecreasesThenValid [
-
-	| aBlackHoleSquare aShipList aShipManager aShipResultingLap |
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-	aShipManager := ShipManager
-		                withShips: aShipList
-		                andLapLenght: 10
-		                andDice: (LoadedDice withSetNumbers: #( 0 )).
-
-	aBlackHoleSquare := BlackHoleSquare new.
-
-	aShipManager moveShip: (aShipList at: 1) to: 12.
-	aShipManager landShip: (aShipList at: 1) atSquare: aBlackHoleSquare.
-	aShipResultingLap := aShipManager shipLap: 'Player 1'.
-	self assert: aShipResultingLap equals: 0.
-	self assert: (aShipManager shipPosition: 'Player 1') equals: 8
+		applyEffectTo: ships
+		forShip: (ships at: 1).
+		
+	self assert: (ships at: 1) position square equals: 2
 ]

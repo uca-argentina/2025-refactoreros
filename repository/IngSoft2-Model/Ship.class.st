@@ -18,6 +18,23 @@ Ship class >> for: aPlayerName startingAt: aPostion with: aNumberOfShields [
 ]
 
 { #category : 'actions' }
+Ship >> battle: anotherShip with: aDice [
+
+	| rollA rollB loserShip |
+	rollA := aDice roll.
+	rollB := aDice roll.
+
+	[ rollA = rollB ] whileTrue: [
+		rollA := aDice roll.
+		rollB := aDice roll ].
+
+	loserShip := self.
+	rollA > rollB ifTrue: [ loserShip := anotherShip ].
+
+	^ loserShip
+]
+
+{ #category : 'actions' }
 Ship >> goToFirstSquare [
 	position := position goToStartOfLap.
 ]
@@ -75,10 +92,17 @@ Ship >> playerName [
 
 { #category : 'accessing' }
 Ship >> position [
-	^ position 
+
+	^ position
 ]
 
 { #category : 'actions' }
 Ship >> rechargeShields [
 	shields := maxShields.
+]
+
+{ #category : 'accessing' }
+Ship >> shields [
+
+	^ shields
 ]

@@ -9,13 +9,15 @@ Class {
 { #category : 'tests' }
 EmptySquareTest >> testB01WhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheSameThenValid [
 
-	| anEmptySquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 1.
+	| anEmptySquare ships|
+	
+	ships := OrderedCollection new.
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
 
 	anEmptySquare := EmptySquare new.
 	anEmptySquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 1'.
-	self assert: (shipsPositions at: 'Player 1') equals: 1
+		applyEffectTo: ships
+		forShip: (ships at: 1).
+		
+	self assert: (ships at: 1) position square equals: 1
 ]
