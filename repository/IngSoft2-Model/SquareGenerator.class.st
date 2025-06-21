@@ -12,23 +12,6 @@ Class {
 	#tag : 'Game'
 }
 
-{ #category : 'adding' }
-SquareGenerator class >> addEmptySquares: extraProbability to: squaresAndProbability [
-
-	| emptySquare |
-	squaresAndProbability keysDo: [ :square |
-		square class = EmptySquare ifTrue: [ emptySquare := square ] ].
-	
-	squaresAndProbability
-		at: emptySquare
-		ifPresent: [
-			squaresAndProbability
-				at: emptySquare
-				put: (squaresAndProbability at: emptySquare) + extraProbability ]
-		ifAbsent: [
-		squaresAndProbability at: EmptySquare new put: extraProbability ]
-]
-
 { #category : 'validation' }
 SquareGenerator class >> checkProbabilitiesAddToOne: squaresAndProbability [
 
@@ -38,7 +21,7 @@ SquareGenerator class >> checkProbabilitiesAddToOne: squaresAndProbability [
 	aFlag := true.
 
 	probabilitySum < 1 ifTrue: [
-			self addEmptySquares: (1 - probabilitySum) to: squaresAndProbability		
+			squaresAndProbability at: EmptySquare new put: (1 - probabilitySum)	
 		]
 ]
 
