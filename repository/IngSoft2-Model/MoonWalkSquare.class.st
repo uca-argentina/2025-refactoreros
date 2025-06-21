@@ -28,7 +28,7 @@ MoonWalkSquare class >> withBackwardsPush: aNumberOfSquares [
 ]
 
 { #category : 'actions' }
-MoonWalkSquare >> applyEffectTo: shipList forShip: aShip [
+MoonWalkSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
 
 	shipList do: [ :ship |
 		ship = aShip ifFalse: [

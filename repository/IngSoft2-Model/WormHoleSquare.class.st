@@ -36,7 +36,7 @@ WormHoleSquare class >> withEntranceAt: anEntrancePosition andExitAt: anExitPosi
 ]
 
 { #category : 'actions' }
-WormHoleSquare >> applyEffectTo: shipList forShip: aShip [
+WormHoleSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
 
 	| currentPosition |
 	currentPosition := aShip square.
