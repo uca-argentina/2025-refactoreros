@@ -53,49 +53,21 @@ Game class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: shipNames rolling: dice and: aLapCount withABoard: squares [
+Game class >> gamePlayedBy: shipNames rolling: dice on: aBoard [
 
 	| ships |
 	self checkValidDice: dice.
-	self checkValidSquareCount: squares size.
 	self checkValidShipNames: shipNames.
-	self checkValidLapCount: aLapCount.
 
 	ships := Ship
 		         forMultiple: shipNames
-		         allStartingAt: (Position atStartOfLapWithSquareNumbers: squares size)
+		         allStartingAt: (Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares )
 		         andAllShieldedWith: 3.
 
 	^ self new
 		  initializeWith: ships
 		  rolling: dice
-		  with: squares size
-		  and: aLapCount
-		  withABoard: squares
-]
-
-{ #category : 'intialization' }
-Game class >> gamePlayedBy: shipNames rolling: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
-
-	| squares ships|
-	self checkValidDice: dice.
-	self checkValidSquareCount: aSquareCount.
-	self checkValidShipNames: shipNames.
-	self checkValidLapCount: aLapCount.
-
-	squares := squareGenerator createSquares: aSquareCount.
-	
-	ships := Ship
-		         forMultiple: shipNames
-		         allStartingAt: (Position atStartOfLapWithSquareNumbers: squares size)
-		         andAllShieldedWith: 3.
-		
-	^ self new
-		  initializeWith: ships
-		  rolling: dice
-		  with: aSquareCount
-		  and: aLapCount
-		  withABoard: squares
+		  on: aBoard 
 ]
 
 { #category : 'actions' }
