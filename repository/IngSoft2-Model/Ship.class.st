@@ -54,9 +54,7 @@ Ship >> boardPosition [
 { #category : 'actions' }
 Ship >> breakAShield [
 
-	shields > 0 ifTrue: [
-		shields := shields - 1.
-		].
+	shields > 0 ifTrue: [ shields := shields - 1 ]
 ]
 
 { #category : 'actions' }
@@ -90,7 +88,6 @@ Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 Ship >> isAtTheSameSquareAs: anotherShip [
 
 	^ position hasEqualPosition: anotherShip position
-	
 ]
 
 { #category : 'accessing' }
@@ -102,13 +99,13 @@ Ship >> lapCount [
 { #category : 'actions' }
 Ship >> moveBackwardsBy: aPosition [
 
-	position := position decreaseBy: aPosition.
+	position := position decreaseBy: aPosition
 ]
 
 { #category : 'actions' }
 Ship >> moveForwardBy: aSquareDistance [
 
-	position := position increaseBy: aSquareDistance.
+	position := position increaseBy: aSquareDistance
 ]
 
 { #category : 'accessing' }
@@ -125,7 +122,8 @@ Ship >> position [
 
 { #category : 'actions' }
 Ship >> rechargeShields [
-	shields := maxShields.
+
+	shields := maxShields
 ]
 
 { #category : 'accessing' }
