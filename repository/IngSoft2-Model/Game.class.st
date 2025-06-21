@@ -9,7 +9,8 @@ Class {
 		'lapsGoal',
 		'shipManager',
 		'squareList',
-		'ships'
+		'ships',
+		'board'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
