@@ -8,7 +8,6 @@ Class {
 		'dice',
 		'lapsGoal',
 		'shipManager',
-		'squareList',
 		'ships',
 		'board'
 	],
@@ -129,7 +128,7 @@ Game >> play [
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := self rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
-	nextSquare := squareList at: aShip boardPosition.
+	nextSquare := board squareAt: aShip boardPosition.
 	shipManager landShip: aShip atSquare: nextSquare
 ]
 
