@@ -5,9 +5,9 @@ Class {
 	#name : 'ShipManager',
 	#superclass : 'Object',
 	#instVars : [
-		'shipList',
 		'shipTurnSkips',
-		'dice'
+		'dice',
+		'gameShips'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -24,7 +24,7 @@ ShipManager class >> withShips: aShipList andDice: aDice [
 ShipManager >> checkBattles: aShip [
 
 	| otherShips loserShip |
-	otherShips := shipList reject: [ :ship | ship = aShip ].
+	otherShips := gameShips reject: [ :ship | ship = aShip ].
 
 	otherShips do: [ :ship |
 		(ship position hasEqualPosition: aShip position) ifTrue: [
@@ -54,16 +54,16 @@ ShipManager >> hasTurnSkips: aShip [
 { #category : 'initialization' }
 ShipManager >> initializeWithShips: aSetOfShips andDice: aDice [
 
-	shipList := aSetOfShips copy.
+	gameShips := aSetOfShips copy.
 	dice := aDice.
 	shipTurnSkips := Dictionary new.
-	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ]
+	gameShips do: [ :aShip | shipTurnSkips at: aShip put: 0 ]
 ]
 
 { #category : 'actions' }
 ShipManager >> landShip: aShip atSquare: nextSquare [
 
-	nextSquare applyEffectTo: shipList forShip: aShip.
+	nextSquare applyEffectTo: gameShips forShip: aShip.
 	self checkBattles: aShip
 ]
 
