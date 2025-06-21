@@ -29,7 +29,7 @@ SquareGeneratorTest >> testB01WhenASquareGeneratorCreatesSquareAndSquareListSize
 	squaresWithProbability at: BlackHoleSquare new  put: 0.2.
 	squaresWithProbability at: HyperSpaceJumpSquare new put: 0.2.
 	squaresWithProbability at: (MoonWalkSquare withBackwardsPush: 1) put: 0.1.
-	squaresWithProbability at: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #( 10 5 2 )) put: 0.08.
+	squaresWithProbability at: (HyperJumpSquare withParsecsRewards: #( 10 5 2 )) put: 0.08.
 	squaresWithProbability at: AtomicBombSquare new put: 0.02.
 
 
@@ -49,7 +49,7 @@ SquareGeneratorTest >> testB02WhenSquaresCreatedFollowTheProbabilityDistribution
 	squaresWithProbability at: BlackHoleSquare new  put:0.2.
 	squaresWithProbability at: HyperSpaceJumpSquare new put:0.2.
 	squaresWithProbability at: (MoonWalkSquare withBackwardsPush:1) put:0.1.
-	squaresWithProbability at: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #( 10 5 2 )) put:0.08.
+	squaresWithProbability at: (HyperJumpSquare withParsecsRewards: #( 10 5 2 )) put:0.08.
 	squaresWithProbability at: AtomicBombSquare new put:0.02.
 
 	squareGenerator := SquareGenerator with: squaresWithProbability.

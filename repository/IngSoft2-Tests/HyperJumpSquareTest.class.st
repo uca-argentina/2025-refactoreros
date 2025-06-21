@@ -19,12 +19,8 @@ HyperJumpSquareTest >> should: anErrorBlock raise: errorClass withMessageText: e
 { #category : 'tests' }
 HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidParsecsPerSquareThenFails [
 
-	| aHyperJumpSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 1.
-
 	self
-		should: [ aHyperJumpSquare := HyperJumpSquare withParsecsPerSquare: -1 andParsecsRewards: #(10 5 2)]
+		should: [ HyperJumpSquare withParsecsRewards: #(  ) ]
 		raise: Error
-		withMessageText: 'Parsecs per square must be equal or higher than 1'
+		withMessageText: 'Parsec rewards cannot be empty'
 ]

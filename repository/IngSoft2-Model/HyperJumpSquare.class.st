@@ -14,7 +14,16 @@ Class {
 }
 
 { #category : 'actions' }
+HyperJumpSquare class >> checkParsecRewards: aParsecsList [
+
+	aParsecsList ifEmpty: [
+		Error signal: 'Parsec rewards cannot be empty' ]
+]
+
+{ #category : 'actions' }
 HyperJumpSquare class >> withParsecsRewards: aParsecsList [
+
+	self checkParsecRewards: aParsecsList .
 
 	^ self new initializeWithParsecsRewards: aParsecsList 
 ]

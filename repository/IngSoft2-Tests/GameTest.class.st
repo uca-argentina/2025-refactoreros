@@ -62,23 +62,26 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 ]
 
 { #category : 'tests' }
-GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOneThenValid [
+GameTest >> testA03WhenAShipSurpassesTheGoalYetItsPositionIsNotGreaterThanBoardLimitThenValid [
 
-	| aGame dice squareGenerator shipNames |
+	| aGame dice squareGenerator shipNames aBoard aBoardSize|
+	aBoardSize := 10.
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
+	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	shipNames := #( 'Player 1' 'Player 2' ).
-	
-	aGame := Game
-		         gamePlayedBy: shipNames
-		         rolling: dice
-		         with: 10
-		         and: 1
-		         withABoardGeneratedBy: squareGenerator.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+		
+	shipNames := #( 'Player 1').
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+		
 	aGame play.
 	
-	self deny: (aGame positionOf: (shipNames at: 1)) >= 10
+	self assert: (aGame positionOf: 'Player 1') < aBoardSize 
 ]
 
 { #category : 'tests' }
