@@ -344,6 +344,7 @@ GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenV
 
 	aGame play.
 	aGame play.
-	
+	aGame play.
+
 	self assert: (aGame positionOf: 'Player 1') equals: 1
 ]

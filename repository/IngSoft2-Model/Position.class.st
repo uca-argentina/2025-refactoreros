@@ -76,8 +76,8 @@ Position >> increaseBy: aSquareDistance [
 
 	| newPosition newLap |
 	
-	newPosition := (aSquareDistance + square) % lapLength.
-	newLap := lap + (aSquareDistance // lapLength).
+	newPosition := (aSquareDistance + square - 1 % lapLength) + 1.
+	newLap := lap + ((aSquareDistance + square - 1) // lapLength). 
 
 	^ (self class at: newPosition and: newLap and: lapLength)
 ]
