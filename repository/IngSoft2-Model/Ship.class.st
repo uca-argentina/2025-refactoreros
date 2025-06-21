@@ -90,6 +90,7 @@ Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 Ship >> isAtTheSameSquareAs: anotherShip [
 
 	^ position hasEqualPosition: anotherShip position
+	
 ]
 
 { #category : 'accessing' }
