@@ -16,16 +16,16 @@ Class {
 }
 
 { #category : 'accessing' }
-Ship class >> for: aPlayerName startingAt: aPostion with: aNumberOfShields [
+Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields [
 
-	^ self new initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields
+	^ self new initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields
 ]
 
 { #category : 'accessing' }
-Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllWith: aNumberOfShields [
+Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWith: aNumberOfShields [
 
 	^ (playerNames collect: [ :aPlayerName |
-		  self for: aPlayerName startingAt: aPosition with: aNumberOfShields ]) asOrderedCollection 
+		  self for: aPlayerName startingAt: aPosition shieldedWith: aNumberOfShields ]) asOrderedCollection 
 ]
 
 { #category : 'actions' }
@@ -76,7 +76,7 @@ Ship >> hasShields [
 ]
 
 { #category : 'accessing' }
-Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
+Ship >> initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields [
 
 	playerName := aPlayerName.
 	position := aPostion.

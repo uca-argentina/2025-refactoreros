@@ -19,14 +19,13 @@ GameTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage
 { #category : 'tests' }
 GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection new.
-	ships add:( Ship for:'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
+	shipNames := #( 'Player 1' ).
 	aGame := Game
-		         gamePlayedBy: ships
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
@@ -38,102 +37,96 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 { #category : 'tests' }
 GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 12 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection new.
-	ships add:( Ship for:'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
-	ships add:( Ship for:'Player 2' startingAt: (Position atStartWith: 10)  with: 3).
-		aGame := Game
-		         gamePlayedBy: ships
+	shipNames := #( 'Player 1' 'Player 2' ).
+	aGame := Game
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
+	
 	self deny: aGame winner equals: 'Player 2'
 ]
 
 { #category : 'tests' }
 GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOneThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
-	ships add: (Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
+	shipNames := #( 'Player 1' 'Player 2' ).
 	aGame := Game
-		         gamePlayedBy: ships
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
 	
-	self deny: (aGame positionOf: (ships at: 1)) >= 10
+	self deny: (aGame positionOf: (shipNames at: 1)) >= 10
 ]
 
 { #category : 'tests' }
 GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	shipNames := #( 'Player 1' ).
 	aGame := Game
-		         gamePlayedBy: ships
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	
+
 	self
 		should: [ aGame positionOf: 'Player 2' ]
 		raise: Error
-		withMessageText: 'There is no such ship at current game'
+		withMessageText: 'No ship by that name exists in the game'
 ]
 
 { #category : 'tests' }
-GameTest >> testA05WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails [
+GameTest >> testA05WhenBoardGameIsCreatedWithDuplicatedShipNamesThenFails [
 
-	| aGame dice squareGenerator ships |
+	| dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
-	aGame := Game
-		         gamePlayedBy: ships
-		         rolling: dice
-		         with: 10
-		         and: 1
-		         withABoardGeneratedBy: squareGenerator.
-	aGame play.
-	
+	shipNames := #( 'Player 1' 'Player 1' 'Player 2' ).
+
 	self
-		should: [ aGame positionOf: 'Player 2' ]
+		should: [
+			Game
+				gamePlayedBy: shipNames
+				rolling: dice
+				with: 10
+				and: 1
+				withABoardGeneratedBy: squareGenerator ]
 		raise: Error
-		withMessageText: 'There is no such ship at current game'
+		withMessageText: 'Player 1 listed more than once'
 ]
 
 { #category : 'tests' }
 GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 
-	| dice squareGenerator ships |
+	| dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #(  ).
+	shipNames := #(  ).
 	self
 		should: [
 			Game
-				gamePlayedBy: ships
+				gamePlayedBy: shipNames
 				rolling: dice
 				with: 10
 				and: 1
@@ -145,18 +138,18 @@ GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 { #category : 'tests' }
 GameTest >> testA07WhenAGameIsCreatedWithZeroDieThenFails [
 
-	| dice squareGenerator ships |
+	| dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	shipNames := #( 'Player 1' ).
 	self
 		should: [
 			Game
-				gamePlayedBy: ships
+				gamePlayedBy: shipNames
 				rolling: dice
 				with: 10
 				and: 1
-				withABoardGeneratedBy: squareGenerator  ]
+				withABoardGeneratedBy: squareGenerator ]
 		raise: Error
 		withMessageText: 'At least one die is required'
 ]
@@ -164,19 +157,19 @@ GameTest >> testA07WhenAGameIsCreatedWithZeroDieThenFails [
 { #category : 'tests' }
 GameTest >> testA08WhenGameIsCreatedWithLessThanTwoSquaresThenFails [
 
-	| dice squareGenerator ships |
+	| dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	shipNames := OrderedCollection withAll: #( 'Player 1' ).
 	self
 		should: [
 			Game
-				gamePlayedBy: ships
+				gamePlayedBy: shipNames
 				rolling: dice
 				with: 0
 				and: 1
-				withABoardGeneratedBy: squareGenerator  ]
+				withABoardGeneratedBy: squareGenerator ]
 		raise: Error
 		withMessageText: 'Square count should be equal or higher than 2'
 ]
@@ -184,106 +177,103 @@ GameTest >> testA08WhenGameIsCreatedWithLessThanTwoSquaresThenFails [
 { #category : 'tests' }
 GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
-		aGame := Game
-		         gamePlayedBy: ships
+	shipNames := #( 'Player 1' ).
+	aGame := Game
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	
+
 	self assert: aGame isGameFinished
 ]
 
 { #category : 'tests' }
 GameTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 30 )).
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	shipNames := #( 'Player 1' ).
 
 	aGame := Game
-		         gamePlayedBy: ships
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 3
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	
+
 	self assert: aGame winner equals: 'Player 1'
 ]
 
 { #category : 'tests' }
 GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	shipNames := #( 'Player 1' ).
 
-		aGame := Game
-		         gamePlayedBy: ships
+	aGame := Game
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	
-	self assert: (aGame lapCountOf: (ships at: 1)) equals: 1
+
+	self assert: (aGame lapCountOf: (shipNames at: 1)) equals: 1
 ]
 
 { #category : 'tests' }
 GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
+	shipNames := #( 'Player 1' ).
 
-		aGame := Game
-		         gamePlayedBy: ships
+	aGame := Game
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	self assert: (aGame positionOf: (ships at: 1)) equals: 6
+
+	self assert: (aGame positionOf: (shipNames at: 1)) equals: 6
 ]
 
 { #category : 'tests' }
 GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 
-	| dice squareGenerator ships |
+	| dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection withAll: #( 'Player 1' ).
+	shipNames := #( 'Player 1' ).
 
 	self
 		should: [
 			Game
-				gamePlayedBy: ships
+				gamePlayedBy: shipNames
 				rolling: dice
 				with: 10
 				and: 0
@@ -295,41 +285,40 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 { #category : 'tests' }
 GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 
-	| aGame dice squareGenerator ships |
+	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 5 8 )).
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
-	ships add: (Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
-	
+	shipNames := #( 'Player 1' 'Player 2' ).
+
 	aGame := Game
-		         gamePlayedBy: ships
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 
-	self assert: ((aGame rank: ships) at: 1) equals: (ships at: 2)
+	self
+		assert: ((aGame rank: shipNames) at: 1)
+		equals: (shipNames at: 2)
 ]
 
 { #category : 'tests' }
 GameTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThenValid [
 
-	| aGame dice squareGenerator ships aShip |
+	| aGame dice squareGenerator shipNames aShip |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 12 )).
 
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
-	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
-	aShip := ships at: 1.
+	shipNames := #( 'Player 1' ).
+	aShip := shipNames at: 1.
 
 	aGame := Game
-		         gamePlayedBy: ships
+		         gamePlayedBy: shipNames
 		         rolling: dice
 		         with: 10
 		         and: 1

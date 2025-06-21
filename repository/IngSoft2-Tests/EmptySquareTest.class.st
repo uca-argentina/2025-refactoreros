@@ -12,7 +12,7 @@ EmptySquareTest >> testB01WhenAShipLandsOnAnEmptySquareAndItsPositionRemainsTheS
 	| anEmptySquare ships|
 	
 	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
+	ships add: (Ship for: 'Player 1' startingAt: (Position atStartOfLapWithSquareNumbers: 10)  shieldedWith: 3).
 
 	anEmptySquare := EmptySquare new.
 	anEmptySquare

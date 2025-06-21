@@ -22,9 +22,9 @@ AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 	| anAtomicBombSquare ships |
 	
 	ships := OrderedCollection new.
-	ships add:( Ship for: 'Player 1' startingAt: (Position at: 5 and: 0 and: 10)  with: 3).
-	ships add:( Ship for: 'Player 2' startingAt: (Position at: 3 and: 0 and: 10)  with: 3).
-	ships add:( Ship for: 'Player 3' startingAt: (Position at: 9 and: 0 and: 10)  with: 3).
+	ships add:( Ship for: 'Player 1' startingAt: (Position at: 5 and: 0 and: 10)  shieldedWith: 3).
+	ships add:( Ship for: 'Player 2' startingAt: (Position at: 3 and: 0 and: 10)  shieldedWith: 3).
+	ships add:( Ship for: 'Player 3' startingAt: (Position at: 9 and: 0 and: 10)  shieldedWith: 3).
 
 	anAtomicBombSquare := AtomicBombSquare new.
 
@@ -42,9 +42,9 @@ AtomicBombSquareTest >> testB02WhenAShipLandsOnAnAtomicBombSquareAndAllShipsLose
 	| anAtomicBombSquare ships|
 	
 	ships := OrderedCollection new.
-	ships add:( Ship for: 'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
-	ships add:( Ship for: 'Player 2' startingAt: (Position atStartWith: 10)  with: 3).
-	ships add:( Ship for: 'Player 3' startingAt: (Position atStartWith: 10)  with: 3).
+	ships add:( Ship for: 'Player 1' startingAt: (Position atStartOfLapWithSquareNumbers: 10)  shieldedWith: 3).
+	ships add:( Ship for: 'Player 2' startingAt: (Position atStartOfLapWithSquareNumbers: 10)  shieldedWith: 3).
+	ships add:( Ship for: 'Player 3' startingAt: (Position atStartOfLapWithSquareNumbers: 10)  shieldedWith: 3).
 
 	anAtomicBombSquare := AtomicBombSquare new.
 

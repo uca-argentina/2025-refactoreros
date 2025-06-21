@@ -21,7 +21,7 @@ Position class >> at: aPosition and: aLap and: aLapLegth [
 ]
 
 { #category : 'accessing' }
-Position class >> atStartWith: aLapLegth [
+Position class >> atStartOfLapWithSquareNumbers: aLapLegth [
 
 	^ self new initializeWith: 1 and: 0 and: aLapLegth
 ]

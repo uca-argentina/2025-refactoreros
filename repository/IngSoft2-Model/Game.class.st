@@ -33,8 +33,16 @@ Game class >> checkValidLapCount: aNumberOfLaps [
 { #category : 'validation' }
 Game class >> checkValidShipNames: shipNames [
 
+	| duplicatedNames |
 	shipNames isNotEmpty ifFalse: [
-		Error signal: 'At least one ship is required' ]
+		Error signal: 'At least one ship is required' ].
+
+	duplicatedNames := shipNames copy asSet select: [ :aName |
+		                   (shipNames occurrencesOf: aName) > 1 ].
+
+	duplicatedNames ifNotEmpty: [
+		Error signal:
+			duplicatedNames asCommaStringAnd , ' listed more than once' ]
 ]
 
 { #category : 'validation' }
@@ -47,13 +55,19 @@ Game class >> checkValidSquareCount: aSquareCount [
 { #category : 'intialization' }
 Game class >> gamePlayedBy: shipNames rolling: dice and: aLapCount withABoard: squares [
 
+	| ships |
 	self checkValidDice: dice.
 	self checkValidSquareCount: squares size.
 	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapCount.
 
+	ships := Ship
+		         forMultiple: shipNames
+		         allStartingAt: (Position atStartOfLapWithSquareNumbers: squares size)
+		         andAllShieldedWith: 3.
+
 	^ self new
-		  initializeWith: shipNames
+		  initializeWith: ships
 		  rolling: dice
 		  with: squares size
 		  and: aLapCount
@@ -63,15 +77,21 @@ Game class >> gamePlayedBy: shipNames rolling: dice and: aLapCount withABoard: s
 { #category : 'intialization' }
 Game class >> gamePlayedBy: shipNames rolling: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
 
-	| squares |
+	| squares ships|
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
 	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapCount.
 
 	squares := squareGenerator createSquares: aSquareCount.
+	
+	ships := Ship
+		         forMultiple: shipNames
+		         allStartingAt: (Position atStartOfLapWithSquareNumbers: squares size)
+		         andAllShieldedWith: 3.
+		
 	^ self new
-		  initializeWith: shipNames
+		  initializeWith: ships
 		  rolling: dice
 		  with: aSquareCount
 		  and: aLapCount

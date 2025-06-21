@@ -12,7 +12,7 @@ BlackHoleSquareTest >> testB01WhenAShipLandsOnABlackHoleSquareAndItsPositionDecr
 	| aBlackHoleSquare ships|
 	
 	ships := OrderedCollection new.
-	ships add: (Ship for: 'Player 1' startingAt: (Position at: 6 and: 0 and: 10)  with: 3).
+	ships add: (Ship for: 'Player 1' startingAt: (Position at: 6 and: 0 and: 10)  shieldedWith: 3).
 
 	aBlackHoleSquare := BlackHoleSquare new.
 
