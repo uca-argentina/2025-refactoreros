@@ -300,9 +300,8 @@ GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 
-	self
-		assert: ((aGame rank: shipNames) at: 1)
-		equals: (shipNames at: 2)
+	self assert: (aGame rankingOf: (shipNames at: 1)) equals: 2.
+	self assert: (aGame rankingOf: (shipNames at: 2)) equals: 1
 ]
 
 { #category : 'tests' }

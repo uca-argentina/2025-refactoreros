@@ -25,7 +25,7 @@ Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShiel
 Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWith: aNumberOfShields [
 
 	^ (playerNames collect: [ :aPlayerName |
-		  self for: aPlayerName startingAt: aPosition shieldedWith: aNumberOfShields ]) asOrderedCollection 
+		  self for: aPlayerName startingAt: aPosition shieldedWith: aNumberOfShields ]) asOrderedCollection
 ]
 
 { #category : 'actions' }

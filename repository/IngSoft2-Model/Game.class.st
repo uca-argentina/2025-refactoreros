@@ -190,6 +190,15 @@ Game >> rank: aSetOfShips [
 	^ OrderedCollection withAll: shipsOrderedByRanking
 ]
 
+{ #category : 'accessing' }
+Game >> rankingOf: aShipName [
+
+	| queriedShip |
+	self checkIfShipExists: aShipName.
+	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	^ (self rank: ships) indexOf: queriedShip
+]
+
 { #category : 'actions' }
 Game >> rollDice [
 

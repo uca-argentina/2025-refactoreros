@@ -20,7 +20,7 @@ AtomicBombSquareTest >> should: anErrorBlock raise: errorClass withMessageText: 
 AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsReturnsToFirstSquare [
 
 	| anAtomicBombSquare ships |
-	
+
 	ships := OrderedCollection new.
 	ships add:( Ship for: 'Player 1' startingAt: (Position at: 5 and: 0 and: 10)  shieldedWith: 3).
 	ships add:( Ship for: 'Player 2' startingAt: (Position at: 3 and: 0 and: 10)  shieldedWith: 3).
@@ -31,9 +31,8 @@ AtomicBombSquareTest >> testB01WhenAShipLandsOnAnAtomicBombSquareThenAllShipsRet
 	anAtomicBombSquare
 		applyEffectTo: ships
 		forShip: (ships at: 1).
-		
-	self assert: (ships allSatisfy: [ :ship | ship position square = 1 ])
 
+	self assert: (ships allSatisfy: [ :ship | ship position square = 1 ])
 ]
 
 { #category : 'tests' }
