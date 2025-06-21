@@ -27,7 +27,7 @@ ShipManager >> checkBattles: aShip on: aBoard [
 
 	otherShips do: [ :anotherShip |
 		(anotherShip isAtTheSameSquareAs: aShip) ifTrue: [
-			loserShip := aShip battle: anotherShip with: aBoard.
+			loserShip := aShip battle: anotherShip on: aBoard.
 			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]

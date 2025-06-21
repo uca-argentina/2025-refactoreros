@@ -29,7 +29,7 @@ Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWi
 ]
 
 { #category : 'actions' }
-Ship >> battle: anotherShip with: aBoard [
+Ship >> battle: anotherShip on: aBoard [
 
 	| rollA rollB loserShip |
 	rollA := aBoard rollDice.

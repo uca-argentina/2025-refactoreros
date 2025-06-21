@@ -19,18 +19,19 @@ GameTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage
 { #category : 'tests' }
 GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 
-	| aGame dice squareGenerator shipNames |
+	| aGame dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: 10
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+		
 	shipNames := #( 'Player 1' ).
-	
-	aGame := Game
-		         gamePlayedBy: shipNames
-		         rolling: dice
-		         with: 10
-		         and: 1
-		         withABoardGeneratedBy: squareGenerator.
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
 	aGame play.
 	self assert: aGame winner equals: 'Player 1'
 ]

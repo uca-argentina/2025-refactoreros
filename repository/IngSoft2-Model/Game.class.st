@@ -5,7 +5,6 @@ Class {
 	#name : 'Game',
 	#superclass : 'Object',
 	#instVars : [
-		'dice',
 		'lapsGoal',
 		'shipManager',
 		'ships',
@@ -53,21 +52,19 @@ Game class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: shipNames rolling: dice on: aBoard [
+Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal [
 
 	| ships |
-	self checkValidDice: dice.
 	self checkValidShipNames: shipNames.
 
 	ships := Ship
 		         forMultiple: shipNames
-		         allStartingAt: (Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares )
+		         allStartingAt:
+		         (Position atStartOfLapWithSquareNumbers:
+			          aBoard numberOfSquares)
 		         andAllShieldedWith: 3.
 
-	^ self new
-		  initializeWith: ships
-		  rolling: dice
-		  on: aBoard 
+	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
 
 { #category : 'actions' }
@@ -92,13 +89,12 @@ Game >> checkIfShipExists: queriedShipName [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: aSetOfships rolling: aDiceSet on: aBoard toPlayFor: aNumberOfLaps [
+Game >> initializeWith: aSetOfships on: aBoard toPlayFor: aNumberOfLaps [
 
 	ships := aSetOfships deepCopy.
 	lapsGoal := aNumberOfLaps.
-	shipManager := ShipManager
-		               withShips: ships.
-	dice := aDiceSet deepCopy.
+	shipManager := ShipManager withShips: ships.
+	board := aBoard
 ]
 
 { #category : 'accessing' }
@@ -125,7 +121,7 @@ Game >> play [
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	self checkIfAllowedToPlay: aShip.
-	diceOutcome := self rollDice.
+	diceOutcome := board rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
 	nextSquare := board squareAt: aShip boardPosition.
 	shipManager landShip: aShip atSquare: nextSquare on: board
