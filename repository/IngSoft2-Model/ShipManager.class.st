@@ -1,21 +1,23 @@
+"
+A Game collaborator that handles all Ship movements, battles and Square effect applications.
+"
 Class {
 	#name : 'ShipManager',
 	#superclass : 'Object',
 	#instVars : [
-		'lapLength',
 		'shipList',
 		'shipTurnSkips',
 		'dice'
 	],
-	#category : 'IngSoft2-Model-game',
+	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
-	#tag : 'game'
+	#tag : 'Game'
 }
 
 { #category : 'initialization' }
-ShipManager class >> withShips: aShipList andLapLenght: aLapLength andDice: aDice [
+ShipManager class >> withShips: aShipList andDice: aDice [
 
-	^ self new initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice
+	^ self new initializeWithShips: aShipList andDice: aDice
 ]
 
 { #category : 'actions' }
@@ -27,16 +29,10 @@ ShipManager >> checkBattles: aShip [
 	otherShips do: [ :ship |
 		(ship position hasEqualPosition: aShip position) ifTrue: [
 			loserShip := aShip battle: ship with: dice.
-			loserShip loseAShield.
+			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
 
-]
-
-{ #category : 'testing' }
-ShipManager >> hasAnyShipReachedLaps: lapsGoal [
-
-	^ shipList anySatisfy: [ :ship | ship hasReachedLap: lapsGoal ]
 ]
 
 { #category : 'testing' }
@@ -56,12 +52,10 @@ ShipManager >> hasTurnSkips: aShip [
 ]
 
 { #category : 'initialization' }
-ShipManager >> initializeWithShips: aShipList andLapLength: aLapLength andDice: aDice [
+ShipManager >> initializeWithShips: aSetOfShips andDice: aDice [
 
-	shipList := aShipList copy.
-	lapLength := aLapLength.
+	shipList := aSetOfShips copy.
 	dice := aDice.
-
 	shipTurnSkips := Dictionary new.
 	shipList do: [ :aShip | shipTurnSkips at: aShip put: 0 ]
 ]
@@ -78,31 +72,4 @@ ShipManager >> moveShip: aShip to: diceResult [
 
 	aShip moveForwardBy: diceResult
 	
-]
-
-{ #category : 'accessing' }
-ShipManager >> shipLap: anotherShip [
-
-	| aShip |
-	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no such ship at current game' ].
-
-	^ aShip position lap
-]
-
-{ #category : 'accessing' }
-ShipManager >> shipPosition: anotherShip [
-
-	| aShip |
-	aShip := shipList detect: [ :ship | ship = anotherShip ] ifNone: [ Error signal: 'There is no such ship at current game' ].
-
-	^ aShip position square
-]
-
-{ #category : 'accessing' }
-ShipManager >> winner [
-
-	| rankedShips |
-	rankedShips := shipList asSortedCollection: [ :aShip :anotherShip |
-		               aShip position square > anotherShip position square ].
-	^ (rankedShips at: 1) playerName
 ]

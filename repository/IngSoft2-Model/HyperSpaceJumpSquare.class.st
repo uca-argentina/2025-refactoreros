@@ -13,5 +13,5 @@ Class {
 HyperSpaceJumpSquare >> applyEffectTo: shipList forShip: aShip [
 
 	aShip moveForwardBy: 4.
-	aShip loseAShield
+	aShip breakAShield
 ]

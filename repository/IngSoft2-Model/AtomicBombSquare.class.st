@@ -14,5 +14,5 @@ AtomicBombSquare >> applyEffectTo: shipList forShip: aShip [
 
 	shipList do: [ :ship |
 		ship goToFirstSquare.
-		ship loseAShield ]
+		ship breakAShield ]
 ]

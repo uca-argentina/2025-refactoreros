@@ -16,7 +16,6 @@ ShipManagerTest >> testB01WhenAShipDecidesToSkipTurnAndItsNextTurnIsSkippedThenV
 
 	aShipManager := ShipManager
 		                withShips: aShipList
-		                andLapLenght: 10
 		                andDice: dice.
 
 	aShipManager skipTurnAndRechargeShields: (aShipList at: 1).

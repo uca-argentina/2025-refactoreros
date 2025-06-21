@@ -27,7 +27,7 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 	ships add:( Ship for:'Player 1' startingAt: (Position atStartWith: 10)  with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
@@ -47,7 +47,7 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 	ships add:( Ship for:'Player 2' startingAt: (Position atStartWith: 10)  with: 3).
 		aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
@@ -67,13 +67,13 @@ GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOne
 	ships add: (Ship for: 'Player 2' startingAt: (Position atStartWith: 10) with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
 	
-	self deny: (aGame shipPosition: (ships at: 1)) >= 10
+	self deny: (aGame positionOf: (ships at: 1)) >= 10
 ]
 
 { #category : 'tests' }
@@ -87,14 +87,14 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
 	
 	self
-		should: [ aGame shipPosition: 'Player 2' ]
+		should: [ aGame positionOf: 'Player 2' ]
 		raise: Error
 		withMessageText: 'There is no such ship at current game'
 ]
@@ -110,14 +110,14 @@ GameTest >> testA05WhenBoardGameIsAskedForThePositionOfAnInexistingShipThenFails
 	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
 	
 	self
-		should: [ aGame shipPosition: 'Player 2' ]
+		should: [ aGame positionOf: 'Player 2' ]
 		raise: Error
 		withMessageText: 'There is no such ship at current game'
 ]
@@ -134,7 +134,7 @@ GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 		should: [
 			Game
 				gamePlayedBy: ships
-				throwing: dice
+				rolling: dice
 				with: 10
 				and: 1
 				withABoardGeneratedBy: squareGenerator ]
@@ -153,7 +153,7 @@ GameTest >> testA07WhenAGameIsCreatedWithZeroDieThenFails [
 		should: [
 			Game
 				gamePlayedBy: ships
-				throwing: dice
+				rolling: dice
 				with: 10
 				and: 1
 				withABoardGeneratedBy: squareGenerator  ]
@@ -173,7 +173,7 @@ GameTest >> testA08WhenGameIsCreatedWithLessThanTwoSquaresThenFails [
 		should: [
 			Game
 				gamePlayedBy: ships
-				throwing: dice
+				rolling: dice
 				with: 0
 				and: 1
 				withABoardGeneratedBy: squareGenerator  ]
@@ -192,7 +192,7 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 	ships add: (Ship for: 'Player 1' startingAt: (Position atStartWith: 10) with: 3).
 		aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
@@ -215,7 +215,7 @@ GameTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 3
 		         withABoardGeneratedBy: squareGenerator.
@@ -238,13 +238,13 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 
 		aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
 	
-	self assert: (aGame shipLap: (ships at: 1)) equals: 1
+	self assert: (aGame lapCountOf: (ships at: 1)) equals: 1
 ]
 
 { #category : 'tests' }
@@ -261,12 +261,12 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 
 		aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
-	self assert: (aGame shipPosition: (ships at: 1)) equals: 6
+	self assert: (aGame positionOf: (ships at: 1)) equals: 6
 ]
 
 { #category : 'tests' }
@@ -284,7 +284,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 		should: [
 			Game
 				gamePlayedBy: ships
-				throwing: dice
+				rolling: dice
 				with: 10
 				and: 0
 				withABoardGeneratedBy: squareGenerator ]
@@ -307,12 +307,12 @@ GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 	
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 
-	self assert: ((aGame shipRankings: ships) at: 1) equals: (ships at: 2)
+	self assert: ((aGame rank: ships) at: 1) equals: (ships at: 2)
 ]
 
 { #category : 'tests' }
@@ -330,11 +330,11 @@ GameTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThen
 
 	aGame := Game
 		         gamePlayedBy: ships
-		         throwing: dice
+		         rolling: dice
 		         with: 10
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 	aGame play.
 
-	self assert: (aGame shipPosition: aShip) equals: 3
+	self assert: (aGame positionOf: aShip) equals: 3
 ]

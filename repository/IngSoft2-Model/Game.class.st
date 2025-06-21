@@ -11,9 +11,9 @@ Class {
 		'squareList',
 		'ships'
 	],
-	#category : 'IngSoft2-Model-game',
+	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
-	#tag : 'game'
+	#tag : 'Game'
 }
 
 { #category : 'validation' }
@@ -45,7 +45,7 @@ Game class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoard: squares [
+Game class >> gamePlayedBy: ships rolling: dice with: aSquareCount and: aLapCount withABoard: squares [
 
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
@@ -54,14 +54,14 @@ Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCou
 
 	^ self new
 		  initializeWith: ships
-		  throwing: dice
+		  rolling: dice
 		  with: aSquareCount
 		  and: aLapCount
 		  withABoard: squares
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
+Game class >> gamePlayedBy: ships rolling: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
 
 	| squares |
 	self checkValidDice: dice.
@@ -72,13 +72,13 @@ Game class >> gamePlayedBy: ships throwing: dice with: aSquareCount and: aLapCou
 	squares := squareGenerator createSquares: aSquareCount.
 	^ self new
 		  initializeWith: ships
-		  throwing: dice
+		  rolling: dice
 		  with: aSquareCount
 		  and: aLapCount
 		  withABoard: squares
 ]
 
-{ #category : 'action' }
+{ #category : 'actions' }
 Game >> checkForActiveGame [
 
 	self isGameFinished ifTrue: [ Error signal: 'The game has finished' ].
@@ -86,28 +86,44 @@ Game >> checkForActiveGame [
 ]
 
 { #category : 'actions' }
-Game >> generateDiceResult [
+Game >> checkIfAllowedToPlay: aShip [
 
-	^ (dice collect: [ :die | die roll ]) sum
+	(shipManager hasTurnSkips: aShip) ifTrue: [
+		Error signal: aShip , ' must skip this turn' ]
+]
+
+{ #category : 'actions' }
+Game >> checkIfItsPartOfTheGame: queriedShip [
+
+	ships
+		detect: [ :aShip | aShip = queriedShip ]
+		ifNone: [ Error signal: 'There is no such ship at current game' ]
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: aSetOfShips throwing: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
+Game >> initializeWith: aSetOfShips rolling: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
 
 	ships := aSetOfShips.
 	lapsGoal := aLapCount.
 	shipManager := ShipManager
 		               withShips: aSetOfShips
-		               andLapLenght: aSquareList size
 		               andDice: aDice.
 	dice := aDice.
 	squareList := aSquareList
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 Game >> isGameFinished [
 
-	^ shipManager hasAnyShipReachedLaps: lapsGoal
+	^ ships anySatisfy: [ :ship | ship hasReachedLap: lapsGoal ]
+]
+
+{ #category : 'accessing' }
+Game >> lapCountOf: aShip [
+
+	self checkIfItsPartOfTheGame: aShip.
+
+	^ aShip position lap
 ]
 
 { #category : 'actions' }
@@ -115,46 +131,44 @@ Game >> play [
 
 	| diceOutcome nextSquare aShip |
 	self checkForActiveGame.
-	aShip := ships removeFirst.
-	(shipManager hasTurnSkips: aShip) ifTrue: [
-		Error signal: aShip , ' must skip this turn' ].
-	diceOutcome := self generateDiceResult.
+	aShip := ships addLast: ships removeFirst.
+	self checkIfAllowedToPlay: aShip.
+	diceOutcome := self rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
-	nextSquare := squareList at: (shipManager shipPosition: aShip).
-	shipManager landShip: aShip atSquare: nextSquare.
-	ships add: aShip
+	nextSquare := squareList at: (self positionOf: aShip).
+	shipManager landShip: aShip atSquare: nextSquare
 ]
 
 { #category : 'accessing' }
-Game >> shipLap: aShip [
+Game >> positionOf: aShip [
 
-	^ shipManager shipLap: aShip
+	self checkIfItsPartOfTheGame: aShip.
+
+	^ aShip position square
 ]
 
 { #category : 'accessing' }
-Game >> shipPosition: aShip [
+Game >> rank: aSetOfShips [
 
-	^ shipManager shipPosition: aShip
-]
-
-{ #category : 'accessing' }
-Game >> shipRankings: aSetOfShips [
 	| shipsOrderedByRanking |
-
-	shipsOrderedByRanking := aSetOfShips
-		sorted: [:aShip :anotherShip |
-		| lap1 lap2 pos1 pos2 |
-		lap1 := shipManager shipLap: aShip.
-		lap2 := shipManager shipLap: anotherShip.
-		lap1 = lap2
-			ifTrue: [
-				pos1 := shipManager shipPosition: aShip.
-				pos2 := shipManager shipPosition: anotherShip.
-				pos1 > pos2
-			]
-			ifFalse: [lap1 > lap2]].
+	shipsOrderedByRanking := aSetOfShips sorted: [ :aShip :anotherShip |
+		                         | lap1 lap2 pos1 pos2 |
+		                         lap1 := self lapCountOf: aShip.
+		                         lap2 := self lapCountOf: anotherShip.
+		                         lap1 = lap2
+			                         ifTrue: [
+				                         pos1 := self positionOf: aShip.
+				                         pos2 := self positionOf: anotherShip.
+				                         pos1 > pos2 ]
+			                         ifFalse: [ lap1 > lap2 ] ].
 
 	^ OrderedCollection withAll: shipsOrderedByRanking
+]
+
+{ #category : 'actions' }
+Game >> rollDice [
+
+	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'actions' }
@@ -162,15 +176,19 @@ Game >> skip [
 
 	| aShip |
 	self checkForActiveGame.
-	aShip := ships removeFirst.
-	shipManager skipTurnAndRechargeShields: aShip.
-	ships add: aShip
+	aShip := ships addLast: ships removeFirst.
+	shipManager skipTurnAndRechargeShields: aShip
 ]
 
 { #category : 'accessing' }
 Game >> winner [
 
+	| rankedShips |
 	self isGameFinished ifFalse: [
 		Error signal: 'The game is still being played' ].
-	^ shipManager winner
+
+	rankedShips := ships asSortedCollection: [ :aShip :anotherShip |
+		               aShip position square > anotherShip position square ].
+
+	^ (rankedShips at: 1) playerName
 ]

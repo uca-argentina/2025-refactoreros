@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'squaresWithProbability'
 	],
-	#category : 'IngSoft2-Model-game',
+	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
-	#tag : 'game'
+	#tag : 'Game'
 }
 
 { #category : 'adding' }

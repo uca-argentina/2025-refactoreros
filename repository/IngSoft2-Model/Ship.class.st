@@ -1,3 +1,6 @@
+"
+Represents a player of the Game. 
+"
 Class {
 	#name : 'Ship',
 	#superclass : 'Object',
@@ -7,9 +10,9 @@ Class {
 		'shields',
 		'maxShields'
 	],
-	#category : 'IngSoft2-Model-game',
+	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
-	#tag : 'game'
+	#tag : 'Game'
 }
 
 { #category : 'accessing' }
@@ -33,6 +36,14 @@ Ship >> battle: anotherShip with: aDice [
 	rollA > rollB ifTrue: [ loserShip := anotherShip ].
 
 	^ loserShip
+]
+
+{ #category : 'actions' }
+Ship >> breakAShield [
+
+	shields > 0 ifTrue: [
+		shields := shields - 1.
+		].
 ]
 
 { #category : 'actions' }
@@ -60,14 +71,6 @@ Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 	position := aPostion.
 	shields := aNumberOfShields.
 	maxShields := aNumberOfShields
-]
-
-{ #category : 'actions' }
-Ship >> loseAShield [
-
-	shields > 0 ifTrue: [
-		shields := shields - 1.
-		].
 ]
 
 { #category : 'actions' }
