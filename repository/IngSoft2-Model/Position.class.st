@@ -1,3 +1,6 @@
+"
+Encapsulates a ship's position at the Game board, and lap count. 
+"
 Class {
 	#name : 'Position',
 	#superclass : 'Object',
@@ -6,9 +9,9 @@ Class {
 		'lapLength',
 		'square'
 	],
-	#category : 'IngSoft2-Model-game',
+	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
-	#tag : 'game'
+	#tag : 'Game'
 }
 
 { #category : 'accessing' }
