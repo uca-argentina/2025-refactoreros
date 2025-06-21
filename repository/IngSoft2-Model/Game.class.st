@@ -93,17 +93,16 @@ Game >> checkIfAllowedToPlay: aShip [
 ]
 
 { #category : 'actions' }
-Game >> checkIfItsPartOfTheGame: queriedShip [
+Game >> checkIfShipExists: queriedShipName [
 
-	ships
-		detect: [ :aShip | aShip = queriedShip ]
-		ifNone: [ Error signal: 'There is no such ship at current game' ]
+	(ships anySatisfy: [ :aShip | aShip playerName = queriedShipName ])
+		ifFalse: [ Error signal: 'No ship by that name exists in the game' ]
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: shipNames rolling: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
+Game >> initializeWith: aSetOfships rolling: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
 
-	ships := shipNames.
+	ships := aSetOfships deepCopy.
 	lapsGoal := aLapCount.
 	shipManager := ShipManager
 		               withShips: ships
@@ -119,11 +118,14 @@ Game >> isGameFinished [
 ]
 
 { #category : 'accessing' }
-Game >> lapCountOf: aShip [
+Game >> lapCountOf: aShipName [
 
-	self checkIfItsPartOfTheGame: aShip.
+	| queriedShip |
+	self checkIfShipExists: aShipName.
 
-	^ aShip position lap
+	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+
+	^ queriedShip position lap
 ]
 
 { #category : 'actions' }
@@ -135,16 +137,19 @@ Game >> play [
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := self rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
-	nextSquare := squareList at: (self positionOf: aShip).
+	nextSquare := squareList at: aShip position square.
 	shipManager landShip: aShip atSquare: nextSquare
 ]
 
 { #category : 'accessing' }
-Game >> positionOf: aShip [
+Game >> positionOf: aShipName [
 
-	self checkIfItsPartOfTheGame: aShip.
+	| queriedShip |
+	self checkIfShipExists: aShipName.
 
-	^ aShip position square
+	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+
+	^ queriedShip position square
 ]
 
 { #category : 'accessing' }
@@ -153,12 +158,12 @@ Game >> rank: aSetOfShips [
 	| shipsOrderedByRanking |
 	shipsOrderedByRanking := aSetOfShips sorted: [ :aShip :anotherShip |
 		                         | lap1 lap2 pos1 pos2 |
-		                         lap1 := self lapCountOf: aShip.
-		                         lap2 := self lapCountOf: anotherShip.
+		                         lap1 := aShip position lap.
+		                         lap2 := anotherShip position lap.
 		                         lap1 = lap2
 			                         ifTrue: [
-				                         pos1 := self positionOf: aShip.
-				                         pos2 := self positionOf: anotherShip.
+				                         pos1 := aShip position square.
+				                         pos2 := anotherShip position square.
 				                         pos1 > pos2 ]
 			                         ifFalse: [ lap1 > lap2 ] ].
 
@@ -183,12 +188,8 @@ Game >> skip [
 { #category : 'accessing' }
 Game >> winner [
 
-	| rankedShips |
 	self isGameFinished ifFalse: [
 		Error signal: 'The game is still being played' ].
 
-	rankedShips := ships asSortedCollection: [ :aShip :anotherShip |
-		               aShip position square > anotherShip position square ].
-
-	^ (rankedShips at: 1) playerName
+	^ ((self rank: ships) at: 1) playerName
 ]

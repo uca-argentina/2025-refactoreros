@@ -45,6 +45,12 @@ Ship >> battle: anotherShip with: aDice [
 	^ loserShip
 ]
 
+{ #category : 'accessing' }
+Ship >> boardPosition [
+
+	^ position square
+]
+
 { #category : 'actions' }
 Ship >> breakAShield [
 
@@ -78,6 +84,18 @@ Ship >> initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields [
 	position := aPostion.
 	shields := aNumberOfShields.
 	maxShields := aNumberOfShields
+]
+
+{ #category : 'accessing' }
+Ship >> isAtTheSameSquareAs: anotherShip [
+
+	^ position hasEqualPosition: anotherShip position
+]
+
+{ #category : 'accessing' }
+Ship >> lapCount [
+
+	^ position lap
 ]
 
 { #category : 'actions' }
