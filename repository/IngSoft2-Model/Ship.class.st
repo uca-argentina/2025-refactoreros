@@ -21,6 +21,13 @@ Ship class >> for: aPlayerName startingAt: aPostion with: aNumberOfShields [
 	^ self new initializeFor: aPlayerName startingAt: aPostion with: aNumberOfShields
 ]
 
+{ #category : 'accessing' }
+Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllWith: aNumberOfShields [
+
+	^ (playerNames collect: [ :aPlayerName |
+		  self for: aPlayerName startingAt: aPosition with: aNumberOfShields ]) asOrderedCollection 
+]
+
 { #category : 'actions' }
 Ship >> battle: anotherShip with: aDice [
 

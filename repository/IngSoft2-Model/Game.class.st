@@ -31,9 +31,9 @@ Game class >> checkValidLapCount: aNumberOfLaps [
 ]
 
 { #category : 'validation' }
-Game class >> checkValidShips: aShipList [
+Game class >> checkValidShipNames: shipNames [
 
-	aShipList isNotEmpty ifFalse: [
+	shipNames isNotEmpty ifFalse: [
 		Error signal: 'At least one ship is required' ]
 ]
 
@@ -45,33 +45,33 @@ Game class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: ships rolling: dice with: aSquareCount and: aLapCount withABoard: squares [
+Game class >> gamePlayedBy: shipNames rolling: dice and: aLapCount withABoard: squares [
 
 	self checkValidDice: dice.
-	self checkValidSquareCount: aSquareCount.
-	self checkValidShips: ships.
+	self checkValidSquareCount: squares size.
+	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapCount.
 
 	^ self new
-		  initializeWith: ships
+		  initializeWith: shipNames
 		  rolling: dice
-		  with: aSquareCount
+		  with: squares size
 		  and: aLapCount
 		  withABoard: squares
 ]
 
 { #category : 'intialization' }
-Game class >> gamePlayedBy: ships rolling: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
+Game class >> gamePlayedBy: shipNames rolling: dice with: aSquareCount and: aLapCount withABoardGeneratedBy: squareGenerator [
 
 	| squares |
 	self checkValidDice: dice.
 	self checkValidSquareCount: aSquareCount.
-	self checkValidShips: ships.
+	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapCount.
 
 	squares := squareGenerator createSquares: aSquareCount.
 	^ self new
-		  initializeWith: ships
+		  initializeWith: shipNames
 		  rolling: dice
 		  with: aSquareCount
 		  and: aLapCount
@@ -101,15 +101,15 @@ Game >> checkIfItsPartOfTheGame: queriedShip [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: aSetOfShips rolling: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
+Game >> initializeWith: shipNames rolling: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
 
-	ships := aSetOfShips.
+	ships := shipNames.
 	lapsGoal := aLapCount.
 	shipManager := ShipManager
-		               withShips: aSetOfShips
+		               withShips: ships
 		               andDice: aDice.
-	dice := aDice.
-	squareList := aSquareList
+	dice := aDice deepCopy.
+	squareList := aSquareList deepCopy
 ]
 
 { #category : 'accessing' }
