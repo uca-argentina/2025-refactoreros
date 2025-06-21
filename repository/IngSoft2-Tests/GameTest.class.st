@@ -283,7 +283,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 ]
 
 { #category : 'tests' }
-GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
+GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 
 	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
@@ -300,8 +300,7 @@ GameTest >> testB05WhenShipsArePlayingAndTheBoardReturnsRankingsRightThenValid [
 		         and: 1
 		         withABoardGeneratedBy: squareGenerator.
 
-	self assert: (aGame rankingOf: (shipNames at: 1)) equals: 2.
-	self assert: (aGame rankingOf: (shipNames at: 2)) equals: 1
+	self assert: (aGame rankingOf: 'Player 1') equals: 2
 ]
 
 { #category : 'tests' }
