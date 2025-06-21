@@ -325,7 +325,7 @@ GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenV
 
 	| aGame dice aSetOfSquares shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDie withSetNumbers: #( 2 4 3 2 1 2 1)).
+	dice add: (LoadedDie withSetNumbers: #( 2 4 3 2 1 2 1 )).
 	aSetOfSquares := {
 		                 EmptySquare new.
 		                 EmptySquare new.
@@ -347,4 +347,152 @@ GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenV
 	aGame play.
 
 	self assert: (aGame positionOf: 'Player 1') equals: 1
+]
+
+{ #category : 'tests' }
+GameTest >> testB07WhenAShipLandsOnAtomicBombAndAllShipsLoseAShieldThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 4 3 2 1 2 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 AtomicBombSquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 1') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testB08WhenAShipLandsOnBlackHoleAndGoesBack4SquaresThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 5 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 BlackHoleSquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testB09WhenAShipLandsOnHyperSpaceJumpAndAdvances4SquaresThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 HyperSpaceJumpSquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 6
+]
+
+{ #category : 'tests' }
+GameTest >> testB10WhenAShipLandsOnHyperSpaceJumpAndLoseAShieldThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 HyperSpaceJumpSquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 1') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testB11WhenAShipLandsOnMoonWalkAndOtherShipsGoBackThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 4 3 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (MoonWalkSquare withBackwardsPush: 2).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4
 ]
