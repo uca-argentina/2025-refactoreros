@@ -14,11 +14,28 @@ Class {
 	#tag : 'Game'
 }
 
+{ #category : 'validation' }
+Board class >> checkValidDice: aDiceCollection [
+
+	aDiceCollection isNotEmpty ifFalse: [
+		Error signal: 'At least one die is required' ]
+]
+
+{ #category : 'validation' }
+Board class >> checkValidSquareCount: aSquareCount [
+
+    aSquareCount >= 2 ifFalse: [
+        Error signal: 'Square count should be equal or higher than 2' ]
+]
+
 { #category : 'instance creation' }
 Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTotalDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
 
 	| aSetOfSquares |
 	aSetOfSquares := aSquareGenerator createSquares: aNumberOfSquares.
+	
+	self checkValidDice: aDiceSet.
+	self checkValidSquareCount: aNumberOfSquares.
 
 	^ self new
 		  initializePopulatedOf: aSetOfSquares
@@ -28,6 +45,8 @@ Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTo
 
 { #category : 'instance creation' }
 Board class >> populatedOf: aSetOfSquares withTotalDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
+
+	self checkValidDice: aDiceSet.
 
 	^ self new
 		  initializePopulatedOf: aSetOfSquares

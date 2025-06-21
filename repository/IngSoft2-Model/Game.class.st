@@ -16,17 +16,10 @@ Class {
 }
 
 { #category : 'validation' }
-Game class >> checkValidDice: aDiceCollection [
-
-	aDiceCollection isNotEmpty ifFalse: [
-		Error signal: 'At least one die is required' ]
-]
-
-{ #category : 'validation' }
 Game class >> checkValidLapCount: aNumberOfLaps [
 
-	aNumberOfLaps >= 1 ifFalse: [
-		Error signal: 'Lap count must be equal or higher than 1' ]
+    aNumberOfLaps >= 1 ifFalse: [
+        Error signal: 'Lap count must be equal or higher than 1' ]
 ]
 
 { #category : 'validation' }
@@ -44,18 +37,12 @@ Game class >> checkValidShipNames: shipNames [
 			duplicatedNames asCommaStringAnd , ' listed more than once' ]
 ]
 
-{ #category : 'validation' }
-Game class >> checkValidSquareCount: aSquareCount [
-
-	aSquareCount >= 2 ifFalse: [
-		Error signal: 'Square count should be equal or higher than 2' ]
-]
-
 { #category : 'intialization' }
 Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal [
 
 	| ships |
 	self checkValidShipNames: shipNames.
+	self checkValidLapCount: aLapGoal.
 
 	ships := Ship
 		         forMultiple: shipNames
