@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'squares',
-		'parsecs'
+		'parsecs',
+		'dice'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -14,7 +15,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTotalDistanceOf: aNumberOfParsecs [
+Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTotalDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
 
 	| aSetOfSquares |
 	aSetOfSquares := aSquareGenerator createSquares: aNumberOfSquares.
@@ -22,27 +23,42 @@ Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTo
 	^ self new
 		  initializePopulatedOf: aSetOfSquares
 		  withDistanceOf: aNumberOfParsecs
+		  toBePlayedOnRolling: aDiceSet
 ]
 
 { #category : 'instance creation' }
-Board class >> populatedOf: aSetOfSquares withTotalDistanceOf: aNumberOfParsecs [
+Board class >> populatedOf: aSetOfSquares withTotalDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
 
 	^ self new
 		  initializePopulatedOf: aSetOfSquares
 		  withDistanceOf: aNumberOfParsecs
+		  toBePlayedOnRolling: aDiceSet
 ]
 
 { #category : 'initialization' }
-Board >> initializePopulatedOf: aSetOfSquares withDistanceOf: aNumberOfParsecs [
+Board >> initializePopulatedOf: aSetOfSquares withDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
 
 	squares := aSetOfSquares deepCopy.
 	parsecs := aNumberOfParsecs.
+	dice := aDiceSet
 ]
 
 { #category : 'accessing' }
 Board >> numberOfSquares [
 
 	^ squares size
+]
+
+{ #category : 'accessing' }
+Board >> parsecsPerSquare [
+	
+	^ parsecs / (squares size)
+]
+
+{ #category : 'actions' }
+Board >> rollDice [
+
+	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'accessing' }

@@ -128,7 +128,7 @@ Game >> play [
 	diceOutcome := self rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
 	nextSquare := board squareAt: aShip boardPosition.
-	shipManager landShip: aShip atSquare: nextSquare rolling: dice
+	shipManager landShip: aShip atSquare: nextSquare on: board
 ]
 
 { #category : 'accessing' }
@@ -167,12 +167,6 @@ Game >> rankingOf: aShipName [
 	self checkIfShipExists: aShipName.
 	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
 	^ (self rank: ships) indexOf: queriedShip
-]
-
-{ #category : 'actions' }
-Game >> rollDice [
-
-	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'actions' }

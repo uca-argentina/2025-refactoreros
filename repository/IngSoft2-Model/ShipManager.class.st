@@ -20,14 +20,14 @@ ShipManager class >> withShips: aShipList [
 ]
 
 { #category : 'actions' }
-ShipManager >> checkBattles: aShip rolling: aDiceSet [
+ShipManager >> checkBattles: aShip on: aBoard [
 
 	| otherShips loserShip |
 	otherShips := gameShips reject: [ :ship | ship = aShip ].
 
 	otherShips do: [ :anotherShip |
 		(anotherShip isAtTheSameSquareAs: aShip) ifTrue: [
-			loserShip := aShip battle: anotherShip with: aDiceSet.
+			loserShip := aShip battle: anotherShip with: aBoard.
 			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
@@ -58,10 +58,10 @@ ShipManager >> initializeWithShips: aSetOfShips [
 ]
 
 { #category : 'actions' }
-ShipManager >> landShip: aShip atSquare: nextSquare rolling: aDiceSet [
+ShipManager >> landShip: aShip atSquare: nextSquare on: aBoard [
 
 	nextSquare applyEffectTo: gameShips forShip: aShip.
-	self checkBattles: aShip rolling: aDiceSet
+	self checkBattles: aShip on: aBoard
 ]
 
 { #category : 'actions' }

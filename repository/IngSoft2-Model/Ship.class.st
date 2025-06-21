@@ -29,15 +29,15 @@ Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWi
 ]
 
 { #category : 'actions' }
-Ship >> battle: anotherShip with: aDice [
+Ship >> battle: anotherShip with: aBoard [
 
 	| rollA rollB loserShip |
-	rollA := aDice roll.
-	rollB := aDice roll.
+	rollA := aBoard rollDice.
+	rollB := aBoard rollDice.
 
 	[ rollA = rollB ] whileTrue: [
-		rollA := aDice roll.
-		rollB := aDice roll ].
+		rollA := aBoard rollDice.
+		rollB := aBoard rollDice ].
 
 	loserShip := self.
 	rollA > rollB ifTrue: [ loserShip := anotherShip ].
