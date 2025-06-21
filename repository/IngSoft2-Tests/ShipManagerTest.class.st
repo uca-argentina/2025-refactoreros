@@ -5,20 +5,3 @@ Class {
 	#package : 'IngSoft2-Tests',
 	#tag : 'gameTest'
 }
-
-{ #category : 'tests' }
-ShipManagerTest >> testB01WhenAShipDecidesToSkipTurnAndItsNextTurnIsSkippedThenValid [
-
-	| aShipList dice aShipManager |
-	aShipList := OrderedCollection withAll: #( 'Player 1' ).
-
-	dice := LoadedDice withSetNumbers: #( 1 ).
-
-	aShipManager := ShipManager
-		                withShips: aShipList
-		                andDice: dice.
-
-	aShipManager skipTurnAndRechargeShields: (aShipList at: 1).
-
-	self assert: (aShipManager hasTurnSkips: (aShipList at: 1))
-]

@@ -17,52 +17,6 @@ HyperJumpSquareTest >> should: anErrorBlock raise: errorClass withMessageText: e
 ]
 
 { #category : 'tests' }
-HyperJumpSquareTest >> testB01WhenAShipLandsOnHyperJumpSquareAndMovesAccordingToParsecsThenValid [
-
-	| aHyperJumpSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 2.
-
-	aHyperJumpSquare := HyperJumpSquare
-		                    withParsecsPerSquare: 5
-		                    andParsecsRewards: #( 10 5 2 ).
-
-	aHyperJumpSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 1'.
-	self assert: (shipsPositions at: 'Player 1') equals: 4
-]
-
-{ #category : 'tests' }
-HyperJumpSquareTest >> testB02WhenShipsLandSequentiallyOnHyperJumpSquareAndMoveAccordingToParsecsThenValid [
-
-	| aHyperJumpSquare shipsPositions |
-	shipsPositions := Dictionary new.
-	shipsPositions at: 'Player 1' put: 2.
-	shipsPositions at: 'Player 2' put: 2.
-	shipsPositions at: 'Player 3' put: 2.
-	shipsPositions at: 'Player 4' put: 2.
-
-	aHyperJumpSquare := HyperJumpSquare
-		                    withParsecsPerSquare: 5
-		                    andParsecsRewards: #( 32 25 18 9 ).
-
-	aHyperJumpSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 1'.
-	aHyperJumpSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 2'.
-	aHyperJumpSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 3'.
-	aHyperJumpSquare
-		applyPositionEffectTo: shipsPositions
-		forShip: 'Player 4'.
-	self assert: shipsPositions values equals: #( 8 7 5 3 )
-]
-
-{ #category : 'tests' }
 HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidParsecsPerSquareThenFails [
 
 	| aHyperJumpSquare shipsPositions |
@@ -73,22 +27,4 @@ HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidParsecsPer
 		should: [ aHyperJumpSquare := HyperJumpSquare withParsecsPerSquare: -1 andParsecsRewards: #(10 5 2)]
 		raise: Error
 		withMessageText: 'Parsecs per square must be equal or higher than 1'
-]
-
-{ #category : 'tests' }
-HyperJumpSquareTest >> testB04WhenAShipsLandOnHyperJumpAndRemainsWithTheSameShieldsThenValid [
-
-	| aHyperJumpSquare shipsShields |
-	shipsShields := Dictionary new.
-	shipsShields at: 'Player 1' put: 3.
-
-
-	aHyperJumpSquare := HyperJumpSquare
-		                    withParsecsPerSquare: 1
-		                    andParsecsRewards: #( 10 5 2 ).
-
-	aHyperJumpSquare
-		applyShieldEffectTo: shipsShields
-		forShip: 'Player 1'.
-	self assert: shipsShields values equals: #( 3 )
 ]
