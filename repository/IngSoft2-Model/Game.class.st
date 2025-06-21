@@ -93,15 +93,14 @@ Game >> checkIfShipExists: queriedShipName [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: aSetOfships rolling: aDice with: aSquareCount and: aLapCount withABoard: aSquareList [
+Game >> initializeWith: aSetOfships rolling: aDiceSet on: aBoard toPlayFor: aNumberOfLaps [
 
 	ships := aSetOfships deepCopy.
-	lapsGoal := aLapCount.
+	lapsGoal := aNumberOfLaps.
 	shipManager := ShipManager
 		               withShips: ships
-		               andDice: aDice.
-	dice := aDice deepCopy.
-	squareList := aSquareList deepCopy
+		               andDice: aDiceSet.
+	dice := aDiceSet deepCopy.
 ]
 
 { #category : 'accessing' }

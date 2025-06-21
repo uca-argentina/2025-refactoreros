@@ -44,3 +44,9 @@ Board >> numberOfSquares [
 
 	^ squares size
 ]
+
+{ #category : 'accessing' }
+Board >> squareAt: aPosition [
+	
+	^ squares at: aPosition 
+]
