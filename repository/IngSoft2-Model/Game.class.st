@@ -145,7 +145,7 @@ Game >> lapCountOf: aShipName [
 
 	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
 
-	^ queriedShip position lap
+	^ queriedShip lapCount 
 ]
 
 { #category : 'actions' }
@@ -157,7 +157,7 @@ Game >> play [
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := self rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
-	nextSquare := squareList at: aShip position square.
+	nextSquare := squareList at: aShip boardPosition.
 	shipManager landShip: aShip atSquare: nextSquare
 ]
 
@@ -169,7 +169,7 @@ Game >> positionOf: aShipName [
 
 	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
 
-	^ queriedShip position square
+	^ queriedShip boardPosition
 ]
 
 { #category : 'accessing' }
@@ -178,12 +178,12 @@ Game >> rank: aSetOfShips [
 	| shipsOrderedByRanking |
 	shipsOrderedByRanking := aSetOfShips sorted: [ :aShip :anotherShip |
 		                         | lap1 lap2 pos1 pos2 |
-		                         lap1 := aShip position lap.
-		                         lap2 := anotherShip position lap.
+		                         lap1 := aShip lapCount.
+		                         lap2 := anotherShip boardPosition.
 		                         lap1 = lap2
 			                         ifTrue: [
-				                         pos1 := aShip position square.
-				                         pos2 := anotherShip position square.
+				                         pos1 := aShip boardPosition.
+				                         pos2 := anotherShip boardPosition.
 				                         pos1 > pos2 ]
 			                         ifFalse: [ lap1 > lap2 ] ].
 

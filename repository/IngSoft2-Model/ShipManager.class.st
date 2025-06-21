@@ -26,13 +26,12 @@ ShipManager >> checkBattles: aShip [
 	| otherShips loserShip |
 	otherShips := gameShips reject: [ :ship | ship = aShip ].
 
-	otherShips do: [ :ship |
-		(ship position hasEqualPosition: aShip position) ifTrue: [
-			loserShip := aShip battle: ship with: dice.
+	otherShips do: [ :anotherShip |
+		(anotherShip isAtTheSameSquareAs: aShip) ifTrue: [
+			loserShip := aShip battle: anotherShip with: dice.
 			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
-
 ]
 
 { #category : 'testing' }
