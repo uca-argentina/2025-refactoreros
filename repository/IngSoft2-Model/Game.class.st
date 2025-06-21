@@ -110,7 +110,7 @@ Game >> play [
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := board rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
-	nextSquare := board squareAt: aShip boardPosition.
+	nextSquare := board squareAt: (aShip boardPosition).
 	shipManager landShip: aShip atSquare: nextSquare on: board
 ]
 

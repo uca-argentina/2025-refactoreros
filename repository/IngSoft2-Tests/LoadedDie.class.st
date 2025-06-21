@@ -2,7 +2,7 @@
 A loaded dice where we can force the number of the dice we want in our benefit.
 "
 Class {
-	#name : 'LoadedDice',
+	#name : 'LoadedDie',
 	#superclass : 'Object',
 	#instVars : [
 		'numbers'
@@ -13,19 +13,19 @@ Class {
 }
 
 { #category : 'initialization' }
-LoadedDice class >> withSetNumbers: aCollectionOfNumbers [
+LoadedDie class >> withSetNumbers: aCollectionOfNumbers [
 
 	^ self new initializeLoadedDice: aCollectionOfNumbers
 ]
 
 { #category : 'initialization' }
-LoadedDice >> initializeLoadedDice: aCollectionOfNumbers [
+LoadedDie >> initializeLoadedDice: aCollectionOfNumbers [
 
 	numbers := OrderedCollection withAll: aCollectionOfNumbers
 ]
 
 { #category : 'action' }
-LoadedDice >> roll [
+LoadedDie >> roll [
 
 	^ numbers removeFirst
 ]

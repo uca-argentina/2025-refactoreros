@@ -58,12 +58,11 @@ Position >> decreaseBy: aSquareDistance [
 
 { #category : 'actions' }
 Position >> goToStartOfLap [
-	
+
 	| newPosition |
 	newPosition := 1.
-	
-	
-	^ (self class at: newPosition and: lap and: lapLength)
+
+	^ self class at: newPosition and: lap and: lapLength
 ]
 
 { #category : 'comparing' }

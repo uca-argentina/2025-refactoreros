@@ -21,7 +21,7 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	dice add: (LoadedDie withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -43,7 +43,7 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 
 	| aGame dice squareGenerator shipNames aBoard|
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 4 10 )).
+	dice add: (LoadedDie withSetNumbers: #( 4 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -67,7 +67,7 @@ GameTest >> testA03WhenAShipSurpassesTheGoalYetItsPositionIsNotGreaterThanBoardL
 	| aGame dice squareGenerator shipNames aBoard aBoardSize|
 	aBoardSize := 10.
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15 )).
+	dice add: (LoadedDie withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -89,7 +89,7 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 
 	| aGame dice squareGenerator shipNames aBoard|
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 3 )).
+	dice add: (LoadedDie withSetNumbers: #( 3 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -114,7 +114,7 @@ GameTest >> testA05WhenBoardGameIsCreatedWithDuplicatedShipNamesThenFails [
 
 	| dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 3 )).
+	dice add: (LoadedDie withSetNumbers: #( 3 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -135,7 +135,7 @@ GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 
 	| dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 3 )).
+	dice add: (LoadedDie withSetNumbers: #( 3 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -174,7 +174,7 @@ GameTest >> testA08WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 
 	| dice squareGenerator |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15 )).
+	dice add: (LoadedDie withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 
 	self
@@ -193,7 +193,7 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	dice add: (LoadedDie withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -215,7 +215,7 @@ GameTest >> testB01WhenLapsGoalIsNotReachedAndGameIsFinishedThenInvalid [
 
 	| aGame dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	dice add: (LoadedDie withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -237,7 +237,7 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 10 )).
+	dice add: (LoadedDie withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -259,7 +259,7 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 
 	| aGame dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 15 )).
+	dice add: (LoadedDie withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -281,7 +281,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 
 	| dice squareGenerator shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 3 )).
+	dice add: (LoadedDie withSetNumbers: #( 3 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -302,7 +302,7 @@ GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard|
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 4 2 )).
+	dice add: (LoadedDie withSetNumbers: #( 4 2 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -318,4 +318,32 @@ GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 	aGame play.
 
 	self assert: (aGame rankingOf: 'Player 1') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 4 3 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 AtomicBombSquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 1
 ]
