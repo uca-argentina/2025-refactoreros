@@ -5,9 +5,8 @@ Class {
 	#name : 'HyperJumpSquare',
 	#superclass : 'Object',
 	#instVars : [
-		'currentParsecRewardIndex',
-		'parsecsPerSquare',
-		'parsecsList'
+		'parsecsList',
+		'currentParsecRewardIndex'
 	],
 	#category : 'IngSoft2-Model-SquareType',
 	#package : 'IngSoft2-Model',
@@ -15,25 +14,17 @@ Class {
 }
 
 { #category : 'actions' }
-HyperJumpSquare class >> checkValidParsecsPerSquareNumber: numberOfParsecsPerSquare [
+HyperJumpSquare class >> withParsecsRewards: aParsecsList [
 
-	numberOfParsecsPerSquare >= 1 ifFalse: [
-		Error signal: 'Parsecs per square must be equal or higher than 1' ]
+	^ self new initializeWithParsecsRewards: aParsecsList 
 ]
 
 { #category : 'actions' }
-HyperJumpSquare class >> withParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList [
-
-	self checkValidParsecsPerSquareNumber: numberOfParsecsPerSquare.
-	^ self new initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList
-]
-
-{ #category : 'actions' }
-HyperJumpSquare >> applyEffectTo: shipList forShip: aShip [
+HyperJumpSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
 
 	| distanceInSquares |
 	distanceInSquares := (parsecsList at: currentParsecRewardIndex)
-	                     // parsecsPerSquare.
+	                     // aBoard parsecsPerSquare .
 	aShip moveForwardBy: distanceInSquares.
 
 	currentParsecRewardIndex := currentParsecRewardIndex + 1.
@@ -42,8 +33,9 @@ HyperJumpSquare >> applyEffectTo: shipList forShip: aShip [
 ]
 
 { #category : 'initialization' }
-HyperJumpSquare >> initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList [
-	parsecsPerSquare := numberOfParsecsPerSquare.
-	parsecsList := (aParsecsList asSortedCollection: [ :a :b | a > b ]) asArray.
+HyperJumpSquare >> initializeWithParsecsRewards: aParsecsList [
+
+	parsecsList := (aParsecsList asSortedCollection: [ :a :b | a > b ])
+		               asArray.
 	currentParsecRewardIndex := 1
 ]

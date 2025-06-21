@@ -10,5 +10,5 @@ Class {
 }
 
 { #category : 'actions' }
-EmptySquare >> applyEffectTo: shipList forShip: aShip [
+EmptySquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
 ]

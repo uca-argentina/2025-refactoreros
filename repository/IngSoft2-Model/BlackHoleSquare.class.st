@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'actions' }
-BlackHoleSquare >> applyEffectTo: shipList forShip: aShip [
+BlackHoleSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
 
 	aShip moveBackwardsBy: 4
 ]

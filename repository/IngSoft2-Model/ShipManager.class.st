@@ -60,7 +60,7 @@ ShipManager >> initializeWithShips: aSetOfShips [
 { #category : 'actions' }
 ShipManager >> landShip: aShip atSquare: nextSquare on: aBoard [
 
-	nextSquare applyEffectTo: gameShips forShip: aShip.
+	nextSquare applyEffectTo: gameShips forShip: aShip on: aBoard.
 	self checkBattles: aShip on: aBoard
 ]
 

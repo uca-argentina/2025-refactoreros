@@ -28,29 +28,34 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 		          anAmountOf: 10
 		          withTotalDistanceOf: 50
 		          toBePlayedOnRolling: dice.
-		
+
 	shipNames := #( 'Player 1' ).
 
 	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+	
 	aGame play.
+	
 	self assert: aGame winner equals: 'Player 1'
 ]
 
 { #category : 'tests' }
 GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid [
 
-	| aGame dice squareGenerator shipNames |
+	| aGame dice squareGenerator shipNames aBoard|
 	dice := OrderedCollection new.
-	dice add: (LoadedDice withSetNumbers: #( 12 )).
+	dice add: (LoadedDice withSetNumbers: #( 4 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-	shipNames := #( 'Player 1' 'Player 2' ).
-	
-	aGame := Game
-		         gamePlayedBy: shipNames
-		         rolling: dice
-		         with: 10
-		         and: 1
-		         withABoardGeneratedBy: squareGenerator.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: 10
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+		
+	shipNames := #( 'Player 2' 'Player 1').
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+		
+	aGame play.
 	aGame play.
 	
 	self deny: aGame winner equals: 'Player 2'
