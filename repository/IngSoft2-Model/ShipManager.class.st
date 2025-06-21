@@ -6,7 +6,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'shipTurnSkips',
-		'dice',
 		'gameShips'
 	],
 	#category : 'IngSoft2-Model-Game',
@@ -15,20 +14,20 @@ Class {
 }
 
 { #category : 'initialization' }
-ShipManager class >> withShips: aShipList andDice: aDice [
+ShipManager class >> withShips: aShipList [
 
-	^ self new initializeWithShips: aShipList andDice: aDice
+	^ self new initializeWithShips: aShipList
 ]
 
 { #category : 'actions' }
-ShipManager >> checkBattles: aShip [
+ShipManager >> checkBattles: aShip rolling: aDiceSet [
 
 	| otherShips loserShip |
 	otherShips := gameShips reject: [ :ship | ship = aShip ].
 
 	otherShips do: [ :anotherShip |
 		(anotherShip isAtTheSameSquareAs: aShip) ifTrue: [
-			loserShip := aShip battle: anotherShip with: dice.
+			loserShip := aShip battle: anotherShip with: aDiceSet.
 			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
@@ -51,19 +50,18 @@ ShipManager >> hasTurnSkips: aShip [
 ]
 
 { #category : 'initialization' }
-ShipManager >> initializeWithShips: aSetOfShips andDice: aDice [
+ShipManager >> initializeWithShips: aSetOfShips [
 
 	gameShips := aSetOfShips copy.
-	dice := aDice.
 	shipTurnSkips := Dictionary new.
 	gameShips do: [ :aShip | shipTurnSkips at: aShip put: 0 ]
 ]
 
 { #category : 'actions' }
-ShipManager >> landShip: aShip atSquare: nextSquare [
+ShipManager >> landShip: aShip atSquare: nextSquare rolling: aDiceSet [
 
 	nextSquare applyEffectTo: gameShips forShip: aShip.
-	self checkBattles: aShip
+	self checkBattles: aShip rolling: aDiceSet
 ]
 
 { #category : 'actions' }

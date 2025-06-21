@@ -97,8 +97,7 @@ Game >> initializeWith: aSetOfships rolling: aDiceSet on: aBoard toPlayFor: aNum
 	ships := aSetOfships deepCopy.
 	lapsGoal := aNumberOfLaps.
 	shipManager := ShipManager
-		               withShips: ships
-		               andDice: aDiceSet.
+		               withShips: ships.
 	dice := aDiceSet deepCopy.
 ]
 
@@ -129,7 +128,7 @@ Game >> play [
 	diceOutcome := self rollDice.
 	shipManager moveShip: aShip to: diceOutcome.
 	nextSquare := board squareAt: aShip boardPosition.
-	shipManager landShip: aShip atSquare: nextSquare
+	shipManager landShip: aShip atSquare: nextSquare rolling: dice
 ]
 
 { #category : 'accessing' }
