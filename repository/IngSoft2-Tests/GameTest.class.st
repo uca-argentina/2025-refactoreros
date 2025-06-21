@@ -24,6 +24,7 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #( 'Player 1' ).
+	
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         rolling: dice
@@ -42,6 +43,7 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 	dice add: (LoadedDice withSetNumbers: #( 12 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #( 'Player 1' 'Player 2' ).
+	
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         rolling: dice
@@ -61,6 +63,7 @@ GameTest >> testA03WhenAShipSurpassesTheGoalAndItsPositionGetsCorrectedToGoalOne
 	dice add: (LoadedDice withSetNumbers: #( 15 1 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #( 'Player 1' 'Player 2' ).
+	
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         rolling: dice
@@ -80,6 +83,7 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #( 'Player 1' ).
+	
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         rolling: dice
@@ -123,6 +127,7 @@ GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #(  ).
+	
 	self
 		should: [
 			Game
@@ -142,6 +147,7 @@ GameTest >> testA07WhenAGameIsCreatedWithZeroDieThenFails [
 	dice := OrderedCollection new.
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #( 'Player 1' ).
+	
 	self
 		should: [
 			Game
@@ -162,6 +168,7 @@ GameTest >> testA08WhenGameIsCreatedWithLessThanTwoSquaresThenFails [
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := OrderedCollection withAll: #( 'Player 1' ).
+	
 	self
 		should: [
 			Game
@@ -182,6 +189,7 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	shipNames := #( 'Player 1' ).
+	
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         rolling: dice
@@ -199,9 +207,7 @@ GameTest >> testB01WhenLapsGoalReachedAndGameFinishedThenValid [
 	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 30 )).
-
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-
 	shipNames := #( 'Player 1' ).
 
 	aGame := Game
@@ -221,9 +227,7 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 10 )).
-
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-
 	shipNames := #( 'Player 1' ).
 
 	aGame := Game
@@ -243,9 +247,7 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
-
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-
 	shipNames := #( 'Player 1' ).
 
 	aGame := Game
@@ -265,9 +267,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 	| dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 15 )).
-
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-
 	shipNames := #( 'Player 1' ).
 
 	self
@@ -288,9 +288,7 @@ GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 	| aGame dice squareGenerator shipNames |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 5 8 )).
-
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-
 	shipNames := #( 'Player 1' 'Player 2' ).
 
 	aGame := Game
@@ -309,9 +307,7 @@ GameTest >> testB06WhenAShipLandsOnAnotherLapAndPositionGetsProperlyAdjustedThen
 	| aGame dice squareGenerator shipNames aShip |
 	dice := OrderedCollection new.
 	dice add: (LoadedDice withSetNumbers: #( 12 )).
-
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
-
 	shipNames := #( 'Player 1' ).
 	aShip := shipNames at: 1.
 
