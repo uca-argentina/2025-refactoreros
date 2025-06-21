@@ -467,7 +467,7 @@ GameTest >> testB10WhenAShipLandsOnHyperSpaceJumpAndLoseAShieldThenValid [
 ]
 
 { #category : 'tests' }
-GameTest >> testB11WhenAShipLandsOnMoonWalkAndOtherShipsGoBackThenValid [
+GameTest >> testB11WhenAShipLandsOnMoonWalkAndShipStaysInPositionButOtherShipsGoBackThenValid [
 
 	| aGame dice aSetOfSquares shipNames aBoard |
 	dice := OrderedCollection new.
@@ -494,5 +494,64 @@ GameTest >> testB11WhenAShipLandsOnMoonWalkAndOtherShipsGoBackThenValid [
 	aGame play.
 	aGame play.
 
-	self assert: (aGame positionOf: 'Player 1') equals: 4
+	self assert: (aGame positionOf: 'Player 1') equals: 1.
+	self assert: (aGame positionOf: 'Player 2') equals: 3.
+	self assert: (aGame positionOf: 'Player 3') equals: 4
+	
+]
+
+{ #category : 'tests' }
+GameTest >> testB12WhenAShipLandsOnWormHoleEntranceAndLandsOnExitThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 (WormHoleSquare withEntranceAt: 2 andExitAt: 5).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (WormHoleSquare withEntranceAt: 2 andExitAt: 5).
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5
+]
+
+{ #category : 'tests' }
+GameTest >> testB13WhenAShipLandsOnWormHoleExitAndLandsOnEntranceThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 4 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 (WormHoleSquare withEntranceAt: 2 andExitAt: 5).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (WormHoleSquare withEntranceAt: 2 andExitAt: 5).
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 2
 ]

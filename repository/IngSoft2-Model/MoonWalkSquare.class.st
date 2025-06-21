@@ -32,7 +32,7 @@ MoonWalkSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
 
 	shipList do: [ :ship |
 		ship = aShip ifFalse: [
-			ship moveBackwards: (Position at: backwardsPush and: 0 and: 0) ] ]
+			ship moveBackwardsBy: backwardsPush ] ]
 ]
 
 { #category : 'accessing' }
