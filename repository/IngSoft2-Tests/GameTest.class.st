@@ -741,6 +741,35 @@ GameTest >> testC02WhenShipLandsOnDrawCardSquareAndObtainsANewCardThenValid [
 	shipNames := #( 'Player 1' ).
 
 	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+	aGame play.
 
 	self assert: (aGame cardsInHandOf: 'Player 1') size equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRollThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize|
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 7 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+	aGame throw: 'Acceleration Card' from: 'Player 1'.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 7.
+	self assert: (aGame positionOf: 'Player 3') equals: 9
+	
 ]

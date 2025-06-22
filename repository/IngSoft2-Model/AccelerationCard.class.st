@@ -6,6 +6,12 @@ Class {
 	#tag : 'Card'
 }
 
+{ #category : 'actions' }
+AccelerationCard >> activatePermanentCardTo: aGame [
+
+	aGame useAcceleration.
+]
+
 { #category : 'accessing' }
 AccelerationCard >> name [
 

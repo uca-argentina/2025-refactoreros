@@ -1,3 +1,6 @@
+"
+A square that gives a new random card to a ship
+"
 Class {
 	#name : 'DrawCardSquare',
 	#superclass : 'Object',

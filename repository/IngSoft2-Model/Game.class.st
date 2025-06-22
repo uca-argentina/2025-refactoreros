@@ -8,7 +8,8 @@ Class {
 		'lapsGoal',
 		'shipManager',
 		'ships',
-		'board'
+		'board',
+		'activeCards'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -47,9 +48,9 @@ Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal [
 	ships := Ship
 		         forMultiple: shipNames
 		         allStartingAt:
-		         (Position atStartOfLapWithSquareNumbers:
-			          aBoard numberOfSquares)
+		         (Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares)
 		         andAllShieldedWith: 3.
+					
 
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
@@ -92,7 +93,8 @@ Game >> initializeWith: aSetOfships on: aBoard toPlayFor: aNumberOfLaps [
 	ships := aSetOfships deepCopy.
 	lapsGoal := aNumberOfLaps.
 	shipManager := ShipManager withShips: ships.
-	board := aBoard
+	board := aBoard.
+	activeCards := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
@@ -175,6 +177,26 @@ Game >> skip [
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	aShip rechargeShields
+]
+
+{ #category : 'actions' }
+Game >> throw: aCardName from: aShipName [
+
+	| queriedShip card |
+	self checkIfShipExists: aShipName.
+
+	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+
+	card := queriedShip throw: aCardName.
+	activeCards add: card.
+	
+	card activatePermanentCardTo: self
+]
+
+{ #category : 'actions' }
+Game >> useAcceleration [
+	
+	board incrementExtraPointsForThrow
 ]
 
 { #category : 'accessing' }
