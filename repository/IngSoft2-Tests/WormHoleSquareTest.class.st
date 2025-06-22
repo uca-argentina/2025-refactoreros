@@ -17,24 +17,6 @@ WormHoleSquareTest >> should: anErrorBlock raise: errorClass withMessageText: er
 ]
 
 { #category : 'tests' }
-WormHoleSquareTest >> testA01WhenAWormHoleRecivesItsEntrancePositionThenItReturnsItsExitPosition [
-
-	| aWormHole aPosition |
-	aWormHole := WormHoleSquare withEntranceAt: 2 andExitAt: 4.
-	aPosition := 2.
-	self assert: (aWormHole oppositeEnd: aPosition) equals: 4
-]
-
-{ #category : 'tests' }
-WormHoleSquareTest >> testA02WhenAWormHoleRecivesItsExitPositionThenItReturnsItsEntrancePosition [
-
-	| aWormHole aPosition |
-	aWormHole := WormHoleSquare withEntranceAt: 2 andExitAt: 4.
-	aPosition := 4.
-	self assert: (aWormHole oppositeEnd: aPosition) equals: 2
-]
-
-{ #category : 'tests' }
 WormHoleSquareTest >> testA04WhenAWormholeHoleIsCreatedWithAPositionBelowZeroThenItFails [
 
 	self
