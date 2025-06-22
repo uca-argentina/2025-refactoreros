@@ -325,7 +325,7 @@ GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenV
 
 	| aGame dice aSetOfSquares shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDie withSetNumbers: #( 2 4 3 2 1 2 1 )).
+	dice add: (LoadedDie withSetNumbers: #( 2 4 3 )).
 	aSetOfSquares := {
 		                 EmptySquare new.
 		                 EmptySquare new.
@@ -354,7 +354,7 @@ GameTest >> testB07WhenAShipLandsOnAtomicBombAndAllShipsLoseAShieldThenValid [
 
 	| aGame dice aSetOfSquares shipNames aBoard |
 	dice := OrderedCollection new.
-	dice add: (LoadedDie withSetNumbers: #( 2 4 3 2 1 2 1 )).
+	dice add: (LoadedDie withSetNumbers: #( 2 4 3 )).
 	aSetOfSquares := {
 		                 EmptySquare new.
 		                 EmptySquare new.
