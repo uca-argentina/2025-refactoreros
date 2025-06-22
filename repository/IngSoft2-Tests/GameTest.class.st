@@ -555,3 +555,85 @@ GameTest >> testB13WhenAShipLandsOnWormHoleExitAndLandsOnEntranceThenValid [
 
 	self assert: (aGame positionOf: 'Player 1') equals: 2
 ]
+
+{ #category : 'tests' }
+GameTest >> testB14WhenAShipLandsOnASquareWithAnotherShipThenTheyBattleAndOnlyLoserGoesBackToLapStartThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 2 20 8 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 15
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 1.
+	self assert: (aGame positionOf: 'Player 2') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testB15WhenAShipLandsOnASquareWithAnotherShipThenTheyBattleAndLoserGetsAShieldBrokenThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 2 20 8 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 15
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 1') equals: 2.
+	self assert: (aGame shieldfOf: 'Player 2') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testB16WhenAShipThatJustLostOneShieldDecidesToSkipItsTurnAndShieldsGetRechargedThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add:
+		(LoadedDie withSetNumbers: #( 2 2 20 18 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 15
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 4.
+
+	aGame play.
+	aGame play.
+	aGame skip.
+
+	self assert: (aGame shieldfOf: 'Player 1') equals: 3
+]

@@ -65,7 +65,7 @@ Game >> checkForActiveGame [
 Game >> checkIfAllowedToPlay: aShip [
 
 	(shipManager hasTurnSkips: aShip) ifTrue: [
-		Error signal: aShip , ' must skip this turn' ]
+		Error signal: aShip playerName , ' must skip this turn' ]
 ]
 
 { #category : 'actions' }
@@ -163,7 +163,7 @@ Game >> skip [
 	| aShip |
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
-	shipManager skipTurnAndRechargeShields: aShip
+	aShip rechargeShields 
 ]
 
 { #category : 'accessing' }
