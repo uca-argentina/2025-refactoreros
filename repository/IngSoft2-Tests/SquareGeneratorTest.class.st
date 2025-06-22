@@ -14,11 +14,7 @@ SquareGeneratorTest >> count: aSquareClass in: aSquareList closeTo: aRatio preci
 	total := aSquareList size.
 	actualRatio := count asFloat / total asFloat.
 
-	self
-		assert: (actualRatio closeTo: aRatio precision: aPrecision)
-		description:
-		'Got ' , actualRatio printString , ' instead of '
-		, aRatio printString
+	self assert: (actualRatio closeTo: aRatio precision: aPrecision)
 ]
 
 { #category : 'tests' }
