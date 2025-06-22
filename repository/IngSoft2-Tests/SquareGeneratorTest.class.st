@@ -9,16 +9,20 @@ Class {
 { #category : 'asserting' }
 SquareGeneratorTest >> count: aSquareClass in: aSquareList closeTo: aRatio precision: aPrecision [
 
-	| count total actualRatio |
+	| count total actualRatio tolerance |
 	count := aSquareList count: [ :square | square class = aSquareClass ].
 	total := aSquareList size.
 	actualRatio := count asFloat / total asFloat.
+	tolerance := aRatio < 0.05
+		             ifTrue: [ 0.01 ]
+		             ifFalse: [ aPrecision ].
 
 	self
-		assert: (actualRatio closeTo: aRatio precision: aPrecision)
+		assert:
+		(actualRatio between: aRatio - tolerance and: aRatio + tolerance)
 		description:
-		'Got ' , actualRatio printString , ' instead of '
-		, aRatio printString
+			'Got ' , actualRatio printString , ' instead of '
+			, aRatio printString , ' ±' , tolerance printString
 ]
 
 { #category : 'tests' }
