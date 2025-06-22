@@ -17,12 +17,8 @@ SquareGeneratorTest >> count: aSquareClass in: aSquareList closeTo: aRatio preci
 		             ifTrue: [ 0.01 ]
 		             ifFalse: [ aPrecision ].
 
-	self
-		assert:
+	self assert:
 		(actualRatio between: aRatio - tolerance and: aRatio + tolerance)
-		description:
-			'Got ' , actualRatio printString , ' instead of '
-			, aRatio printString , ' ±' , tolerance printString
 ]
 
 { #category : 'tests' }
