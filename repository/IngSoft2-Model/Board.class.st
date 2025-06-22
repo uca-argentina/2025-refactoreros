@@ -7,8 +7,7 @@ Class {
 	#instVars : [
 		'squares',
 		'parsecs',
-		'dice',
-		'extraPointsForThrow'
+		'dice'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -55,19 +54,12 @@ Board class >> populatedOf: aSetOfSquares withTotalDistanceOf: aNumberOfParsecs 
 		  toBePlayedOnRolling: aDiceSet
 ]
 
-{ #category : 'actions' }
-Board >> incrementExtraPointsForThrow [
-
-	extraPointsForThrow := extraPointsForThrow + 1
-]
-
 { #category : 'initialization' }
 Board >> initializePopulatedOf: aSetOfSquares withDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
 
 	squares := aSetOfSquares deepCopy.
 	parsecs := aNumberOfParsecs.
 	dice := aDiceSet.
-	extraPointsForThrow := 0
 ]
 
 { #category : 'accessing' }
@@ -85,7 +77,7 @@ Board >> parsecsPerSquare [
 { #category : 'actions' }
 Board >> rollDice [
 
-	^ ((dice collect: [ :die | die roll ]) sum) + extraPointsForThrow 
+	^ ((dice collect: [ :die | die roll ]) sum) 
 ]
 
 { #category : 'accessing' }

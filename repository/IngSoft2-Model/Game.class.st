@@ -165,12 +165,15 @@ Game >> lapCountOf: aShipName [
 { #category : 'actions' }
 Game >> play [
 
-	| diceOutcome nextSquare aShip |
+	| diceOutcome nextSquare aShip extraPointsForThrow |
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := board rollDice.
-	shipManager moveShip: aShip to: diceOutcome.
+	extraPointsForThrow := 0.
+	activeCards do: [:aCard | extraPointsForThrow := extraPointsForThrow +  (aCard applyThrowEffectFor: aShip) ].
+	
+	shipManager moveShip: aShip to: (diceOutcome + extraPointsForThrow).
 	nextSquare := board squareAt: aShip boardPosition.
 	shipManager landShip: aShip atSquare: nextSquare on: board
 ]
@@ -240,13 +243,6 @@ Game >> throw: aCardName from: aShipName [
 	card := queriedShip throw: aCardName.
 	activeCards add: card.
 
-	card activatePermanentCardTo: self
-]
-
-{ #category : 'actions' }
-Game >> useAcceleration [
-	
-	board incrementExtraPointsForThrow
 ]
 
 { #category : 'accessing' }

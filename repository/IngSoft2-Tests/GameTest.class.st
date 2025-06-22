@@ -763,12 +763,12 @@ GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRoll
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
 
 	aDeckOfCards := {
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new } asOrderedCollection.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner } asOrderedCollection.
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         on: aBoard
@@ -803,8 +803,8 @@ GameTest >> testC04WhenShipDrawsACardThatDoesNotHaveInHandThenItFails [
 	shipNames := #( 'Player 1' ).
 
 	aDeckOfCards := {
-		                SpeedCard new.
-		                SpeedCard new } asOrderedCollection.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         on: aBoard
@@ -834,12 +834,12 @@ GameTest >> testC05WhenAShipDrawsAPermanentCardOutOfItsTurnThenItFails [
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
 
 	aDeckOfCards := {
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new.
-		                AccelerationCard new } asOrderedCollection.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner } asOrderedCollection.
 	aGame := Game
 		         gamePlayedBy: shipNames
 		         on: aBoard
@@ -853,4 +853,44 @@ GameTest >> testC05WhenAShipDrawsAPermanentCardOutOfItsTurnThenItFails [
 		withMessageText: 'The ship is trying a permanent card out of its turn'
 
 
+]
+
+{ #category : 'tests' }
+GameTest >> testC06WhenAShipUseSpeedCardAndItIncrementItsDiceRollThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 7 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame throw: 'Speed Card' from: 'Player 2'.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4.
+	self assert: (aGame positionOf: 'Player 2') equals: 7.
+	self assert: (aGame positionOf: 'Player 3') equals: 8
 ]

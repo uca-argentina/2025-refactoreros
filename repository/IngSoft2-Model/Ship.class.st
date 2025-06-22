@@ -171,8 +171,11 @@ Ship >> shields [
 { #category : 'actions' }
 Ship >> throw: aCardName [
 
+	| card |
 	(cardsInHand anySatisfy: [ :aCard | aCard name = aCardName ])
 		ifFalse: [ Error signal: 'The ship does not have this card' ].
+	card := cardsInHand detect: [ :aCard | aCard name = aCardName ].
+	cardsInHand remove: card.
 		
-	^ cardsInHand detect: [ :aCard | aCard name = aCardName ]
+	^ card class ownedBy: self
 ]
