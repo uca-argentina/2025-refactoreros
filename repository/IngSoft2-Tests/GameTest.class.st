@@ -699,3 +699,48 @@ GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecyc
 	self assert: (aGame positionOf: 'Player 2') equals: 6.
 	self assert: (aGame positionOf: 'Player 3') equals: 4
 ]
+
+{ #category : 'tests' }
+GameTest >> testC01WhenShipIsCreatedWithTwoCardsThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize|
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #(  )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+		
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+	
+	self assert: (aGame cardsInHandOf: 'Player 1' ) size equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC02WhenShipLandsOnDrawCardSquareAndObtainsANewCardThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 DrawCardSquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	self assert: (aGame cardsInHandOf: 'Player 1') size equals: 3
+]

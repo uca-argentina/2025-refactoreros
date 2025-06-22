@@ -54,6 +54,17 @@ Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal [
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
 
+{ #category : 'accessing' }
+Game >> cardsInHandOf: aShipName [
+
+	| queriedShip |
+	self checkIfShipExists: aShipName.
+
+	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+
+	^ queriedShip cardsInHand
+]
+
 { #category : 'actions' }
 Game >> checkForActiveGame [
 

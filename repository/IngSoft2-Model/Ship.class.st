@@ -8,7 +8,8 @@ Class {
 		'playerName',
 		'position',
 		'shields',
-		'maxShields'
+		'maxShields',
+		'cardsInHand'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -16,16 +17,32 @@ Class {
 }
 
 { #category : 'accessing' }
-Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields [
+Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields holding: cards [
 
-	^ self new initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields
+	^ self new initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields holding: cards
 ]
 
 { #category : 'accessing' }
 Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWith: aNumberOfShields [
 
+	| allCards cards |
 	^ (playerNames collect: [ :aPlayerName |
-		  self for: aPlayerName startingAt: aPosition shieldedWith: aNumberOfShields ]) asOrderedCollection
+		   allCards := {
+			               SpeedCard new.
+			               MercenaryCard new.
+			               AccelerationCard new.
+			               CancellationCard new.
+			               RedoCard new.
+			               RepeatCard new }.
+		   cards := OrderedCollection new.
+		   cards add: allCards atRandom deepCopy.
+		   cards add: allCards atRandom deepCopy.
+
+		   self
+			   for: aPlayerName
+			   startingAt: aPosition
+			   shieldedWith: aNumberOfShields
+			   holding: cards ]) asOrderedCollection
 ]
 
 { #category : 'actions' }
@@ -57,6 +74,27 @@ Ship >> breakAShield [
 	shields > 0 ifTrue: [ shields := shields - 1 ]
 ]
 
+{ #category : 'accessing' }
+Ship >> cardsInHand [
+
+	^ cardsInHand collect: [ :card | card name ]
+]
+
+{ #category : 'actions' }
+Ship >> drawCard [
+
+	| allCards |
+	allCards := {
+		            SpeedCard new.
+		            MercenaryCard new.
+		            AccelerationCard new.
+		            CancellationCard new.
+		            RedoCard new.
+		            RepeatCard new }.
+		
+	cardsInHand add: allCards atRandom deepCopy
+]
+
 { #category : 'actions' }
 Ship >> goToFirstSquare [
 
@@ -82,12 +120,14 @@ Ship >> hasShields [
 ]
 
 { #category : 'accessing' }
-Ship >> initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields [
+Ship >> initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields holding: cards [
 
 	playerName := aPlayerName.
 	position := aPostion.
 	shields := aNumberOfShields.
-	maxShields := aNumberOfShields
+	maxShields := aNumberOfShields.
+	cardsInHand := cards
+
 ]
 
 { #category : 'accessing' }
