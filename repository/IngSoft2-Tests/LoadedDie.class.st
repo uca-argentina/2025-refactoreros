@@ -15,11 +15,11 @@ Class {
 { #category : 'initialization' }
 LoadedDie class >> withSetNumbers: aCollectionOfNumbers [
 
-	^ self new initializeLoadedDice: aCollectionOfNumbers
+	^ self new initializeLoadedDie: aCollectionOfNumbers
 ]
 
 { #category : 'initialization' }
-LoadedDie >> initializeLoadedDice: aCollectionOfNumbers [
+LoadedDie >> initializeLoadedDie: aCollectionOfNumbers [
 
 	numbers := OrderedCollection withAll: aCollectionOfNumbers
 ]

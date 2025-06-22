@@ -14,5 +14,5 @@ HyperSpaceJumpSquare >> applyEffectTo: shipList forShip: aShip on: aBoard manage
 
 	aShip moveForwardBy: 4.
 	aShip breakAShield.
-	aShipManager checkBattles: aShip on: aBoard 
+	aShipManager checkBattles: aShip on: aBoard
 ]

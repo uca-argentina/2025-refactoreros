@@ -39,11 +39,10 @@ ShipManager >> hasTurnSkips: aShip [
 	| currentTurnSkips |
 	currentTurnSkips := shipTurnSkips at: aShip.
 
-	(currentTurnSkips = 1 ) ifTrue: [
-			aShip rechargeShields].
+	currentTurnSkips = 1 ifTrue: [ aShip rechargeShields ].
 
-	(currentTurnSkips > 0) ifTrue: [
-		shipTurnSkips at: aShip put: (currentTurnSkips - 1).
+	currentTurnSkips > 0 ifTrue: [
+		shipTurnSkips at: aShip put: currentTurnSkips - 1.
 		^ true ].
 
 	^ false
@@ -60,12 +59,15 @@ ShipManager >> initializeWithShips: aSetOfShips [
 { #category : 'actions' }
 ShipManager >> landShip: aShip atSquare: nextSquare on: aBoard [
 
-	nextSquare applyEffectTo: gameShips forShip: aShip on: aBoard managedBy: self
+	nextSquare
+		applyEffectTo: gameShips
+		forShip: aShip
+		on: aBoard
+		managedBy: self
 ]
 
 { #category : 'actions' }
 ShipManager >> moveShip: aShip to: diceResult [
 
 	aShip moveForwardBy: diceResult
-	
 ]

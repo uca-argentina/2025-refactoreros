@@ -18,11 +18,11 @@ Die class >> withFaces: aNumber [
 ]
 
 { #category : 'initialization' }
-Die >> initializeWithFaces: aNumber [
+Die >> initializeWithFaces: aNumberOfFaces [
 
-	(aNumber isInteger and: [ aNumber > 0 ]) ifFalse: [
+	(aNumberOfFaces isInteger and: [ aNumberOfFaces > 0 ]) ifFalse: [
 		self error: 'Invalid number of faces' ].
-	faces := aNumber
+	faces := aNumberOfFaces
 ]
 
 { #category : 'action' }

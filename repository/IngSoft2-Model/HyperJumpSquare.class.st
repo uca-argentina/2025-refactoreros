@@ -33,20 +33,20 @@ HyperJumpSquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: 
 
 	| distanceInSquares |
 	distanceInSquares := (parsecsList at: currentParsecRewardIndex)
-	                     // aBoard parsecsPerSquare .
+	                     // aBoard parsecsPerSquare.
 	aShip moveForwardBy: distanceInSquares.
 
 	currentParsecRewardIndex := currentParsecRewardIndex + 1.
 	currentParsecRewardIndex > parsecsList size ifTrue: [
 		currentParsecRewardIndex := 1 ].
-	
-	aShipManager checkBattles: aShip on: aBoard 
+
+	aShipManager checkBattles: aShip on: aBoard
 ]
 
 { #category : 'initialization' }
 HyperJumpSquare >> initializeWithParsecsRewards: aParsecsList [
 
-	parsecsList := (aParsecsList asSortedCollection: [ :a :b | a > b ])
+	parsecsList := (aParsecsList asSortedCollection: [ :aParsecNumber :anotherParsecNumber | aParsecNumber > anotherParsecNumber ])
 		               asArray.
 	currentParsecRewardIndex := 1
 ]

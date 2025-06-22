@@ -30,30 +30,25 @@ Position class >> atStartOfLapWithSquareNumbers: aLapLegth [
 Position >> decreaseBy: aSquareDistance [
 
 	| newPosition newLap lapsGoneBackwards squaresGoneBackwards |
-	
 	newPosition := square - aSquareDistance.
 	newLap := lap.
-	
-	
-	newPosition <= 0 ifTrue: [ 
-			lapsGoneBackwards := (newPosition // lapLength) abs.
-			squaresGoneBackwards := newPosition abs % lapLength.
-
-			newPosition := lapLength - squaresGoneBackwards.
-			newLap := lap - lapsGoneBackwards.
-			
-			squaresGoneBackwards = 0 ifFalse: [
-				newLap := lap - 1 ].
-			
-			newLap <= 0 ifTrue:[
-				newLap := 0.
-				newPosition := 1.
-				].
-
-		 ].
 
 
-	^ (self class at: newPosition and: newLap and: lapLength)
+	newPosition <= 0 ifTrue: [
+		lapsGoneBackwards := (newPosition // lapLength) abs.
+		squaresGoneBackwards := newPosition abs % lapLength.
+
+		newPosition := lapLength - squaresGoneBackwards.
+		newLap := lap - lapsGoneBackwards.
+
+		squaresGoneBackwards = 0 ifFalse: [ newLap := lap - 1 ].
+
+		newLap <= 0 ifTrue: [
+			newLap := 0.
+			newPosition := 1 ] ].
+
+
+	^ self class at: newPosition and: newLap and: lapLength
 ]
 
 { #category : 'actions' }
@@ -68,18 +63,17 @@ Position >> goToStartOfLap [
 { #category : 'comparing' }
 Position >> hasEqualPosition: aPositon [
 
-	^ square = (aPositon square)
+	^ square = aPositon square
 ]
 
 { #category : 'arithmetic' }
 Position >> increaseBy: aSquareDistance [
 
 	| newPosition newLap |
-	
-	newPosition := (aSquareDistance + square - 1 % lapLength) + 1.
-	newLap := lap + ((aSquareDistance + square - 1) // lapLength). 
+	newPosition := aSquareDistance + square - 1 % lapLength + 1.
+	newLap := lap + (aSquareDistance + square - 1 // lapLength).
 
-	^ (self class at: newPosition and: newLap and: lapLength)
+	^ self class at: newPosition and: newLap and: lapLength
 ]
 
 { #category : 'initialization' }
@@ -92,11 +86,12 @@ Position >> initializeWith: aSquare and: aLap and: aLapLength [
 
 { #category : 'comparing' }
 Position >> isGreaterThan: anotherPosition [
-	
+
 	| positionAsOnlySquares |
-	positionAsOnlySquares := anotherPosition square +(( anotherPosition lap) * lapLength).
-	
-	^ (square + (lap * lapLength)) > positionAsOnlySquares
+	positionAsOnlySquares := anotherPosition square
+	                         + (anotherPosition lap * lapLength).
+
+	^ square + (lap * lapLength) > positionAsOnlySquares
 ]
 
 { #category : 'accessing' }

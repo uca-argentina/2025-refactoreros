@@ -31,9 +31,8 @@ MoonWalkSquare class >> withBackwardsPush: aNumberOfSquares [
 MoonWalkSquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
 
 	shipList do: [ :ship |
-		ship = aShip ifFalse: [
-			ship moveBackwardsBy: backwardsPush ] ].
-	aShipManager checkBattles: aShip on: aBoard 
+		ship = aShip ifFalse: [ ship moveBackwardsBy: backwardsPush ] ].
+	aShipManager checkBattles: aShip on: aBoard
 ]
 
 { #category : 'accessing' }

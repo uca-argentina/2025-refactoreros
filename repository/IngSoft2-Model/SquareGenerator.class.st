@@ -63,13 +63,12 @@ SquareGenerator >> initializeWith: squaresAndProbability [
 SquareGenerator >> squareType [
 
 	| sampleList randomNumberGenerator sumResult randomNumber probabilityList squareList |
-
 	randomNumberGenerator := Random new.
 	squareList := OrderedCollection new.
 
 	sumResult := 0.
 	randomNumber := randomNumberGenerator next.
-	
+
 	sampleList := squaresWithProbability keys.
 	probabilityList := squaresWithProbability values.
 
