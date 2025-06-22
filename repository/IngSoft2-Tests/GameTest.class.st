@@ -637,3 +637,65 @@ GameTest >> testB16WhenAShipThatJustLostOneShieldDecidesToSkipItsTurnAndShieldsG
 
 	self assert: (aGame shieldfOf: 'Player 1') equals: 3
 ]
+
+{ #category : 'tests' }
+GameTest >> testB17WhenAShipLandsOnHyperJumpAndAdvancesAccordingToParsecsRewardsThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 1 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 (HyperJumpSquare withParsecsRewards: #( 18 12 6 )).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 28
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 4.
+	self assert: (aGame positionOf: 'Player 3') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecycledParsecsRewardsThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 1 1 1 3 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 (HyperJumpSquare withParsecsRewards: #( 22 18 12 )).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 28
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	5 timesRepeat: [ aGame play ].
+
+	self assert: (aGame positionOf: 'Player 1') equals: 1.
+	self assert: (aGame positionOf: 'Player 2') equals: 6.
+	self assert: (aGame positionOf: 'Player 3') equals: 4
+]
