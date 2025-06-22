@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'faces'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-Game',
+	#package : 'IngSoft2-Model',
+	#tag : 'Game'
 }
 
 { #category : 'initialization' }
@@ -17,14 +18,15 @@ Die class >> withFaces: aNumber [
 ]
 
 { #category : 'initialization' }
-Die >> initializeWithFaces: aNumber [
+Die >> initializeWithFaces: aNumberOfFaces [
 
-	(aNumber isInteger and: [ aNumber > 0 ]) ifFalse: [
+	(aNumberOfFaces isInteger and: [ aNumberOfFaces > 0 ]) ifFalse: [
 		self error: 'Invalid number of faces' ].
-	faces := aNumber
+	faces := aNumberOfFaces
 ]
 
 { #category : 'action' }
 Die >> roll [
+
 	^ (1 to: faces) atRandom
 ]

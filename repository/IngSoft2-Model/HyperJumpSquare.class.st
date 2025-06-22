@@ -5,45 +5,48 @@ Class {
 	#name : 'HyperJumpSquare',
 	#superclass : 'Object',
 	#instVars : [
-		'currentParsecRewardIndex',
-		'parsecsPerSquare',
-		'parsecsList'
+		'parsecsList',
+		'currentParsecRewardIndex'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-SquareType',
+	#package : 'IngSoft2-Model',
+	#tag : 'SquareType'
 }
 
 { #category : 'actions' }
-HyperJumpSquare class >> checkValidParsecsPerSquareNumber: numberOfParsecsPerSquare [
+HyperJumpSquare class >> checkParsecRewards: aParsecsList [
 
-	numberOfParsecsPerSquare >= 1 ifFalse: [
-		Error signal: 'Parsecs per square must be equal or higher than 1' ]
+	aParsecsList ifEmpty: [
+		Error signal: 'Parsec rewards cannot be empty' ]
 ]
 
 { #category : 'actions' }
-HyperJumpSquare class >> withParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList [
+HyperJumpSquare class >> withParsecsRewards: aParsecsList [
 
-	self checkValidParsecsPerSquareNumber: numberOfParsecsPerSquare.
-	^ self new initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList 
+	self checkParsecRewards: aParsecsList .
+
+	^ self new initializeWithParsecsRewards: aParsecsList 
 ]
 
 { #category : 'actions' }
-HyperJumpSquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
+HyperJumpSquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
 
-	shipsPositions at: aShip put: (shipsPositions at: aShip) + ((parsecsList at: currentParsecRewardIndex) // parsecsPerSquare ).
+	| distanceInSquares |
+	distanceInSquares := (parsecsList at: currentParsecRewardIndex)
+	                     // aBoard parsecsPerSquare.
+	aShip moveForwardBy: distanceInSquares.
 
 	currentParsecRewardIndex := currentParsecRewardIndex + 1.
-	currentParsecRewardIndex > parsecsList size ifTrue: [ currentParsecRewardIndex := 1 ]
-]
+	currentParsecRewardIndex > parsecsList size ifTrue: [
+		currentParsecRewardIndex := 1 ].
 
-{ #category : 'actions' }
-HyperJumpSquare >> applyShieldEffectTo: newShipShields forShip: aShip [
-
+	aShipManager checkBattles: aShip on: aBoard
 ]
 
 { #category : 'initialization' }
-HyperJumpSquare >> initializeWithParsecsPerSquare: numberOfParsecsPerSquare andParsecsRewards: aParsecsList [
-	parsecsPerSquare := numberOfParsecsPerSquare.
-	parsecsList := (aParsecsList asSortedCollection: [ :a :b | a > b ]) asArray.
+HyperJumpSquare >> initializeWithParsecsRewards: aParsecsList [
+
+	parsecsList := (aParsecsList asSortedCollection: [ :aParsecNumber :anotherParsecNumber | aParsecNumber > anotherParsecNumber ])
+		               asArray.
 	currentParsecRewardIndex := 1
 ]

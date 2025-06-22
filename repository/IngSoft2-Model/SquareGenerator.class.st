@@ -4,52 +4,75 @@ Returns a list of randomly distributed squares based on probabilities.
 Class {
 	#name : 'SquareGenerator',
 	#superclass : 'Object',
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#instVars : [
+		'squaresWithProbability'
+	],
+	#category : 'IngSoft2-Model-Game',
+	#package : 'IngSoft2-Model',
+	#tag : 'Game'
 }
 
-{ #category : 'actions' }
-SquareGenerator >> addToList: aSquareList squareSample: aSquareSample times: aNumberOfTimes [
+{ #category : 'validation' }
+SquareGenerator class >> checkProbabilitiesAddToOne: squaresAndProbability [
 
-	aNumberOfTimes timesRepeat: [ aSquareList add: aSquareSample copy].
+	| probabilitySum probabilities |
+	probabilities := squaresAndProbability values.
+	probabilitySum := probabilities sum.
+
+	probabilitySum < 1 ifTrue: [
+			squaresAndProbability at: EmptySquare new put: (1 - probabilitySum)	
+		]
+]
+
+{ #category : 'instance creation' }
+SquareGenerator class >> with: squaresAndProbability [
+
+	self checkProbabilitiesAddToOne: squaresAndProbability.
+	
+	^ self new initializeWith: squaresAndProbability
+]
+
+{ #category : 'instance creation' }
+SquareGenerator class >> withOnlyEmptySquares [
+
+	| squaresAndProbability |
+	squaresAndProbability := Dictionary new.
+	squaresAndProbability at: EmptySquare new put: 1.
+
+	^ self new initializeWith: squaresAndProbability
 ]
 
 { #category : 'actions' }
 SquareGenerator >> createSquares: squareCount [
 
-	| squareList blackHoleProbability hyperSpaceJumpProbability moonwalkProbability hyperJumpProbability atomicBombProbability |
-	blackHoleProbability := 0.2.
-	hyperSpaceJumpProbability := 0.2.
-	moonwalkProbability := 0.1.
-	hyperJumpProbability := 0.08.
-	atomicBombProbability := 0.02.
-
+	| squareList |
 	squareList := OrderedCollection new.
 
-	self
-		addToList: squareList
-		squareSample: BlackHoleSquare new
-		times: (squareCount * blackHoleProbability) asInteger.
-	self
-		addToList: squareList
-		squareSample: HyperSpaceJumpSquare new
-		times: (squareCount * hyperSpaceJumpProbability) asInteger.
-	self
-		addToList: squareList
-		squareSample: (MoonWalkSquare withBackwardsPush: 2)
-		times: (squareCount * moonwalkProbability) asInteger.
-	self
-		addToList: squareList
-		squareSample: (HyperJumpSquare withParsecsPerSquare: 5 andParsecsRewards: #(20 15 12 8 5))
-		times: (squareCount * hyperJumpProbability) asInteger.
-	self
-		addToList: squareList
-		squareSample: AtomicBombSquare new
-		times: (squareCount * atomicBombProbability) asInteger.
-	self
-		addToList: squareList
-		squareSample: EmptySquare new
-		times: squareCount - squareList size.
+	squareCount timesRepeat: [ squareList add: self squareType deepCopy ].
 
-	^ squareList shuffle
+	^ squareList
+]
+
+{ #category : 'initialization' }
+SquareGenerator >> initializeWith: squaresAndProbability [
+
+	squaresWithProbability := squaresAndProbability
+]
+
+{ #category : 'actions' }
+SquareGenerator >> squareType [
+
+	| sampleList randomNumberGenerator sumResult randomNumber probabilityList squareList |
+	randomNumberGenerator := Random new.
+	squareList := OrderedCollection new.
+
+	sumResult := 0.
+	randomNumber := randomNumberGenerator next.
+
+	sampleList := squaresWithProbability keys.
+	probabilityList := squaresWithProbability values.
+
+	1 to: probabilityList size do: [ :i |
+		sumResult := sumResult + (probabilityList at: i).
+		randomNumber <= sumResult ifTrue: [ ^ sampleList at: i ] ]
 ]

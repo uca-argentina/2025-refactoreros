@@ -1,8 +1,9 @@
 Class {
 	#name : 'DieTest',
 	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#category : 'IngSoft2-Tests-gameTest',
+	#package : 'IngSoft2-Tests',
+	#tag : 'gameTest'
 }
 
 { #category : 'asserting' }
@@ -13,37 +14,6 @@ DieTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessag
 		raise: anErrorClass
 		withExceptionDo: [ :error |
 			self assert: (error messageText) equals: errorMessage ]
-]
-
-{ #category : 'tests' }
-DieTest >> test01AWhenADieRollItFallsOnAValidNumber [
-
-	| aDie value |
-	aDie := Die withFaces: 6.
-	value := aDie roll.
-
-	self assert:
-		(value between: 1 and: 6)
-]
-
-{ #category : 'tests' }
-DieTest >> test02AWhenADieHasOneFaceThenAlwaysReturnsOne [
-
-	| aDie value |
-	aDie := Die withFaces: 1.
-	value := aDie roll.
-	
-	self assert: value equals: 1
-]
-
-{ #category : 'tests' }
-DieTest >> test03AWhenADieHasZeroFacesThenCreationFails [
-
-	self
-		should: [ Die withFaces: 0 ]
-		raise: Error
-		withMessageText: 'Invalid number of faces'
-
 ]
 
 { #category : 'tests' }
@@ -63,7 +33,7 @@ DieTest >> testA02WhenADieHasOneFaceThenAlwaysReturnsOne [
 	| aDie value |
 	aDie := Die withFaces: 1.
 	value := aDie roll.
-	
+
 	self assert: value equals: 1
 ]
 
@@ -74,5 +44,4 @@ DieTest >> testA03WhenADieHasZeroFacesThenCreationFails [
 		should: [ Die withFaces: 0 ]
 		raise: Error
 		withMessageText: 'Invalid number of faces'
-
 ]
