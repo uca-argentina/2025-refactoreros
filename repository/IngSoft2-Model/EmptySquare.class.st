@@ -4,15 +4,13 @@ A square that doesn't affect ships positions (a dictionary: 'shipName' -> positi
 Class {
 	#name : 'EmptySquare',
 	#superclass : 'Object',
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model-SquareType',
+	#package : 'IngSoft2-Model',
+	#tag : 'SquareType'
 }
 
 { #category : 'actions' }
-EmptySquare >> applyPositionEffectTo: shipsPositions forShip: aShip [
+EmptySquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
 
-]
-
-{ #category : 'actions' }
-EmptySquare >> applyShieldEffectTo:newShipShields forShip: aShip [
+	aShipManager checkBattles: aShip on: aBoard
 ]
