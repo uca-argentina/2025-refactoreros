@@ -25,7 +25,7 @@ SquareGeneratorTest >> count: aSquareClass in: aSquareList closeTo: aRatio preci
 SquareGeneratorTest >> testB01WhenASquareGeneratorCreatesSquareAndSquareListSizeMatchesSquareCountThenValid [
 
 	| squareCount squareGenerator squareList squaresWithProbability |
-	squareCount := 100.
+	squareCount := 10000.
 	squaresWithProbability := Dictionary new.
 	squaresWithProbability at: EmptySquare new put: 0.4.
 	squaresWithProbability at: BlackHoleSquare new  put: 0.2.
@@ -45,7 +45,7 @@ SquareGeneratorTest >> testB01WhenASquareGeneratorCreatesSquareAndSquareListSize
 SquareGeneratorTest >> testB02WhenSquaresCreatedFollowTheProbabilityDistributionThenValid [
 
 	| squareCount squareGenerator squareList squaresWithProbability |
-	squareCount := 1000.
+	squareCount := 10000.
 	squaresWithProbability := Dictionary new.
 	squaresWithProbability at: EmptySquare new put:0.4.
 	squaresWithProbability at: BlackHoleSquare new  put:0.2.
@@ -71,7 +71,7 @@ SquareGeneratorTest >> testB02WhenSquaresCreatedFollowTheProbabilityDistribution
 SquareGeneratorTest >> testB03WhenProbabilitiesDoNotAddUpToOneAndTheRemainingAreFilledWithEmptySquaresThenValid [
 
 	| squareCount squareGenerator squareList squaresWithProbability |
-	squareCount := 1000.
+	squareCount := 10000.
 	squaresWithProbability := Dictionary new.
 	squaresWithProbability at: EmptySquare new put:0.4.
 	squaresWithProbability at: BlackHoleSquare new  put:0.2.
@@ -93,7 +93,7 @@ SquareGeneratorTest >> testB03WhenProbabilitiesDoNotAddUpToOneAndTheRemainingAre
 SquareGeneratorTest >> testB04WhenProbabilitiesDoNotAddUpToOneAndThereIsNoProbabilityForEmptySquareAndTheRemainingAreFilledWithEmptySquaresThenValid [
 
 	| squareCount squareGenerator squareList squaresWithProbability |
-	squareCount := 1000.
+	squareCount := 10000.
 	squaresWithProbability := Dictionary new.
 	squaresWithProbability at: BlackHoleSquare new  put: 0.2.
 	squaresWithProbability at: HyperSpaceJumpSquare new put: 0.2.
