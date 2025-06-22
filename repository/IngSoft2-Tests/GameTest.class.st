@@ -774,8 +774,8 @@ GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRoll
 		         on: aBoard
 		         toPlayFor: 2
 		         drawingFrom: aDeckOfCards.
-		
-		
+
+
 	aGame throw: 'Acceleration Card' from: 'Player 1'.
 	aGame play.
 	aGame play.
@@ -784,4 +784,73 @@ GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRoll
 	self assert: (aGame positionOf: 'Player 1') equals: 5.
 	self assert: (aGame positionOf: 'Player 2') equals: 7.
 	self assert: (aGame positionOf: 'Player 3') equals: 9
+]
+
+{ #category : 'tests' }
+GameTest >> testC04WhenShipDrawsACardThatDoesNotHaveInHandThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #(  )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aDeckOfCards := {
+		                SpeedCard new.
+		                SpeedCard new } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+		
+	self
+		should: [ aGame throw: 'Acceleration Card' from: 'Player 1' ]
+		raise: Error
+		withMessageText: 'The ship does not have this card'
+]
+
+{ #category : 'tests' }
+GameTest >> testC05WhenAShipDrawsAPermanentCardOutOfItsTurnThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                AccelerationCard new.
+		                AccelerationCard new.
+		                AccelerationCard new.
+		                AccelerationCard new.
+		                AccelerationCard new.
+		                AccelerationCard new } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	self
+		should: [ aGame throw: 'Acceleration Card' from: 'Player 2' ]
+		raise: Error
+		withMessageText: 'The ship is trying a permanent card out of its turn'
+
+
 ]

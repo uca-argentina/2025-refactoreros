@@ -234,10 +234,12 @@ Game >> throw: aCardName from: aShipName [
 	self checkIfShipExists: aShipName.
 
 	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip = (ships at: 1) ifFalse: [
+		Error signal: 'The ship is trying a permanent card out of its turn' ].
 
 	card := queriedShip throw: aCardName.
 	activeCards add: card.
-	
+
 	card activatePermanentCardTo: self
 ]
 
