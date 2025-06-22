@@ -25,19 +25,9 @@ Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShiel
 { #category : 'accessing' }
 Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWith: aNumberOfShields [
 
-	| allCards cards |
+	|  cards |
 	^ (playerNames collect: [ :aPlayerName |
-		   allCards := {
-			               SpeedCard new.
-			               MercenaryCard new.
-			               AccelerationCard new.
-			               CancellationCard new.
-			               RedoCard new.
-			               RepeatCard new }.
-		   cards := OrderedCollection new.
-		   cards add: allCards atRandom deepCopy.
-		   cards add: allCards atRandom deepCopy.
-
+		 	cards := OrderedCollection new.  
 		   self
 			   for: aPlayerName
 			   startingAt: aPosition

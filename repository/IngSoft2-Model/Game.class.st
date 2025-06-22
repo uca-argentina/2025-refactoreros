@@ -38,19 +38,67 @@ Game class >> checkValidShipNames: shipNames [
 			duplicatedNames asCommaStringAnd , ' listed more than once' ]
 ]
 
-{ #category : 'intialization' }
+{ #category : 'initialization' }
+Game class >> createShipsNamed: shipNames on: squareCount drawingFrom: allCards [
+	| ships cards|
+	
+	ships := OrderedCollection new.
+	
+	1 to: shipNames size do: [ :i |
+
+		cards := OrderedCollection new.
+		cards add: allCards atRandom deepCopy.
+		cards add: allCards atRandom deepCopy.
+
+		ships add: (Ship
+				 for: (shipNames at:i)
+				 startingAt:
+				 (Position atStartOfLapWithSquareNumbers: squareCount )
+				 shieldedWith: 3
+				 holding: cards) ].
+		^ ships
+]
+
+{ #category : 'initialization' }
 Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal [
 
-	| ships |
+	| ships allCards |
 	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapGoal.
 
-	ships := Ship
-		         forMultiple: shipNames
-		         allStartingAt:
-		         (Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares)
-		         andAllShieldedWith: 3.
-					
+	allCards := {
+		            SpeedCard new.
+		            MercenaryCard new.
+		            AccelerationCard new.
+		            CancellationCard new.
+		            RedoCard new.
+		            RepeatCard new }.
+	ships := self
+		         createShipsNamed: shipNames
+		         on: aBoard numberOfSquares
+		         drawingFrom: allCards.
+
+
+	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
+]
+
+{ #category : 'initialization' }
+Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal drawingFrom: aDeckOfCards [
+
+	| ships cards |
+	self checkValidShipNames: shipNames.
+	self checkValidLapCount: aLapGoal.
+	
+	ships := OrderedCollection new.
+
+	1 to: shipNames size do:[:i |
+			cards := OrderedCollection new.
+			cards add: aDeckOfCards removeFirst.
+			cards add: aDeckOfCards removeFirst.
+			ships add: (Ship for: (shipNames at:i) startingAt:(Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares )  shieldedWith: 3  holding: cards ).		
+		
+		].
+
 
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
