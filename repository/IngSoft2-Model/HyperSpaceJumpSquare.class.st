@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'actions' }
-HyperSpaceJumpSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
+HyperSpaceJumpSquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
 
 	aShip moveForwardBy: 4.
-	aShip breakAShield
+	aShip breakAShield.
+	aShipManager checkBattles: aShip on: aBoard 
 ]

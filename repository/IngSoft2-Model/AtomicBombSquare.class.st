@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'actions' }
-AtomicBombSquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
+AtomicBombSquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
 
 	shipList do: [ :ship |
 		ship goToFirstSquare.

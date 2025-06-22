@@ -10,5 +10,7 @@ Class {
 }
 
 { #category : 'actions' }
-EmptySquare >> applyEffectTo: shipList forShip: aShip on: aBoard [
+EmptySquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
+
+	aShipManager checkBattles: aShip on: aBoard
 ]
