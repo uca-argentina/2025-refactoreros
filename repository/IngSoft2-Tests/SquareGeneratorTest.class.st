@@ -8,15 +8,13 @@ Class {
 
 { #category : 'asserting' }
 SquareGeneratorTest >> count: aSquareClass in: aSquareList closeTo: aRatio precision: aPrecision [
-	| count |
-	count := 0.
-	1 to: aSquareList size do:[ :i|
-		(((aSquareList at: i) class) = aSquareClass ) ifTrue: [ 
-			count := count + 1.
-			 ]
-		].
-	
-	self assert: count/(aSquareList size) closeTo: aRatio  precision: aPrecision 
+
+	| count total actualRatio |
+	count := aSquareList count: [ :square | square class = aSquareClass ].
+	total := aSquareList size.
+	actualRatio := count / total.
+
+	self assert: actualRatio closeTo: aRatio precision: aPrecision
 ]
 
 { #category : 'tests' }
