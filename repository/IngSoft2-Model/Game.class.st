@@ -130,15 +130,7 @@ Game >> rank: aSetOfShips [
 
 	| shipsOrderedByRanking |
 	shipsOrderedByRanking := aSetOfShips sorted: [ :aShip :anotherShip |
-		                         | lap1 lap2 pos1 pos2 |
-		                         lap1 := aShip lapCount.
-		                         lap2 := anotherShip boardPosition.
-		                         lap1 = lap2
-			                         ifTrue: [
-				                         pos1 := aShip boardPosition.
-				                         pos2 := anotherShip boardPosition.
-				                         pos1 > pos2 ]
-			                         ifFalse: [ lap1 > lap2 ] ].
+		                         aShip hasGreaterPosition: anotherShip ].
 
 	^ OrderedCollection withAll: shipsOrderedByRanking
 ]

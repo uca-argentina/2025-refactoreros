@@ -90,6 +90,15 @@ Position >> initializeWith: aSquare and: aLap and: aLapLength [
 	lapLength := aLapLength
 ]
 
+{ #category : 'comparing' }
+Position >> isGreaterThan: anotherPosition [
+	
+	| positionAsOnlySquares |
+	positionAsOnlySquares := anotherPosition square +(( anotherPosition lap) * lapLength).
+	
+	^ (square + (lap * lapLength)) > positionAsOnlySquares
+]
+
 { #category : 'accessing' }
 Position >> lap [
 

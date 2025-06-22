@@ -63,6 +63,12 @@ Ship >> goToFirstSquare [
 	position := position goToStartOfLap
 ]
 
+{ #category : 'comparing' }
+Ship >> hasGreaterPosition: anotherShip [
+
+	^  position isGreaterThan: (anotherShip position)
+]
+
 { #category : 'testing' }
 Ship >> hasReachedLap: lapsGoal [
 

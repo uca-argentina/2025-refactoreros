@@ -302,7 +302,7 @@ GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard|
 	dice := OrderedCollection new.
-	dice add: (LoadedDie withSetNumbers: #( 4 2 )).
+	dice add: (LoadedDie withSetNumbers: #( 2 4 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator

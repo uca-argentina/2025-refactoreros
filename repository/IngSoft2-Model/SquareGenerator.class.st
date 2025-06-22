@@ -15,10 +15,9 @@ Class {
 { #category : 'validation' }
 SquareGenerator class >> checkProbabilitiesAddToOne: squaresAndProbability [
 
-	| probabilitySum probabilities aFlag |
+	| probabilitySum probabilities |
 	probabilities := squaresAndProbability values.
 	probabilitySum := probabilities sum.
-	aFlag := true.
 
 	probabilitySum < 1 ifTrue: [
 			squaresAndProbability at: EmptySquare new put: (1 - probabilitySum)	
