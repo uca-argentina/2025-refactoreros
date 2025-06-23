@@ -103,7 +103,7 @@ Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal drawingFrom
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 Game >> applyCancellationTo: aTarget [
 
 	| cardToBeCancelled |
@@ -113,7 +113,8 @@ Game >> applyCancellationTo: aTarget [
 		Error signal: 'Targeted Card is not within active permanent cards' ].
 
 	cardToBeCancelled := activeCards detect: [ :aCard |
-		                     aCard name = aTarget cardName ].
+		                     aCard name = aTarget cardName and:
+			                     aCard ownerName = aTarget shipName ].
 	activeCards remove: cardToBeCancelled
 ]
 
@@ -254,8 +255,9 @@ Game >> throw: aCardName from: aShipName to: aTarget [
 
 	| queriedShip card |
 	queriedShip := self searchShipByName: aShipName.
-
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
+
+
 
 	card isPermanent
 		ifTrue: [ activeCards add: card ]

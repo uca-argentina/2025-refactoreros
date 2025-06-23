@@ -929,7 +929,7 @@ GameTest >> testC07WhenACancellationCardIsPlayedAndThePermanentCardIsDeactivated
 ]
 
 { #category : 'tests' }
-GameTest >> testC08WhenACancellationCardIsPlayedAndTheTargetCardHasNotBeenPlayedThenItFails [
+GameTest >> testC08WhenACancellationCardIsPlayedAndTheTargetCardIsNotActiveThenItFails [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -964,6 +964,46 @@ GameTest >> testC08WhenACancellationCardIsPlayedAndTheTargetCardHasNotBeenPlayed
 				throw: 'Cancellation Card'
 				from: 'Player 2'
 				to: (Target ship: 'Player 1' whoPlayed: 'Speed Card') ]
+		raise: Error
+		withMessageText: 'Targeted Card is not within active permanent cards'
+]
+
+{ #category : 'tests' }
+GameTest >> testC09WhenACancellationCardTargetsANonPermanentCardThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+
+	self
+		should: [
+			aGame
+				throw: 'Cancellation Card'
+				from: 'Player 2'
+				to: (Target ship: 'Player 1' whoPlayed: 'Cancellation Card') ]
 		raise: Error
 		withMessageText: 'Targeted Card is not within active permanent cards'
 ]
