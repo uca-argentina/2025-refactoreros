@@ -1007,3 +1007,70 @@ GameTest >> testC09WhenACancellationCardTargetsANonPermanentCardThenItFails [
 		raise: Error
 		withMessageText: 'Targeted Card is not within active permanent cards'
 ]
+
+{ #category : 'tests' }
+GameTest >> testC10WhenARedoCardHasTheSameEffectAsLastCardThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Acceleration Card' from: 'Player 1'.
+	aGame play.
+	aGame throw: 'Redo Card' from: 'Player 2'.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 8
+]
+
+{ #category : 'tests' }
+GameTest >> testC11WhenARedoCardIsPlayedWithoutACardPlayedPreviouslyThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aDeckOfCards := {
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	self
+		should: [ aGame throw: 'Redo Card' from: 'Player 1' ]
+		raise: Error
+		withMessageText: 'No card has been played yet'
+]

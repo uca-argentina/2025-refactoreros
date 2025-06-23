@@ -9,7 +9,8 @@ Class {
 		'shipManager',
 		'ships',
 		'board',
-		'activeCards'
+		'activeCards',
+		'lastCardPlayed'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -116,6 +117,16 @@ Game >> applyCancellationTo: aTarget [
 		                     aCard name = aTarget cardName and:
 			                     aCard ownerName = aTarget shipName ].
 	activeCards remove: cardToBeCancelled
+]
+
+{ #category : 'actions' }
+Game >> applyRedoTo: aTarget from: aShip [
+
+	lastCardPlayed ifNil: [ Error signal: 'No card has been played yet' ].
+
+	aShip drawCard: lastCardPlayed class withoutOwner.
+
+	self throw: lastCardPlayed name from: aShip playerName to: aTarget
 ]
 
 { #category : 'accessing' }
@@ -246,8 +257,12 @@ Game >> throw: aCardName from: aShipName [
 	queriedShip := self searchShipByName: aShipName.
 
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
-
-	activeCards add: card
+	
+	card isPermanent
+		ifTrue: [ activeCards add: card ]
+		ifFalse: [ card applyEffectIn: self for: (Target ship: '') ].
+		
+	lastCardPlayed := card deepCopy.
 ]
 
 { #category : 'actions' }
@@ -257,11 +272,11 @@ Game >> throw: aCardName from: aShipName to: aTarget [
 	queriedShip := self searchShipByName: aShipName.
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
 
-
-
 	card isPermanent
 		ifTrue: [ activeCards add: card ]
-		ifFalse: [ card applyEffectIn: self for: aTarget ]
+		ifFalse: [ card applyEffectIn: self for: aTarget ].
+		
+	lastCardPlayed := card deepCopy.
 ]
 
 { #category : 'accessing' }

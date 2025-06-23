@@ -12,5 +12,14 @@ Class {
 { #category : 'actions' }
 DrawCardSquare >> applyEffectTo: shipList forShip: aShip on: aBoard managedBy: aShipManager [
 
-	aShip drawCard
+	| allCards |
+	allCards := {
+		            SpeedCard new.
+		            MercenaryCard new.
+		            AccelerationCard new.
+		            CancellationCard new.
+		            RedoCard new.
+		            RepeatCard new }.
+		
+	aShip drawCard: allCards atRandom deepCopy
 ]

@@ -71,18 +71,9 @@ Ship >> cardsInHand [
 ]
 
 { #category : 'actions' }
-Ship >> drawCard [
-
-	| allCards |
-	allCards := {
-		            SpeedCard new.
-		            MercenaryCard new.
-		            AccelerationCard new.
-		            CancellationCard new.
-		            RedoCard new.
-		            RepeatCard new }.
+Ship >> drawCard: aCard [
 		
-	cardsInHand add: allCards atRandom deepCopy
+	cardsInHand add: aCard
 ]
 
 { #category : 'actions' }
