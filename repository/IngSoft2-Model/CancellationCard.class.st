@@ -21,6 +21,12 @@ CancellationCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new
 ]
 
+{ #category : 'actions' }
+CancellationCard >> applyEffectIn: aGame for: aTarget [
+
+	aGame applyCancellationTo: aTarget
+]
+
 { #category : 'initialization' }
 CancellationCard >> initializeOwnedBy: aShip [
 

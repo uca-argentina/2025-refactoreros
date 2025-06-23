@@ -45,3 +45,9 @@ SpeedCard >> name [
 
 	^ 'Speed Card'
 ]
+
+{ #category : 'accessing' }
+SpeedCard >> ownerName [
+
+	^ owner playerName
+]

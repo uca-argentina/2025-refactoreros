@@ -103,13 +103,27 @@ Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal drawingFrom
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> applyCancellationTo: aTarget [
+
+	| cardToBeCancelled |
+	(activeCards anySatisfy: [ :aCard |
+		 aCard name = aTarget cardName and:
+			 aCard ownerName = aTarget shipName ]) ifFalse: [
+		Error signal: 'Targeted Card is not within active permanent cards' ].
+
+	cardToBeCancelled := activeCards detect: [ :aCard |
+		                     aCard name = aTarget cardName ].
+	activeCards remove: cardToBeCancelled
+]
+
 { #category : 'accessing' }
 Game >> cardsInHandOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
+	
 
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip cardsInHand
 ]
@@ -126,13 +140,6 @@ Game >> checkIfAllowedToPlay: aShip [
 
 	(shipManager hasTurnSkips: aShip) ifTrue: [
 		Error signal: aShip playerName , ' must skip this turn' ]
-]
-
-{ #category : 'actions' }
-Game >> checkIfShipExists: queriedShipName [
-
-	(ships anySatisfy: [ :aShip | aShip playerName = queriedShipName ])
-		ifFalse: [ Error signal: 'No ship by that name exists in the game' ]
 ]
 
 { #category : 'initialization' }
@@ -155,9 +162,8 @@ Game >> isGameFinished [
 Game >> lapCountOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
+	queriedShip := self searchShipByName: aShipName.
 
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
 
 	^ queriedShip lapCount
 ]
@@ -182,9 +188,7 @@ Game >> play [
 Game >> positionOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip boardPosition
 ]
@@ -203,20 +207,24 @@ Game >> rank: aSetOfShips [
 Game >> rankingOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ (self rank: ships) indexOf: queriedShip
+]
+
+{ #category : 'actions' }
+Game >> searchShipByName: queriedShipName [
+
+	^ ((ships select: [ :aShip | aShip playerName = queriedShipName ])
+		   ifEmpty: [
+		   Error signal: 'No ship by that name exists in the game' ]) at: 1
 ]
 
 { #category : 'accessing' }
 Game >> shieldfOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip shields
 ]
@@ -234,10 +242,8 @@ Game >> skip [
 Game >> throw: aCardName from: aShipName [
 
 	| queriedShip card |
-	self checkIfShipExists: aShipName.
+	queriedShip := self searchShipByName: aShipName.
 
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
-	
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
 
 	activeCards add: card
@@ -247,13 +253,13 @@ Game >> throw: aCardName from: aShipName [
 Game >> throw: aCardName from: aShipName to: aTarget [
 
 	| queriedShip card |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
-	
-	activeCards add: card
+
+	card isPermanent
+		ifTrue: [ activeCards add: card ]
+		ifFalse: [ card applyEffectIn: self for: aTarget ]
 ]
 
 { #category : 'accessing' }

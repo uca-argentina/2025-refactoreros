@@ -747,7 +747,7 @@ GameTest >> testC02WhenShipLandsOnDrawCardSquareAndObtainsANewCardThenValid [
 ]
 
 { #category : 'tests' }
-GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRollThenValid [
+GameTest >> testC03WhenAShipPlaysAccelerationCardAndAllShipsIncrementTheirDiceRollThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -786,7 +786,7 @@ GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRoll
 ]
 
 { #category : 'tests' }
-GameTest >> testC04WhenShipDrawsACardThatDoesNotHaveInHandThenItFails [
+GameTest >> testC04WhenShipPlaysACardThatDoesNotHaveInHandThenItFails [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -817,7 +817,7 @@ GameTest >> testC04WhenShipDrawsACardThatDoesNotHaveInHandThenItFails [
 ]
 
 { #category : 'tests' }
-GameTest >> testC05WhenAShipDrawsAPermanentCardOutOfItsTurnThenItFails [
+GameTest >> testC05WhenAShipPlaysAPermanentCardOutOfItsTurnThenItFails [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -854,7 +854,7 @@ GameTest >> testC05WhenAShipDrawsAPermanentCardOutOfItsTurnThenItFails [
 ]
 
 { #category : 'tests' }
-GameTest >> testC06WhenAShipUseSpeedCardAndItIncrementItsDiceRollThenValid [
+GameTest >> testC06WhenAShipPlaysSpeedCardAndItIncrementItsDiceRollThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -893,7 +893,7 @@ GameTest >> testC06WhenAShipUseSpeedCardAndItIncrementItsDiceRollThenValid [
 ]
 
 { #category : 'tests' }
-GameTest >> testC07 [
+GameTest >> testC07WhenACancellationCardIsPlayedAndThePermanentCardIsDeactivatedThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -921,9 +921,49 @@ GameTest >> testC07 [
 		         drawingFrom: aDeckOfCards.
 
 	aGame throw: 'Speed Card' from: 'Player 1'.
-	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Cancellation Card').
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
 	aGame play.
 	aGame play.
 
 	self assert: (aGame positionOf: 'Player 1') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC08WhenACancellationCardIsPlayedAndTheTargetCardHasNotBeenPlayedThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+
+	self
+		should: [
+			aGame
+				throw: 'Cancellation Card'
+				from: 'Player 2'
+				to: (Target ship: 'Player 1' whoPlayed: 'Speed Card') ]
+		raise: Error
+		withMessageText: 'Targeted Card is not within active permanent cards'
 ]
