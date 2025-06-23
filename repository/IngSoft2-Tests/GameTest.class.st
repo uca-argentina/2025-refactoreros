@@ -775,7 +775,6 @@ GameTest >> testC03WhenAShipUseAccelerationCardAndAllShipsIncrementTheirDiceRoll
 		         toPlayFor: 2
 		         drawingFrom: aDeckOfCards.
 
-
 	aGame throw: 'Acceleration Card' from: 'Player 1'.
 	aGame play.
 	aGame play.
@@ -846,11 +845,10 @@ GameTest >> testC05WhenAShipDrawsAPermanentCardOutOfItsTurnThenItFails [
 		         toPlayFor: 2
 		         drawingFrom: aDeckOfCards.
 
-
 	self
 		should: [ aGame throw: 'Acceleration Card' from: 'Player 2' ]
 		raise: Error
-		withMessageText: 'The ship is trying a permanent card out of its turn'
+		withMessageText: 'The ship is trying to use a permanent card out of its turn'
 
 
 ]
@@ -884,7 +882,6 @@ GameTest >> testC06WhenAShipUseSpeedCardAndItIncrementItsDiceRollThenValid [
 		         toPlayFor: 2
 		         drawingFrom: aDeckOfCards.
 
-
 	aGame play.
 	aGame throw: 'Speed Card' from: 'Player 2'.
 	aGame play.
@@ -893,4 +890,40 @@ GameTest >> testC06WhenAShipUseSpeedCardAndItIncrementItsDiceRollThenValid [
 	self assert: (aGame positionOf: 'Player 1') equals: 4.
 	self assert: (aGame positionOf: 'Player 2') equals: 7.
 	self assert: (aGame positionOf: 'Player 3') equals: 8
+]
+
+{ #category : 'tests' }
+GameTest >> testC07 [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Speed Card' from: 'Player 1'.
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Cancellation Card').
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4
 ]

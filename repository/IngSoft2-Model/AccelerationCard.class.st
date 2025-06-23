@@ -11,11 +11,13 @@ Class {
 
 { #category : 'instance creation' }
 AccelerationCard class >> ownedBy: aShip [
-	^ self new initializeOwnedBy: aShip 
+
+	^ self new initializeOwnedBy: aShip
 ]
 
 { #category : 'instance creation' }
 AccelerationCard class >> withoutOwner [
+
 	^ self new initializeOwnedBy: NullShip new
 ]
 
@@ -26,8 +28,15 @@ AccelerationCard >> applyThrowEffectFor: aShip [
 ]
 
 { #category : 'initialization' }
-AccelerationCard >> initializeOwnedBy: aShip [ 
-	owner := aShip 
+AccelerationCard >> initializeOwnedBy: aShip [
+
+	owner := aShip
+]
+
+{ #category : 'testing' }
+AccelerationCard >> isPermanent [
+
+	^ true
 ]
 
 { #category : 'accessing' }

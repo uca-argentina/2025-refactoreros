@@ -6,6 +6,12 @@ Class {
 	#tag : 'Card'
 }
 
+{ #category : 'testing' }
+MercenaryCard >> isPermanent [
+
+	^ true
+]
+
 { #category : 'accessing' }
 MercenaryCard >> name [
 

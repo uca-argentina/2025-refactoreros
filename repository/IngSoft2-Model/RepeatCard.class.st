@@ -6,6 +6,12 @@ Class {
 	#tag : 'Card'
 }
 
+{ #category : 'testing' }
+RepeatCard >> isPermanent [
+
+	^ false
+]
+
 { #category : 'accessing' }
 RepeatCard >> name [
 

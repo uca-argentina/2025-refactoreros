@@ -6,6 +6,12 @@ Class {
 	#tag : 'Card'
 }
 
+{ #category : 'testing' }
+RedoCard >> isPermanent [
+
+	^ false
+]
+
 { #category : 'accessing' }
 RedoCard >> name [
 

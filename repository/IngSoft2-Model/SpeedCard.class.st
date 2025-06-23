@@ -11,11 +11,13 @@ Class {
 
 { #category : 'instance creation' }
 SpeedCard class >> ownedBy: aShip [
+
 	^ self new initializeOwnedBy: aShip
 ]
 
 { #category : 'instance creation' }
 SpeedCard class >> withoutOwner [
+
 	^ self new initializeOwnedBy: NullShip new
 ]
 
@@ -28,7 +30,14 @@ SpeedCard >> applyThrowEffectFor: aShip [
 
 { #category : 'initialization' }
 SpeedCard >> initializeOwnedBy: aShip [
+
 	owner := aShip
+]
+
+{ #category : 'testing' }
+SpeedCard >> isPermanent [
+
+	^ true
 ]
 
 { #category : 'accessing' }

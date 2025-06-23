@@ -169,13 +169,17 @@ Ship >> shields [
 ]
 
 { #category : 'actions' }
-Ship >> throw: aCardName [
+Ship >> throw: aCardName whenTurnOf: aShip [
 
 	| card |
 	(cardsInHand anySatisfy: [ :aCard | aCard name = aCardName ])
 		ifFalse: [ Error signal: 'The ship does not have this card' ].
 	card := cardsInHand detect: [ :aCard | aCard name = aCardName ].
+
+	(card isPermanent and: self playerName ~= aShip playerName) ifTrue: [
+		Error signal: 'The ship is trying to use a permanent card out of its turn' ].
+
 	cardsInHand remove: card.
-		
+
 	^ card class ownedBy: self
 ]

@@ -40,23 +40,21 @@ Game class >> checkValidShipNames: shipNames [
 
 { #category : 'initialization' }
 Game class >> createShipsNamed: shipNames on: squareCount drawingFrom: allCards [
-	| ships cards|
-	
-	ships := OrderedCollection new.
-	
-	1 to: shipNames size do: [ :i |
 
+	| ships cards |
+	ships := OrderedCollection new.
+
+	1 to: shipNames size do: [ :i |
 		cards := OrderedCollection new.
-		cards add: allCards atRandom deepCopy.
-		cards add: allCards atRandom deepCopy.
+		cards add: allCards atRandom.
+		cards add: allCards atRandom.
 
 		ships add: (Ship
-				 for: (shipNames at:i)
-				 startingAt:
-				 (Position atStartOfLapWithSquareNumbers: squareCount )
+				 for: (shipNames at: i)
+				 startingAt: (Position atStartOfLapWithSquareNumbers: squareCount)
 				 shieldedWith: 3
 				 holding: cards) ].
-		^ ships
+	^ ships
 ]
 
 { #category : 'initialization' }
@@ -88,17 +86,19 @@ Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal drawingFrom
 	| ships cards |
 	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapGoal.
-	
+
 	ships := OrderedCollection new.
 
-	1 to: shipNames size do:[:i |
-			cards := OrderedCollection new.
-			cards add: aDeckOfCards removeFirst.
-			cards add: aDeckOfCards removeFirst.
-			ships add: (Ship for: (shipNames at:i) startingAt:(Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares )  shieldedWith: 3  holding: cards ).		
-		
-		].
-
+	1 to: shipNames size do: [ :i |
+		cards := OrderedCollection new.
+		cards add: aDeckOfCards removeFirst.
+		cards add: aDeckOfCards removeFirst.
+		ships add: (Ship
+				 for: (shipNames at: i)
+				 startingAt:
+				 (Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares)
+				 shieldedWith: 3
+				 holding: cards) ].
 
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
 ]
@@ -237,12 +237,23 @@ Game >> throw: aCardName from: aShipName [
 	self checkIfShipExists: aShipName.
 
 	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
-	queriedShip = (ships at: 1) ifFalse: [
-		Error signal: 'The ship is trying a permanent card out of its turn' ].
+	
+	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
 
-	card := queriedShip throw: aCardName.
-	activeCards add: card.
+	activeCards add: card
+]
 
+{ #category : 'actions' }
+Game >> throw: aCardName from: aShipName to: aTarget [
+
+	| queriedShip card |
+	self checkIfShipExists: aShipName.
+
+	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+
+	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
+	
+	activeCards add: card
 ]
 
 { #category : 'accessing' }
