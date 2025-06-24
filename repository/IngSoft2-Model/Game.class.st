@@ -128,8 +128,7 @@ Game >> applyRedoTo: aTarget from: aShip [
 
 	aTarget shipName
 		ifEmpty: [ self throw: lastCardPlayed name from: aShip playerName ]
-		ifNotEmpty: [
-		self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
+		ifNotEmpty: [ self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
 ]
 
 { #category : 'accessing' }
@@ -265,22 +264,29 @@ Game >> throw: aCardName from: aShipName [
 		ifTrue: [ activeCards add: card ]
 		ifFalse: [ card applyEffectIn: self for: (Target ship: '') ].
 		
-	lastCardPlayed := card deepCopy.
+	(card class = RedoCard )ifFalse: [
+		lastCardPlayed := card deepCopy.
+		]
+	
 ]
 
 { #category : 'actions' }
 Game >> throw: aCardName from: aShipName to: aTarget [
 
 	| queriedShip card queriedTargetShip |
-	queriedShip := self searchShipByName: aShipName.
+	queriedShip       := self searchShipByName: aShipName.
 	queriedTargetShip := self searchShipByName: aTarget shipName.
+	
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1) to: queriedTargetShip.
 
 	card isPermanent
-		ifTrue: [ activeCards add: card ]
+		ifTrue:  [ activeCards add: card ]
 		ifFalse: [ card applyEffectIn: self for: aTarget ].
-		
-	lastCardPlayed := card deepCopy.
+	
+	(card class = RedoCard )ifFalse: [
+		lastCardPlayed := card deepCopy.
+		]
+	
 ]
 
 { #category : 'accessing' }

@@ -1009,7 +1009,7 @@ GameTest >> testC09WhenACancellationCardTargetsANonPermanentCardThenItFails [
 ]
 
 { #category : 'tests' }
-GameTest >> testC10WhenARedoCardHasTheSameEffectAsLastCardThenValid [
+GameTest >> testC10WhenARedoCardIsPlayedAfterAPermanentCardAndHasTheSameEffectThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
@@ -1076,7 +1076,7 @@ GameTest >> testC11WhenARedoCardIsPlayedWithoutACardPlayedPreviouslyThenItFails 
 ]
 
 { #category : 'tests' }
-GameTest >> testC12 [
+GameTest >> testC12WhenARedoCardIsPlayedByAShipAndItActivatesForAnotherPlayerThenIsValid [
 
     | aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
     aBoardSize := 10.
@@ -1113,4 +1113,149 @@ GameTest >> testC12 [
     self assert: (aGame positionOf: 'Player 1') equals: 5.
     self assert: (aGame positionOf: 'Player 2') equals: 6.
     self assert: (aGame positionOf: 'Player 3') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC13WhenRedoCardIsPlayedByAShipAfterAPermanentCardAndItsNotTheTurnOfTheShipThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame
+		throw: 'Speed Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame play.
+	aGame play.
+
+	self
+		should: [
+			aGame
+				throw: 'Redo Card'
+				from: 'Player 2'
+				to: (Target ship: 'Player 3') ]
+		raise: Error
+		withMessageText:
+		'The ship is trying to use a permanent card out of its turn'
+]
+
+{ #category : 'tests' }
+GameTest >> testC14WhenARedoCardIsPlayedAfterAnInstantaneousCardAndHasTheSameEffectThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 100.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 11 10 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame
+		throw: 'Speed Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame
+		throw: 'Speed Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame play.
+	aGame
+		throw: 'Cancellation Card'
+		from: 'Player 2'
+		to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame
+		throw: 'Redo Card'
+		from: 'Player 3'
+		to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame play.
+
+
+	self assert: (aGame positionOf: 'Player 1') equals: 9
+]
+
+{ #category : 'tests' }
+GameTest >> testC15WhenARedoIsPlayedAfterAnotherRedoAndHasTheSameEffectThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 100.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 11 10 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Speed Card' from: 'Player 1' to: (Target ship: 'Player 1').
+	aGame throw: 'Speed Card' from: 'Player 1' to: (Target ship: 'Player 1').
+	aGame play.
+	aGame throw: 'Speed Card' from: 'Player 2' to: (Target ship: 'Player 1').
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame throw: 'Redo Card' from: 'Player 3' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame throw: 'Redo Card' from: 'Player 3' to: (Target ship: 'Player 2' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame play.
+
+
+	self assert: (aGame positionOf: 'Player 1') equals: 9
 ]
