@@ -44,3 +44,10 @@ AccelerationCard >> name [
 
 	^ 'Acceleration Card'
 ]
+
+{ #category : 'accessing' }
+AccelerationCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
+
+	activeCards add: self.
+	aGame updateLastPlayedCard: self.
+]

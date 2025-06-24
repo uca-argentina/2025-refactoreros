@@ -53,3 +53,10 @@ SpeedCard >> ownerName [
 
 	^ owner playerName
 ]
+
+{ #category : 'accessing' }
+SpeedCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
+
+	activeCards add: self.
+	aGame updateLastPlayedCard: self.
+]

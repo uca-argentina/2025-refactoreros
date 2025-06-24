@@ -25,7 +25,8 @@ CancellationCard class >> withoutOwner [
 { #category : 'actions' }
 CancellationCard >> applyEffectIn: aGame for: aTarget [
 
-	aGame applyCancellationTo: aTarget
+	aGame applyCancellationTo: aTarget.
+	aGame updateLastPlayedCard: self.
 ]
 
 { #category : 'initialization' }
@@ -45,4 +46,10 @@ CancellationCard >> isPermanent [
 CancellationCard >> name [
 
 	^ 'Cancellation Card'
+]
+
+{ #category : 'accessing' }
+CancellationCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
+
+	self applyEffectIn: aGame for: aTarget 
 ]

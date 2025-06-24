@@ -54,3 +54,9 @@ RedoCard >> name [
 
 	^ 'Redo Card'
 ]
+
+{ #category : 'accessing' }
+RedoCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
+
+	self applyEffectIn: aGame for: aTarget
+]

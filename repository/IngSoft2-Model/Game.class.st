@@ -259,34 +259,32 @@ Game >> throw: aCardName from: aShipName [
 	queriedShip := self searchShipByName: aShipName.
 
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
-	
-	card isPermanent
-		ifTrue: [ activeCards add: card ]
-		ifFalse: [ card applyEffectIn: self for: (Target ship: '') ].
-		
-	(card class = RedoCard )ifFalse: [
-		lastCardPlayed := card deepCopy.
-		]
-	
+
+	card
+		playIn: self
+		alongWith: activeCards
+		targetedAt: (Target ship: '')
 ]
 
 { #category : 'actions' }
 Game >> throw: aCardName from: aShipName to: aTarget [
 
 	| queriedShip card queriedTargetShip |
-	queriedShip       := self searchShipByName: aShipName.
+	queriedShip := self searchShipByName: aShipName.
 	queriedTargetShip := self searchShipByName: aTarget shipName.
-	
-	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1) to: queriedTargetShip.
 
-	card isPermanent
-		ifTrue:  [ activeCards add: card ]
-		ifFalse: [ card applyEffectIn: self for: aTarget ].
-	
-	(card class = RedoCard )ifFalse: [
-		lastCardPlayed := card deepCopy.
-		]
-	
+	card := queriedShip
+		        throw: aCardName
+		        whenTurnOf: (ships at: 1)
+		        to: queriedTargetShip.
+
+
+	card playIn: self alongWith: activeCards targetedAt: aTarget
+]
+
+{ #category : 'actions' }
+Game >> updateLastPlayedCard: aCard [
+	lastCardPlayed := aCard
 ]
 
 { #category : 'accessing' }
