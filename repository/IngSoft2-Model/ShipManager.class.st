@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'shipTurnSkips',
-		'gameShips'
+		'gameShips',
+		'activeCards'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -14,23 +15,60 @@ Class {
 }
 
 { #category : 'initialization' }
-ShipManager class >> withShips: aShipList [
+ShipManager class >> withShips: aShipList andActiveCards: aActiveCardsList [
 
-	^ self new initializeWithShips: aShipList
+	^ self new initializeWithShips: aShipList andActiveCards: aActiveCardsList 
+]
+
+{ #category : 'as yet unclassified' }
+ShipManager >> battle:aShipWithMercenaries  with: anotherShipWithMercenaries on: aBoard [
+
+		| rollA rollB loserShip |
+		
+		rollA := 0.
+		aShipWithMercenaries do:[:aShip | rollA := rollA + (aBoard rollDiceFor: aShip with:activeCards)].
+		rollB := 0.
+		anotherShipWithMercenaries do:[:aShip | rollB := rollB + (aBoard rollDiceFor: aShip with:activeCards)].
+		
+		[ rollA = rollB ] whileTrue: [
+		 rollA := 0.
+		aShipWithMercenaries do:[:aShip | rollA := rollA + (aBoard rollDiceFor: aShip with:activeCards)].
+		rollB := 0.
+		anotherShipWithMercenaries do:[:aShip | rollB := rollB + (aBoard rollDiceFor: aShip with:activeCards)]. ].
+
+
+	loserShip := (aShipWithMercenaries at:1).
+	rollA > rollB ifTrue: [ loserShip := (anotherShipWithMercenaries at:1) ].
+
+	^ loserShip
 ]
 
 { #category : 'actions' }
 ShipManager >> checkBattles: aShip on: aBoard [
 
-	| otherShips loserShip |
+	| otherShips loserShip aShipWithMercenaries anotherShipWithMercenaries |
 	otherShips := gameShips reject: [ :ship | ship = aShip ].
 
 	otherShips do: [ :anotherShip |
 		(anotherShip isAtTheSameSquareAs: aShip) ifTrue: [
-			loserShip := aShip battle: anotherShip on: aBoard.
+			aShipWithMercenaries := self getMercenariesOf: aShip.
+			anotherShipWithMercenaries := self getMercenariesOf: anotherShip.
+			"loserShip := aShip battle: anotherShip on: aBoard."
+			loserShip := self battle: aShipWithMercenaries  with: anotherShipWithMercenaries on: aBoard. 
 			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
+]
+
+{ #category : 'as yet unclassified' }
+ShipManager >> getMercenariesOf: aShip [
+	| shipWithMercenaries |
+	
+	shipWithMercenaries:= OrderedCollection new.
+	shipWithMercenaries add: aShip.
+	activeCards do: [:aCard | aCard applyMercenaryEffectFor: aShip in: shipWithMercenaries].
+
+	^ shipWithMercenaries 
 ]
 
 { #category : 'testing' }
@@ -49,9 +87,10 @@ ShipManager >> hasTurnSkips: aShip [
 ]
 
 { #category : 'initialization' }
-ShipManager >> initializeWithShips: aSetOfShips [
+ShipManager >> initializeWithShips: aSetOfShips andActiveCards: aListOfActiveCards [
 
 	gameShips := aSetOfShips copy.
+	activeCards := aListOfActiveCards.
 	shipTurnSkips := Dictionary new.
 	gameShips do: [ :aShip | shipTurnSkips at: aShip put: 0 ]
 ]

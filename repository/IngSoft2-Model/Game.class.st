@@ -171,9 +171,9 @@ Game >> initializeWith: aSetOfships on: aBoard toPlayFor: aNumberOfLaps [
 
 	ships := aSetOfships deepCopy.
 	lapsGoal := aNumberOfLaps.
-	shipManager := ShipManager withShips: ships.
-	board := aBoard.
 	activeCards := OrderedCollection new.
+	shipManager := ShipManager withShips: ships andActiveCards: activeCards.
+	board := aBoard.	
 	nextSquare := EmptySquare new.
 ]
 

@@ -1435,3 +1435,42 @@ GameTest >> testC19WhenARepeatCardIsPlayedBeforeAnyDiceAreRolledAndTheCardHasNoE
 
 	self assert: (aGame positionOf: 'Player 1') equals: 1.
 ]
+
+{ #category : 'tests' }
+GameTest >> testC20WhenAMercenaryCardIsPlayedAndTheMercenaryHelpsTheShipInBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 3 10 1 3 3 5)).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from:'Player 1'  to:(Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 4.
+	self assert: (aGame positionOf: 'Player 2') equals: 1
+]

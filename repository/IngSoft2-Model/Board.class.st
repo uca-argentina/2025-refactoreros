@@ -80,6 +80,20 @@ Board >> rollDice [
 	^ ((dice collect: [ :die | die roll ]) sum) 
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> rollDiceFor: aShip with: activeCards [
+	
+	| extraPointsForThrow diceResult |
+	
+	diceResult := (dice collect: [ :die | die roll ]) sum.
+	
+	
+	extraPointsForThrow := 0.
+	activeCards do: [:aCard | extraPointsForThrow := extraPointsForThrow +( aCard applyThrowEffectFor: aShip) ].
+	
+	^ diceResult + extraPointsForThrow 
+]
+
 { #category : 'accessing' }
 Board >> squareAt: aPosition [
 	
