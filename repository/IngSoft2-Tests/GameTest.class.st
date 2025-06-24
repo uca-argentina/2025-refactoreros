@@ -883,7 +883,7 @@ GameTest >> testC06WhenAShipPlaysSpeedCardAndItIncrementItsDiceRollThenValid [
 		         drawingFrom: aDeckOfCards.
 
 	aGame play.
-	aGame throw: 'Speed Card' from: 'Player 2'.
+	aGame throw: 'Speed Card' from: 'Player 2' to: (Target ship: 'Player 2').
 	aGame play.
 	aGame play.
 
@@ -920,7 +920,7 @@ GameTest >> testC07WhenACancellationCardIsPlayedAndThePermanentCardIsDeactivated
 		         toPlayFor: 2
 		         drawingFrom: aDeckOfCards.
 
-	aGame throw: 'Speed Card' from: 'Player 1'.
+	aGame throw: 'Speed Card' from: 'Player 1' to:(Target ship: 'Player 1').
 	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
 	aGame play.
 	aGame play.
@@ -1073,4 +1073,44 @@ GameTest >> testC11WhenARedoCardIsPlayedWithoutACardPlayedPreviouslyThenItFails 
 		should: [ aGame throw: 'Redo Card' from: 'Player 1' ]
 		raise: Error
 		withMessageText: 'No card has been played yet'
+]
+
+{ #category : 'tests' }
+GameTest >> testC12 [
+
+    | aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+    aBoardSize := 10.
+    dice := OrderedCollection new.
+    dice add: (LoadedDie withSetNumbers: #( 3 5 2 )).
+    squareGenerator := SquareGenerator withOnlyEmptySquares.
+    aBoard := Board
+                  populatedBy: squareGenerator
+                  anAmountOf: aBoardSize
+                  withTotalDistanceOf: 50
+                  toBePlayedOnRolling: dice.
+
+    shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+    aDeckOfCards := {
+                        SpeedCard withoutOwner.
+                        SpeedCard withoutOwner.
+                        RedoCard withoutOwner.
+                        RedoCard withoutOwner.
+                        CancellationCard withoutOwner.
+                        CancellationCard withoutOwner } asOrderedCollection.
+    aGame := Game
+                 gamePlayedBy: shipNames
+                 on: aBoard
+                 toPlayFor: 2
+                 drawingFrom: aDeckOfCards.
+
+    aGame throw: 'Speed Card' from: 'Player 1' to: (Target ship: 'Player 1').
+    aGame play.
+    aGame throw: 'Redo Card' from: 'Player 2' to: (Target ship: 'Player 3').
+    aGame play.
+    aGame play.
+
+    self assert: (aGame positionOf: 'Player 1') equals: 5.
+    self assert: (aGame positionOf: 'Player 2') equals: 6.
+    self assert: (aGame positionOf: 'Player 3') equals: 4
 ]

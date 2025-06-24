@@ -126,7 +126,10 @@ Game >> applyRedoTo: aTarget from: aShip [
 
 	aShip drawCard: lastCardPlayed class withoutOwner.
 
-	self throw: lastCardPlayed name from: aShip playerName to: aTarget
+	aTarget shipName
+		ifEmpty: [ self throw: lastCardPlayed name from: aShip playerName ]
+		ifNotEmpty: [
+		self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
 ]
 
 { #category : 'accessing' }
@@ -268,9 +271,10 @@ Game >> throw: aCardName from: aShipName [
 { #category : 'actions' }
 Game >> throw: aCardName from: aShipName to: aTarget [
 
-	| queriedShip card |
+	| queriedShip card queriedTargetShip |
 	queriedShip := self searchShipByName: aShipName.
-	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
+	queriedTargetShip := self searchShipByName: aTarget shipName.
+	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1) to: queriedTargetShip.
 
 	card isPermanent
 		ifTrue: [ activeCards add: card ]

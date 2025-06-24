@@ -2,7 +2,8 @@ Class {
 	#name : 'CancellationCard',
 	#superclass : 'Object',
 	#instVars : [
-		'owner'
+		'owner',
+		'target'
 	],
 	#category : 'IngSoft2-Model-Card',
 	#package : 'IngSoft2-Model',
@@ -10,15 +11,15 @@ Class {
 }
 
 { #category : 'instance creation' }
-CancellationCard class >> ownedBy: aShip [
+CancellationCard class >> ownedBy: aShip targetedTo: aTargetShip [
 
-	^ self new initializeOwnedBy: aShip
+	^ self new initializeOwnedBy: aShip targetedTo: aTargetShip 
 ]
 
 { #category : 'instance creation' }
 CancellationCard class >> withoutOwner [
 
-	^ self new initializeOwnedBy: NullShip new
+	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new 
 ]
 
 { #category : 'actions' }
@@ -28,9 +29,10 @@ CancellationCard >> applyEffectIn: aGame for: aTarget [
 ]
 
 { #category : 'initialization' }
-CancellationCard >> initializeOwnedBy: aShip [
+CancellationCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 
-	owner := aShip
+	owner := aShip.
+	target := anotherShip 
 ]
 
 { #category : 'testing' }

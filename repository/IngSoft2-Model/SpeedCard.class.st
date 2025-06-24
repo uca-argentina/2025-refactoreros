@@ -2,7 +2,8 @@ Class {
 	#name : 'SpeedCard',
 	#superclass : 'Object',
 	#instVars : [
-		'owner'
+		'owner',
+		'target'
 	],
 	#category : 'IngSoft2-Model-Card',
 	#package : 'IngSoft2-Model',
@@ -10,28 +11,29 @@ Class {
 }
 
 { #category : 'instance creation' }
-SpeedCard class >> ownedBy: aShip [
+SpeedCard class >> ownedBy: aShip targetedTo: aTargetShip [
 
-	^ self new initializeOwnedBy: aShip
+	^ self new initializeOwnedBy: aShip targetedTo: aTargetShip
 ]
 
 { #category : 'instance creation' }
 SpeedCard class >> withoutOwner [
 
-	^ self new initializeOwnedBy: NullShip new
+	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new
 ]
 
 { #category : 'actions' }
 SpeedCard >> applyThrowEffectFor: aShip [
 
-	aShip = owner ifTrue: [ ^ 1 ].
+	aShip = target ifTrue: [ ^ 1 ].
 	^ 0
 ]
 
 { #category : 'initialization' }
-SpeedCard >> initializeOwnedBy: aShip [
+SpeedCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 
-	owner := aShip
+	owner := aShip.
+	target := anotherShip 
 ]
 
 { #category : 'testing' }
