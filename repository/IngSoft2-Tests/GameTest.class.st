@@ -1308,3 +1308,130 @@ GameTest >> testC16WhenAShipPlaysRepeatCardTargetedToItselfAndTheEffectOfTheLast
 
 	self assert: (aGame positionOf: 'Player 2') equals: 2
 ]
+
+{ #category : 'tests' }
+GameTest >> testC17WhenAShipPlaysRepeatCardTargetedToOtherShipAndTheEffectOfTheLastSquareGetsRetriggeredThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 5 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (MoonWalkSquare withBackwardsPush: 1).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 15
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 2').
+
+	self assert: (aGame positionOf: 'Player 1') equals: 2.
+	self assert: (aGame positionOf: 'Player 2') equals: 5
+]
+
+{ #category : 'tests' }
+GameTest >> testC18WhenAShipPlaysRepeatCardOnAnEmptySquareAndTheCardHasNoEffectThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 15
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 2').
+
+	self assert: (aGame positionOf: 'Player 1') equals: 2.
+	self assert: (aGame positionOf: 'Player 2') equals: 1
+]
+
+{ #category : 'tests' }
+GameTest >> testC19WhenARepeatCardIsPlayedBeforeAnyDiceAreRolledAndTheCardHasNoEffectThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #()).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: 15
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1').
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+
+	self assert: (aGame positionOf: 'Player 1') equals: 1.
+]

@@ -132,7 +132,7 @@ Game >> applyRedoTo: aTarget from: aShip [
 		ifNotEmpty: [ self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 Game >> applyRepeatTo: aTarget [
 	
 	| targetedShip |
@@ -174,6 +174,7 @@ Game >> initializeWith: aSetOfships on: aBoard toPlayFor: aNumberOfLaps [
 	shipManager := ShipManager withShips: ships.
 	board := aBoard.
 	activeCards := OrderedCollection new.
+	nextSquare := EmptySquare new.
 ]
 
 { #category : 'accessing' }
