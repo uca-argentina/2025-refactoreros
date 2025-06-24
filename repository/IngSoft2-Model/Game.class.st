@@ -10,7 +10,8 @@ Class {
 		'ships',
 		'board',
 		'activeCards',
-		'lastCardPlayed'
+		'lastCardPlayed',
+		'nextSquare'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -131,6 +132,15 @@ Game >> applyRedoTo: aTarget from: aShip [
 		ifNotEmpty: [ self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> applyRepeatTo: aTarget [
+	
+	| targetedShip |
+	targetedShip := self searchShipByName: (aTarget shipName).
+	
+	shipManager landShip: targetedShip atSquare: nextSquare  on: board 
+]
+
 { #category : 'accessing' }
 Game >> cardsInHandOf: aShipName [
 
@@ -185,7 +195,7 @@ Game >> lapCountOf: aShipName [
 { #category : 'actions' }
 Game >> play [
 
-	| diceOutcome nextSquare aShip extraPointsForThrow |
+	| diceOutcome  aShip extraPointsForThrow |
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	self checkIfAllowedToPlay: aShip.

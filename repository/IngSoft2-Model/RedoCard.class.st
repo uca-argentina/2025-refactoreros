@@ -28,14 +28,6 @@ RedoCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new 
 ]
 
-{ #category : 'actions' }
-RedoCard >> applyEffectIn: aGame for: aTarget [
-
-	aGame applyRedoTo: aTarget from: owner
-
-	
-]
-
 { #category : 'initialization' }
 RedoCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 
@@ -58,5 +50,5 @@ RedoCard >> name [
 { #category : 'accessing' }
 RedoCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
 
-	self applyEffectIn: aGame for: aTarget
+	aGame applyRedoTo: aTarget from: owner
 ]

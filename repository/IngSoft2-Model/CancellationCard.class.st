@@ -22,13 +22,6 @@ CancellationCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new 
 ]
 
-{ #category : 'actions' }
-CancellationCard >> applyEffectIn: aGame for: aTarget [
-
-	aGame applyCancellationTo: aTarget.
-	aGame updateLastPlayedCard: self.
-]
-
 { #category : 'initialization' }
 CancellationCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 
@@ -51,5 +44,6 @@ CancellationCard >> name [
 { #category : 'accessing' }
 CancellationCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
 
-	self applyEffectIn: aGame for: aTarget 
+	aGame applyCancellationTo: aTarget.
+	aGame updateLastPlayedCard: self.
 ]
