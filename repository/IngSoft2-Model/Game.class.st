@@ -191,7 +191,7 @@ Game >> play [
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := board rollDice.
 	extraPointsForThrow := 0.
-	activeCards do: [:aCard | extraPointsForThrow := extraPointsForThrow +  (aCard applyThrowEffectFor: aShip) ].
+	activeCards do: [:aCard | extraPointsForThrow := extraPointsForThrow +( aCard applyThrowEffectFor: aShip) ].
 	
 	shipManager moveShip: aShip to: (diceOutcome + extraPointsForThrow).
 	nextSquare := board squareAt: aShip boardPosition.
