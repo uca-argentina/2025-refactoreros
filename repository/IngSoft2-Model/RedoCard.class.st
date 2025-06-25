@@ -31,10 +31,6 @@ RedoCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new 
 ]
 
-{ #category : 'checking' }
-RedoCard >> checkIfPresent [
-]
-
 { #category : 'initialization' }
 RedoCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 

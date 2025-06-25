@@ -51,5 +51,6 @@ RepeatCard >> name [
 { #category : 'accessing' }
 RepeatCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
 
-	aGame applyRepeatTo: aTarget
+	aGame applyRepeatTo: aTarget.
+	aGame updateLastPlayedCard: self
 ]

@@ -1779,3 +1779,53 @@ GameTest >> testC28WhenShipsBattleAndAPlayedAccelerationCardIncreasesTheDiceThro
 	self assert: (aGame positionOf: 'Player 1') equals: 5.
 	self assert: (aGame positionOf: 'Player 2') equals: 1
 ]
+
+{ #category : 'tests' }
+GameTest >> testC29WhenARedoCardIsPlayedAfterARepeatCardAndTheLastSquareGetsRetriggeredTwiceThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 9 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (MoonWalkSquare withBackwardsPush: 2).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 15)
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                RedoCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame throw: 'Redo Card' from: 'Player 2'  to:(Target ship:'Player 2').
+
+
+	self assert: (aGame positionOf: 'Player 2') equals: 6
+]
