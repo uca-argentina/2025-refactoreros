@@ -54,10 +54,3 @@ WormHoleSquare >> intializewithEntranceAt: anEntrancePosition andExitAt: anExitP
 	entrancePosition := anEntrancePosition.
 	exitPosition := anExitPosition
 ]
-
-{ #category : 'accessing' }
-WormHoleSquare >> oppositeEnd: aPosition [
-
-	aPosition = entrancePosition ifTrue: [ ^ exitPosition ].
-	aPosition = exitPosition ifTrue: [ ^ entrancePosition ]
-]

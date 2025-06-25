@@ -23,19 +23,6 @@ Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShiel
 ]
 
 { #category : 'accessing' }
-Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWith: aNumberOfShields [
-
-	|  cards |
-	^ (playerNames collect: [ :aPlayerName |
-		 	cards := OrderedCollection new.  
-		   self
-			   for: aPlayerName
-			   startingAt: aPosition
-			   shieldedWith: aNumberOfShields
-			   holding: cards ]) asOrderedCollection
-]
-
-{ #category : 'accessing' }
 Ship >> boardPosition [
 
 	^ position square
