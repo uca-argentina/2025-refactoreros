@@ -21,6 +21,16 @@ SquareGeneratorTest >> count: aSquareClass in: aSquareList closeTo: aRatio preci
 		(actualRatio between: aRatio - tolerance and: aRatio + tolerance)
 ]
 
+{ #category : 'asserting' }
+SquareGeneratorTest >> should: anErrorBlock raise: errorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: errorClass
+		withExceptionDo: [ :error |
+		self assert: (error messageText) equals: errorMessage ]
+]
+
 { #category : 'tests' }
 SquareGeneratorTest >> testB01WhenASquareGeneratorCreatesSquareAndSquareListSizeMatchesSquareCountThenValid [
 
@@ -108,4 +118,27 @@ SquareGeneratorTest >> testB04WhenProbabilitiesDoNotAddUpToOneAndThereIsNoProbab
 
 	
 
+]
+
+{ #category : 'tests' }
+SquareGeneratorTest >> testB05 [
+
+	| squareCount squareGenerator squaresWithProbability |
+	squareCount := 100.
+	squaresWithProbability := Dictionary new.
+	squaresWithProbability at: EmptySquare new put: 0.4.
+	squaresWithProbability at: BlackHoleSquare new put: 0.2.
+	squaresWithProbability at: HyperSpaceJumpSquare new put: 0.2.
+	squaresWithProbability at: (MoonWalkSquare withBackwardsPush: 1) put: 0.1.
+	squaresWithProbability at: (HyperJumpSquare withParsecsRewards: #( 10 5 2 )) put: 0.8.
+	squaresWithProbability at: AtomicBombSquare new put: 0.9.
+
+
+
+
+	self
+		should: [
+		squareGenerator := SquareGenerator with: squaresWithProbability ]
+		raise: Error
+		withMessageText: 'Total Probability should not be larger than 1'
 ]
