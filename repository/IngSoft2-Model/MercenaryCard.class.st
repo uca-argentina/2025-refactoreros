@@ -37,6 +37,12 @@ MercenaryCard >> applyThrowEffectFor: aShip [
 	^ 0
 ]
 
+{ #category : 'testing' }
+MercenaryCard >> hasTarget: aTarget [
+
+	^ target playerName = aTarget shipName
+]
+
 { #category : 'initialization' }
 MercenaryCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 
@@ -58,6 +64,10 @@ MercenaryCard >> name [
 
 { #category : 'accessing' }
 MercenaryCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
+
+	| activeMercenaryCards |
+	activeMercenaryCards := activeCards select: [ :aCard | aCard name = 'Mercenary Card' ]. 
+	(activeMercenaryCards anySatisfy: [ :aCard | aCard hasTarget: aTarget ]) ifTrue: [ Error signal: 'Ship has already been hired as mercenary' ].
 
 	activeCards add: self.
 	aGame updateLastPlayedCard: self.

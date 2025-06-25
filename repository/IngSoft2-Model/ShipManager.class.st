@@ -50,17 +50,17 @@ ShipManager >> battle: aShipWithMercenaries with: anotherShipWithMercenaries on:
 { #category : 'checking' }
 ShipManager >> checkBattles: aShip on: aBoard [
 
-	| otherShips loserShip aShipWithMercenaries anotherShipWithMercenaries |
+	| otherShips loserShip aShipWithMercenaries anotherShipWithMercenaries loserShipWithMercenaries |
 	aShipWithMercenaries := self getMercenariesOf: aShip.
 
 	otherShips := gameShips reject: [ :ship | aShipWithMercenaries includes: ship ].
-	otherShips := otherShips reject: [ :ship | aShipWithMercenaries includes: ship ].
 
 	otherShips do: [ :anotherShip |
 		(self checkIfShouldFight: aShip with: anotherShip ) ifTrue: [
 			anotherShipWithMercenaries := self getMercenariesOf: anotherShip.
 			loserShip := self battle: aShipWithMercenaries with: anotherShipWithMercenaries on: aBoard.
-			loserShip breakAShield.
+			loserShipWithMercenaries := self getMercenariesOf: loserShip.
+			loserShipWithMercenaries do: [ :ship | ship breakAShield ].
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
 

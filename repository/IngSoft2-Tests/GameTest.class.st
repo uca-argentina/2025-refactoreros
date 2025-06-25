@@ -1544,3 +1544,164 @@ GameTest >> testC22WhenAMercenaryLandsOnTheSameSquareAsItsHirererAndDontBattleTh
 	self assert: (aGame positionOf: 'Player 1') equals: 3.
 	self assert: (aGame positionOf: 'Player 2') equals: 3
 ]
+
+{ #category : 'tests' }
+GameTest >> testC23WhenAMercenaryBattlesAndTheHirererDoesNotHelpThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 4 4 2 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3').
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+							 SpeedCard withoutOwner.
+		                SpeedCard withoutOwner. } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame play.
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame shieldfOf: 'Player 1') equals: 3.
+	self assert: (aGame shieldfOf: 'Player 2') equals: 2.
+
+]
+
+{ #category : 'tests' }
+GameTest >> testC24WhenAShipHiresMoreThanOneMercenaryAndTheyHelpInBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 9 7 3 2 1 1 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 4') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC25WhenAShipWithMercenariesLosesABattleAndAllBreakAShieldThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 9 7 3 4 1 1 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 1') equals: 2.
+	self assert: (aGame shieldfOf: 'Player 2') equals: 2.
+	self assert: (aGame shieldfOf: 'Player 3') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC26WhenAShipHiresAMercenaryAndItHasAlreadyBeenHiredThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+
+	self
+		should: [ aGame throw: 'Mercenary Card' from: 'Player 2' to: (Target ship: 'Player 3') ]
+		raise: Error
+		withMessageText: 'Ship has already been hired as mercenary'
+]
