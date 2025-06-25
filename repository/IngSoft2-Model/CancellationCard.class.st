@@ -1,3 +1,6 @@
+"
+An instant card that removes an active permanent card from the game
+"
 Class {
 	#name : 'CancellationCard',
 	#superclass : 'Object',

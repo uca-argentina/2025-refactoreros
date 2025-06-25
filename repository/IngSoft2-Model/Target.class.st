@@ -1,3 +1,7 @@
+"
+A target object that links a specific ship and the card it played
+
+"
 Class {
 	#name : 'Target',
 	#superclass : 'Object',

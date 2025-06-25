@@ -1,3 +1,6 @@
+"
+A card that mimics the effect of the last played card, regardless of its type (instant or permanent)
+"
 Class {
 	#name : 'RedoCard',
 	#superclass : 'Object',

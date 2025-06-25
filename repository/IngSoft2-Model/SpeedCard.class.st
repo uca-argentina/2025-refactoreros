@@ -1,3 +1,6 @@
+"
+A permanent card that increases the total die roll of a selected ship by 1 (affects the total result, not individual die values)
+"
 Class {
 	#name : 'SpeedCard',
 	#superclass : 'Object',

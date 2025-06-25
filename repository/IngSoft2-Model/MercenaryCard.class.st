@@ -1,3 +1,6 @@
+"
+A permanent card that allows the ship to hire a mercenary ship as an ally
+"
 Class {
 	#name : 'MercenaryCard',
 	#superclass : 'Object',
@@ -22,9 +25,10 @@ MercenaryCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 MercenaryCard >> applyMercenaryEffectFor: aShip in: aListMercenaries [
-	(aShip = owner) ifTrue: [ aListMercenaries add: target].
+
+	aShip = owner ifTrue: [ aListMercenaries add: target ]
 ]
 
 { #category : 'actions' }

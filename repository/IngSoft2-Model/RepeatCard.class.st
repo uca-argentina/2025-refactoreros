@@ -1,3 +1,6 @@
+"
+An instant card that reapplies the last effect used in the game to a selected ship
+"
 Class {
 	#name : 'RepeatCard',
 	#superclass : 'Object',

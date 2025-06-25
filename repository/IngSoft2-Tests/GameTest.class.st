@@ -1220,7 +1220,7 @@ GameTest >> testC14WhenARedoCardIsPlayedAfterAnInstantaneousCardAndHasTheSameEff
 GameTest >> testC15WhenARedoIsPlayedAfterAnotherRedoAndHasTheSameEffectThenValid [
 
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
-	aBoardSize := 100.
+	aBoardSize := 20.
 	dice := OrderedCollection new.
 	dice add: (LoadedDie withSetNumbers: #( 1 11 10 5 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
@@ -1442,7 +1442,7 @@ GameTest >> testC20WhenAMercenaryCardIsPlayedAndTheMercenaryHelpsTheShipInBattle
 	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
 	aBoardSize := 10.
 	dice := OrderedCollection new.
-	dice add: (LoadedDie withSetNumbers: #( 2 3 10 1 3 3 5)).
+	dice add: (LoadedDie withSetNumbers: #( 2 3 10 1 3 3 5 )).
 	squareGenerator := SquareGenerator withOnlyEmptySquares.
 	aBoard := Board
 		          populatedBy: squareGenerator
@@ -1465,7 +1465,7 @@ GameTest >> testC20WhenAMercenaryCardIsPlayedAndTheMercenaryHelpsTheShipInBattle
 		         toPlayFor: 2
 		         drawingFrom: aDeckOfCards.
 
-	aGame throw: 'Mercenary Card' from:'Player 1'  to:(Target ship: 'Player 3').
+	aGame throw: 'Mercenary Card' from: 'Player 1'  to: (Target ship: 'Player 3').
 	aGame play.
 	aGame play.
 	aGame play.
