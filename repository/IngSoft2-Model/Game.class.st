@@ -8,7 +8,10 @@ Class {
 		'lapsGoal',
 		'shipManager',
 		'ships',
-		'board'
+		'board',
+		'activeCards',
+		'lastCardPlayed',
+		'nextSquare'
 	],
 	#category : 'IngSoft2-Model-Game',
 	#package : 'IngSoft2-Model',
@@ -18,8 +21,8 @@ Class {
 { #category : 'validation' }
 Game class >> checkValidLapCount: aNumberOfLaps [
 
-    aNumberOfLaps >= 1 ifFalse: [
-        Error signal: 'Lap count must be equal or higher than 1' ]
+	aNumberOfLaps >= 1 ifFalse: [
+		Error signal: 'Lap count must be equal or higher than 1' ]
 ]
 
 { #category : 'validation' }
@@ -37,21 +40,116 @@ Game class >> checkValidShipNames: shipNames [
 			duplicatedNames asCommaStringAnd , ' listed more than once' ]
 ]
 
-{ #category : 'intialization' }
+{ #category : 'initialization' }
+Game class >> createShipsNamed: shipNames on: squareCount drawingFrom: allCards [
+
+	| ships cards |
+	ships := OrderedCollection new.
+
+	1 to: shipNames size do: [ :i |
+		cards := OrderedCollection new.
+		cards add: allCards atRandom.
+		cards add: allCards atRandom.
+
+		ships add: (Ship
+				 for: (shipNames at: i)
+				 startingAt: (Position atStartOfLapWithSquareNumbers: squareCount)
+				 shieldedWith: 3
+				 holding: cards) ].
+	^ ships
+]
+
+{ #category : 'initialization' }
 Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal [
 
-	| ships |
+	| ships allCards |
 	self checkValidShipNames: shipNames.
 	self checkValidLapCount: aLapGoal.
 
-	ships := Ship
-		         forMultiple: shipNames
-		         allStartingAt:
-		         (Position atStartOfLapWithSquareNumbers:
-			          aBoard numberOfSquares)
-		         andAllShieldedWith: 3.
+	allCards := {
+		            SpeedCard new.
+		            MercenaryCard new.
+		            AccelerationCard new.
+		            CancellationCard new.
+		            RedoCard new.
+		            RepeatCard new }.
+	ships := self
+		         createShipsNamed: shipNames
+		         on: aBoard numberOfSquares
+		         drawingFrom: allCards.
+
 
 	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
+]
+
+{ #category : 'initialization' }
+Game class >> gamePlayedBy: shipNames on: aBoard toPlayFor: aLapGoal drawingFrom: aDeckOfCards [
+
+	| ships cards |
+	self checkValidShipNames: shipNames.
+	self checkValidLapCount: aLapGoal.
+
+	ships := OrderedCollection new.
+
+	1 to: shipNames size do: [ :i |
+		cards := OrderedCollection new.
+		cards add: aDeckOfCards removeFirst.
+		cards add: aDeckOfCards removeFirst.
+		ships add: (Ship
+				 for: (shipNames at: i)
+				 startingAt:
+				 (Position atStartOfLapWithSquareNumbers: aBoard numberOfSquares)
+				 shieldedWith: 3
+				 holding: cards) ].
+
+	^ self new initializeWith: ships on: aBoard toPlayFor: aLapGoal
+]
+
+{ #category : 'actions' }
+Game >> applyCancellationTo: aTarget [
+
+	| cardToBeCancelled |
+	(activeCards anySatisfy: [ :aCard |
+		 aCard name = aTarget cardName and:
+			 aCard ownerName = aTarget shipName ]) ifFalse: [
+		Error signal: 'Targeted Card is not within active permanent cards' ].
+
+	cardToBeCancelled := activeCards detect: [ :aCard |
+		                     aCard name = aTarget cardName and:
+			                     aCard ownerName = aTarget shipName ].
+	activeCards remove: cardToBeCancelled
+]
+
+{ #category : 'actions' }
+Game >> applyRedoTo: aTarget from: aShip [
+
+	lastCardPlayed checkIfPresent.
+
+
+	aShip drawCard: lastCardPlayed class withoutOwner.
+
+	aTarget shipName
+		ifEmpty: [ self throw: lastCardPlayed name from: aShip playerName ]
+		ifNotEmpty: [
+		self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
+]
+
+{ #category : 'actions' }
+Game >> applyRepeatTo: aTarget [
+
+	| targetedShip |
+	targetedShip := self searchShipByName: aTarget shipName.
+
+	shipManager landShip: targetedShip atSquare: nextSquare on: board
+]
+
+{ #category : 'accessing' }
+Game >> cardsInHandOf: aShipName [
+
+	| queriedShip |
+	queriedShip := self searchShipByName: aShipName.
+
+	^ queriedShip cardsInHand
 ]
 
 { #category : 'actions' }
@@ -68,20 +166,16 @@ Game >> checkIfAllowedToPlay: aShip [
 		Error signal: aShip playerName , ' must skip this turn' ]
 ]
 
-{ #category : 'actions' }
-Game >> checkIfShipExists: queriedShipName [
-
-	(ships anySatisfy: [ :aShip | aShip playerName = queriedShipName ])
-		ifFalse: [ Error signal: 'No ship by that name exists in the game' ]
-]
-
 { #category : 'initialization' }
 Game >> initializeWith: aSetOfships on: aBoard toPlayFor: aNumberOfLaps [
 
 	ships := aSetOfships deepCopy.
 	lapsGoal := aNumberOfLaps.
-	shipManager := ShipManager withShips: ships.
-	board := aBoard
+	activeCards := OrderedCollection new.
+	shipManager := ShipManager withShips: ships andActiveCards: activeCards.
+	board := aBoard.	
+	nextSquare := EmptySquare new.
+	lastCardPlayed := NullCard new.
 ]
 
 { #category : 'accessing' }
@@ -94,9 +188,7 @@ Game >> isGameFinished [
 Game >> lapCountOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip lapCount
 ]
@@ -104,12 +196,17 @@ Game >> lapCountOf: aShipName [
 { #category : 'actions' }
 Game >> play [
 
-	| diceOutcome nextSquare aShip |
+	| diceOutcome aShip extraPointsForThrow |
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := board rollDice.
-	shipManager moveShip: aShip to: diceOutcome.
+	extraPointsForThrow := 0.
+	activeCards do: [ :aCard |
+		extraPointsForThrow := extraPointsForThrow
+		                       + (aCard applyThrowEffectFor: aShip) ].
+
+	shipManager moveShip: aShip to: diceOutcome + extraPointsForThrow.
 	nextSquare := board squareAt: aShip boardPosition.
 	shipManager landShip: aShip atSquare: nextSquare on: board
 ]
@@ -118,9 +215,7 @@ Game >> play [
 Game >> positionOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip boardPosition
 ]
@@ -139,20 +234,24 @@ Game >> rank: aSetOfShips [
 Game >> rankingOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ (self rank: ships) indexOf: queriedShip
+]
+
+{ #category : 'actions' }
+Game >> searchShipByName: queriedShipName [
+
+	^ ((ships select: [ :aShip | aShip playerName = queriedShipName ])
+		   ifEmpty: [
+		   Error signal: 'No ship by that name exists in the game' ]) at: 1
 ]
 
 { #category : 'accessing' }
 Game >> shieldfOf: aShipName [
 
 	| queriedShip |
-	self checkIfShipExists: aShipName.
-
-	queriedShip := ships detect: [ :aShip | aShip playerName = aShipName ].
+	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip shields
 ]
@@ -164,6 +263,41 @@ Game >> skip [
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	aShip rechargeShields
+]
+
+{ #category : 'actions' }
+Game >> throw: aCardName from: aShipName [
+
+	| queriedShip card |
+	queriedShip := self searchShipByName: aShipName.
+
+	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
+
+	card
+		playIn: self
+		alongWith: activeCards
+		targetedAt: (Target ship: '')
+]
+
+{ #category : 'actions' }
+Game >> throw: aCardName from: aShipName to: aTarget [
+
+	| queriedShip card queriedTargetShip |
+	queriedShip := self searchShipByName: aShipName.
+	queriedTargetShip := self searchShipByName: aTarget shipName.
+
+	card := queriedShip
+		        throw: aCardName
+		        whenTurnOf: (ships at: 1)
+		        to: queriedTargetShip.
+
+	card playIn: self alongWith: activeCards targetedAt: aTarget
+]
+
+{ #category : 'actions' }
+Game >> updateLastPlayedCard: aCard [
+
+	lastCardPlayed := aCard
 ]
 
 { #category : 'accessing' }

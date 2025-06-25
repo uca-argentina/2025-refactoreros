@@ -26,7 +26,7 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -48,7 +48,7 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 2' 'Player 1').
@@ -72,7 +72,7 @@ GameTest >> testA03WhenAShipSurpassesTheGoalYetItsPositionIsNotGreaterThanBoardL
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1').
@@ -94,7 +94,7 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1').
@@ -119,7 +119,7 @@ GameTest >> testA05WhenBoardGameIsCreatedWithDuplicatedShipNamesThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 1' ).
@@ -140,7 +140,7 @@ GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #(  ).
@@ -163,7 +163,7 @@ GameTest >> testA07WhenABoardIsCreatedWithZeroDieThenFails [
 		should: [ aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.]
 		raise: Error
 		withMessageText: 'At least one die is required'
@@ -182,7 +182,7 @@ GameTest >> testA08WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 			Board
 				populatedBy: squareGenerator
 				anAmountOf: 1
-				withTotalDistanceOf: 50
+				withTotalDistanceOf: (Parsec amount: 50)
 				toBePlayedOnRolling: dice ]
 		raise: Error
 		withMessageText: 'Square count should be equal or higher than 2'
@@ -198,7 +198,7 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -220,7 +220,7 @@ GameTest >> testB01WhenLapsGoalIsNotReachedAndGameIsFinishedThenInvalid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -242,7 +242,7 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -264,7 +264,7 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -286,7 +286,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -307,7 +307,7 @@ GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1' 'Player 2').
@@ -335,7 +335,7 @@ GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenV
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -365,7 +365,7 @@ GameTest >> testB07WhenAShipLandsOnAtomicBombAndAllShipsLoseAShieldThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -396,7 +396,7 @@ GameTest >> testB08WhenAShipLandsOnBlackHoleAndGoesBack4SquaresThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -425,7 +425,7 @@ GameTest >> testB09WhenAShipLandsOnHyperSpaceJumpAndAdvances4SquaresThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -454,7 +454,7 @@ GameTest >> testB10WhenAShipLandsOnHyperSpaceJumpAndLoseAShieldThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -483,7 +483,7 @@ GameTest >> testB11WhenAShipLandsOnMoonWalkAndShipStaysInPositionButOtherShipsGo
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -516,7 +516,7 @@ GameTest >> testB12WhenAShipLandsOnWormHoleEntranceAndLandsOnExitThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -544,7 +544,7 @@ GameTest >> testB13WhenAShipLandsOnWormHoleExitAndLandsOnEntranceThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -569,7 +569,7 @@ GameTest >> testB14WhenAShipLandsOnASquareWithAnotherShipThenTheyBattleAndOnlyLo
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -596,7 +596,7 @@ GameTest >> testB15WhenAShipLandsOnASquareWithAnotherShipThenTheyBattleAndLoserG
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -624,7 +624,7 @@ GameTest >> testB16WhenAShipThatJustLostOneShieldDecidesToSkipItsTurnAndShieldsG
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -646,7 +646,7 @@ GameTest >> testB17WhenAShipLandsOnHyperJumpAndAdvancesAccordingToParsecsRewards
 	dice add: (LoadedDie withSetNumbers: #( 1 1 1 )).
 	aSetOfSquares := {
 		                 EmptySquare new.
-		                 (HyperJumpSquare withParsecsRewards: #( 18 12 6 )).
+		                 (HyperJumpSquare withRewards: { LightYear amount: 18 . LightYear amount: 12 . LightYear amount: 6 }).
 		                 EmptySquare new.
 		                 EmptySquare new.
 		                 EmptySquare new.
@@ -654,7 +654,7 @@ GameTest >> testB17WhenAShipLandsOnHyperJumpAndAdvancesAccordingToParsecsRewards
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 28
+		          withTotalDistanceOf: (LightYear amount: 30)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -676,9 +676,10 @@ GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecyc
 	| aGame dice aSetOfSquares shipNames aBoard |
 	dice := OrderedCollection new.
 	dice add: (LoadedDie withSetNumbers: #( 1 1 1 1 3 )).
+	
 	aSetOfSquares := {
 		                 EmptySquare new.
-		                 (HyperJumpSquare withParsecsRewards: #( 22 18 12 )).
+		                 (HyperJumpSquare withRewards: { LightYear amount: 22 . LightYear amount: 18 . LightYear amount: 12 }).
 		                 EmptySquare new.
 		                 EmptySquare new.
 		                 EmptySquare new.
@@ -686,7 +687,7 @@ GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecyc
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 28
+		          withTotalDistanceOf: (LightYear amount: 30)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -698,4 +699,1246 @@ GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecyc
 	self assert: (aGame positionOf: 'Player 1') equals: 1.
 	self assert: (aGame positionOf: 'Player 2') equals: 6.
 	self assert: (aGame positionOf: 'Player 3') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC01WhenShipIsCreatedWithTwoCardsThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize|
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #(  )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+		
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 1.
+	
+	self assert: (aGame cardsInHandOf: 'Player 1' ) size equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC02WhenShipLandsOnDrawCardSquareAndObtainsANewCardThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 DrawCardSquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+	aGame play.
+
+	self assert: (aGame cardsInHandOf: 'Player 1') size equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testC03WhenAShipPlaysAccelerationCardAndAllShipsIncrementTheirDiceRollThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 7 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Acceleration Card' from: 'Player 1'.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 7.
+	self assert: (aGame positionOf: 'Player 3') equals: 9
+]
+
+{ #category : 'tests' }
+GameTest >> testC04WhenShipPlaysACardThatDoesNotHaveInHandThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #(  )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+		
+	self
+		should: [ aGame throw: 'Acceleration Card' from: 'Player 1' ]
+		raise: Error
+		withMessageText: 'The ship does not have this card'
+]
+
+{ #category : 'tests' }
+GameTest >> testC05WhenAShipPlaysAPermanentCardOutOfItsTurnThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	self
+		should: [ aGame throw: 'Acceleration Card' from: 'Player 2' ]
+		raise: Error
+		withMessageText: 'The ship is trying to use a permanent card out of its turn'
+
+
+]
+
+{ #category : 'tests' }
+GameTest >> testC06WhenAShipPlaysSpeedCardAndItIncrementItsDiceRollThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 7 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+	aGame throw: 'Speed Card' from: 'Player 2' to: (Target ship: 'Player 2').
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4.
+	self assert: (aGame positionOf: 'Player 2') equals: 7.
+	self assert: (aGame positionOf: 'Player 3') equals: 8
+]
+
+{ #category : 'tests' }
+GameTest >> testC07WhenACancellationCardIsPlayedAndThePermanentCardIsDeactivatedThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Speed Card' from: 'Player 1' to:(Target ship: 'Player 1').
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC08WhenACancellationCardIsPlayedAndTheTargetCardIsNotActiveThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+
+	self
+		should: [
+			aGame
+				throw: 'Cancellation Card'
+				from: 'Player 2'
+				to: (Target ship: 'Player 1' whoPlayed: 'Speed Card') ]
+		raise: Error
+		withMessageText: 'Targeted Card is not within active permanent cards'
+]
+
+{ #category : 'tests' }
+GameTest >> testC09WhenACancellationCardTargetsANonPermanentCardThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+
+	self
+		should: [
+			aGame
+				throw: 'Cancellation Card'
+				from: 'Player 2'
+				to: (Target ship: 'Player 1' whoPlayed: 'Cancellation Card') ]
+		raise: Error
+		withMessageText: 'Targeted Card is not within active permanent cards'
+]
+
+{ #category : 'tests' }
+GameTest >> testC10WhenARedoCardIsPlayedAfterAPermanentCardAndHasTheSameEffectThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                AccelerationCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Acceleration Card' from: 'Player 1'.
+	aGame play.
+	aGame throw: 'Redo Card' from: 'Player 2'.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 8
+]
+
+{ #category : 'tests' }
+GameTest >> testC11WhenARedoCardIsPlayedWithoutACardPlayedPreviouslyThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' ).
+
+	aDeckOfCards := {
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	self
+		should: [ aGame throw: 'Redo Card' from: 'Player 1' ]
+		raise: Error
+		withMessageText: 'No card has been played yet'
+]
+
+{ #category : 'tests' }
+GameTest >> testC12WhenARedoCardIsPlayedByAShipAndItActivatesForAnotherPlayerThenIsValid [
+
+    | aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+    aBoardSize := 10.
+    dice := OrderedCollection new.
+    dice add: (LoadedDie withSetNumbers: #( 3 5 2 )).
+    squareGenerator := SquareGenerator withOnlyEmptySquares.
+    aBoard := Board
+                  populatedBy: squareGenerator
+                  anAmountOf: aBoardSize
+                  withTotalDistanceOf: (Parsec amount: 50)
+                  toBePlayedOnRolling: dice.
+
+    shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+    aDeckOfCards := {
+                        SpeedCard withoutOwner.
+                        SpeedCard withoutOwner.
+                        RedoCard withoutOwner.
+                        RedoCard withoutOwner.
+                        CancellationCard withoutOwner.
+                        CancellationCard withoutOwner } asOrderedCollection.
+    aGame := Game
+                 gamePlayedBy: shipNames
+                 on: aBoard
+                 toPlayFor: 2
+                 drawingFrom: aDeckOfCards.
+
+    aGame throw: 'Speed Card' from: 'Player 1' to: (Target ship: 'Player 1').
+    aGame play.
+    aGame throw: 'Redo Card' from: 'Player 2' to: (Target ship: 'Player 3').
+    aGame play.
+    aGame play.
+
+    self assert: (aGame positionOf: 'Player 1') equals: 5.
+    self assert: (aGame positionOf: 'Player 2') equals: 6.
+    self assert: (aGame positionOf: 'Player 3') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC13WhenRedoCardIsPlayedByAShipAfterAPermanentCardAndItsNotTheTurnOfTheShipThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame
+		throw: 'Speed Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame play.
+	aGame play.
+
+	self
+		should: [
+			aGame
+				throw: 'Redo Card'
+				from: 'Player 2'
+				to: (Target ship: 'Player 3') ]
+		raise: Error
+		withMessageText:
+		'The ship is trying to use a permanent card out of its turn'
+]
+
+{ #category : 'tests' }
+GameTest >> testC14WhenARedoCardIsPlayedAfterAnInstantaneousCardAndHasTheSameEffectThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 100.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 11 10 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame
+		throw: 'Speed Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame
+		throw: 'Speed Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame play.
+	aGame
+		throw: 'Cancellation Card'
+		from: 'Player 2'
+		to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame
+		throw: 'Redo Card'
+		from: 'Player 3'
+		to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame play.
+
+
+	self assert: (aGame positionOf: 'Player 1') equals: 9
+]
+
+{ #category : 'tests' }
+GameTest >> testC15WhenARedoIsPlayedAfterAnotherRedoAndHasTheSameEffectThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 20.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 11 10 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                RedoCard withoutOwner.
+		                RedoCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Speed Card' from: 'Player 1' to: (Target ship: 'Player 1').
+	aGame throw: 'Speed Card' from: 'Player 1' to: (Target ship: 'Player 1').
+	aGame play.
+	aGame throw: 'Speed Card' from: 'Player 2' to: (Target ship: 'Player 1').
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame throw: 'Redo Card' from: 'Player 3' to: (Target ship: 'Player 1' whoPlayed: 'Speed Card').
+	aGame throw: 'Redo Card' from: 'Player 3' to: (Target ship: 'Player 2' whoPlayed: 'Speed Card').
+	aGame play.
+	aGame play.
+
+
+	self assert: (aGame positionOf: 'Player 1') equals: 9
+]
+
+{ #category : 'tests' }
+GameTest >> testC16WhenAShipPlaysRepeatCardTargetedToItselfAndTheEffectOfTheLastSquareGetsRetriggeredThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 9 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (MoonWalkSquare withBackwardsPush: 4).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 15)
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+
+
+	self assert: (aGame positionOf: 'Player 2') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC17WhenAShipPlaysRepeatCardTargetedToOtherShipAndTheEffectOfTheLastSquareGetsRetriggeredThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 5 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (MoonWalkSquare withBackwardsPush: 1).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 15)
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 2').
+
+	self assert: (aGame positionOf: 'Player 1') equals: 2.
+	self assert: (aGame positionOf: 'Player 2') equals: 5
+]
+
+{ #category : 'tests' }
+GameTest >> testC18WhenAShipPlaysRepeatCardOnAnEmptySquareAndTheCardHasNoEffectThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 15)
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 2').
+
+	self assert: (aGame positionOf: 'Player 1') equals: 2.
+	self assert: (aGame positionOf: 'Player 2') equals: 1
+]
+
+{ #category : 'tests' }
+GameTest >> testC19WhenARepeatCardIsPlayedBeforeAnyDiceAreRolledAndTheCardHasNoEffectThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #()).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 15)
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1').
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+
+	self assert: (aGame positionOf: 'Player 1') equals: 1.
+]
+
+{ #category : 'tests' }
+GameTest >> testC20WhenAMercenaryCardIsPlayedAndTheMercenaryHelpsTheShipInBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 3 10 1 3 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1'  to: (Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 4.
+	self assert: (aGame positionOf: 'Player 2') equals: 1
+]
+
+{ #category : 'tests' }
+GameTest >> testC21WhenAShipLandsOnTheSameSquareAsItsMercenaryAndDontBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+	aGame throw: 'Mercenary Card' from: 'Player 2' to: (Target ship: 'Player 1').
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 3.
+	self assert: (aGame positionOf: 'Player 2') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testC22WhenAMercenaryLandsOnTheSameSquareAsItsHirererAndDontBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+		
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 3.
+	self assert: (aGame positionOf: 'Player 2') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testC23WhenAMercenaryBattlesAndTheHirererDoesNotHelpThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 4 4 2 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3').
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+							 SpeedCard withoutOwner.
+		                SpeedCard withoutOwner. } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame play.
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame shieldfOf: 'Player 1') equals: 3.
+	self assert: (aGame shieldfOf: 'Player 2') equals: 2.
+
+]
+
+{ #category : 'tests' }
+GameTest >> testC24WhenAShipHiresMoreThanOneMercenaryAndTheyHelpInBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 9 7 3 2 1 1 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 4') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC25WhenAShipWithMercenariesLosesABattleAndAllBreakAShieldThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 9 7 3 4 1 1 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 1') equals: 2.
+	self assert: (aGame shieldfOf: 'Player 2') equals: 2.
+	self assert: (aGame shieldfOf: 'Player 3') equals: 2
+]
+
+{ #category : 'tests' }
+GameTest >> testC26WhenAShipHiresAMercenaryAndItHasAlreadyBeenHiredThenItFails [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+
+	self
+		should: [ aGame throw: 'Mercenary Card' from: 'Player 2' to: (Target ship: 'Player 3') ]
+		raise: Error
+		withMessageText: 'Ship has already been hired as mercenary'
+]
+
+{ #category : 'tests' }
+GameTest >> testC27WhenAShipLandsOnHyperJumpAndAdvancesAccordingToLightYearRewardsThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 1 1 )).
+
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 (HyperJumpSquare withRewards: { LightYear amount: 18 . LightYear amount: 12 . LightYear amount: 6 }).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (LightYear amount: 30)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 4.
+	self assert: (aGame positionOf: 'Player 3') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testC28WhenShipsBattleAndAPlayedAccelerationCardIncreasesTheDiceThrowThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 3 9 1 3 3 6 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                AccelerationCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1'  to: (Target ship: 'Player 3').
+	aGame throw: 'Acceleration Card' from: 'Player 1'. 
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 1
+]
+
+{ #category : 'tests' }
+GameTest >> testC29WhenARedoCardIsPlayedAfterARepeatCardAndTheLastSquareGetsRetriggeredTwiceThenValid [
+
+	| aGame dice shipNames aBoard aDeckOfCards aSetOfSquares |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 9 1 )).
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 (MoonWalkSquare withBackwardsPush: 2).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (Parsec amount: 15)
+		          toBePlayedOnRolling: dice.
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                RepeatCard withoutOwner.
+		                RepeatCard withoutOwner.
+		                RedoCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame
+		throw: 'Repeat Card'
+		from: 'Player 1'
+		to: (Target ship: 'Player 1').
+	aGame throw: 'Redo Card' from: 'Player 2'  to:(Target ship:'Player 2').
+
+
+	self assert: (aGame positionOf: 'Player 2') equals: 6
+]
+
+{ #category : 'tests' }
+GameTest >> testC30WhenACancellationCardIsPlayedAndTheAccelerationCardIsDeactivatedThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 5 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                AccelerationCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Acceleration Card' from: 'Player 1'.
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Acceleration Card').
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC31WhenACancellationCardIsPlayedForAMercenaryAndTheMercenaryNoLongerHelpsInBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 3 5 6)).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                CancellationCard withoutOwner.
+		                CancellationCard withoutOwner } asOrderedCollection.
+
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship:'Player 2').
+	aGame throw: 'Cancellation Card' from: 'Player 2' to: (Target ship: 'Player 1' whoPlayed: 'Mercenary Card').
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 4
+]
+
+{ #category : 'tests' }
+GameTest >> testC32WhenAShipUsesRedoCardAfterAMercenaryCardAndTwoShipsHelpInBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 3 9 7 3 2 1 1 1 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: (Parsec amount: 50)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                RedoCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame throw: 'Redo Card' from: 'Player 1' to: (Target ship: 'Player 3').
+	aGame play.
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame shieldfOf: 'Player 4') equals: 2
 ]

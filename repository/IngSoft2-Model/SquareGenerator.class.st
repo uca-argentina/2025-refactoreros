@@ -13,22 +13,33 @@ Class {
 }
 
 { #category : 'validation' }
-SquareGenerator class >> checkProbabilitiesAddToOne: squaresAndProbability [
+SquareGenerator class >> checkProbabilitiesAreLessThanOne: squaresAndProbability [
 
 	| probabilitySum probabilities |
 	probabilities := squaresAndProbability values.
 	probabilitySum := probabilities sum.
 
 	probabilitySum < 1 ifTrue: [
-			squaresAndProbability at: EmptySquare new put: (1 - probabilitySum)	
-		]
+		squaresAndProbability at: EmptySquare new put: 1 - probabilitySum ]
+]
+
+{ #category : 'validation' }
+SquareGenerator class >> checkProbabilitiesAreMoreThanOne: squaresAndProbability [
+
+	| probabilitySum probabilities |
+	probabilities := squaresAndProbability values.
+	probabilitySum := probabilities sum asInteger.
+
+	probabilitySum > 1 ifTrue: [
+		Error signal: 'Total Probability should not be larger than 1' ]
 ]
 
 { #category : 'instance creation' }
 SquareGenerator class >> with: squaresAndProbability [
 
-	self checkProbabilitiesAddToOne: squaresAndProbability.
-	
+	self checkProbabilitiesAreLessThanOne: squaresAndProbability.
+	self checkProbabilitiesAreMoreThanOne: squaresAndProbability.
+
 	^ self new initializeWith: squaresAndProbability
 ]
 
