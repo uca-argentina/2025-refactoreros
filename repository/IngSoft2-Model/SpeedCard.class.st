@@ -26,6 +26,10 @@ SpeedCard class >> withoutOwner [
 ]
 
 { #category : 'actions' }
+SpeedCard >> applyMercenaryEffectFor: aShip in: aListMercenaries [
+]
+
+{ #category : 'actions' }
 SpeedCard >> applyThrowEffectFor: aShip [
 
 	aShip = target ifTrue: [ ^ 1 ].

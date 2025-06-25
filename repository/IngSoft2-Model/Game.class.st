@@ -134,11 +134,11 @@ Game >> applyRedoTo: aTarget from: aShip [
 
 { #category : 'actions' }
 Game >> applyRepeatTo: aTarget [
-	
+
 	| targetedShip |
-	targetedShip := self searchShipByName: (aTarget shipName).
-	
-	shipManager landShip: targetedShip atSquare: nextSquare  on: board 
+	targetedShip := self searchShipByName: aTarget shipName.
+
+	shipManager landShip: targetedShip atSquare: nextSquare on: board
 ]
 
 { #category : 'accessing' }

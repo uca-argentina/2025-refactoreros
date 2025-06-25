@@ -1474,3 +1474,73 @@ GameTest >> testC20WhenAMercenaryCardIsPlayedAndTheMercenaryHelpsTheShipInBattle
 	self assert: (aGame positionOf: 'Player 1') equals: 4.
 	self assert: (aGame positionOf: 'Player 2') equals: 1
 ]
+
+{ #category : 'tests' }
+GameTest >> testC21WhenAShipLandsOnTheSameSquareAsItsMercenaryAndDontBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+
+	aGame play.
+	aGame throw: 'Mercenary Card' from: 'Player 2' to: (Target ship: 'Player 1').
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 3.
+	self assert: (aGame positionOf: 'Player 2') equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testC22WhenAMercenaryLandsOnTheSameSquareAsItsHirererAndDontBattleThenValid [
+
+	| aGame dice squareGenerator shipNames aBoard aBoardSize aDeckOfCards |
+	aBoardSize := 10.
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 2 2 )).
+	squareGenerator := SquareGenerator withOnlyEmptySquares.
+	aBoard := Board
+		          populatedBy: squareGenerator
+		          anAmountOf: aBoardSize
+		          withTotalDistanceOf: 50
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' ).
+
+	aDeckOfCards := {
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner.
+		                MercenaryCard withoutOwner.
+		                SpeedCard withoutOwner } asOrderedCollection.
+	aGame := Game
+		         gamePlayedBy: shipNames
+		         on: aBoard
+		         toPlayFor: 2
+		         drawingFrom: aDeckOfCards.
+		
+	aGame throw: 'Mercenary Card' from: 'Player 1' to: (Target ship: 'Player 2').
+	aGame play.
+	aGame play.
+	
+	self assert: (aGame positionOf: 'Player 1') equals: 3.
+	self assert: (aGame positionOf: 'Player 2') equals: 3
+]

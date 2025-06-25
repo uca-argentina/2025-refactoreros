@@ -35,23 +35,6 @@ Ship class >> forMultiple: playerNames allStartingAt: aPosition andAllShieldedWi
 			   holding: cards ]) asOrderedCollection
 ]
 
-{ #category : 'actions' }
-Ship >> battle: anotherShip on: aBoard [
-
-	| rollA rollB loserShip |
-	rollA := aBoard rollDice.
-	rollB := aBoard rollDice.
-
-	[ rollA = rollB ] whileTrue: [
-		rollA := aBoard rollDice.
-		rollB := aBoard rollDice ].
-
-	loserShip := self.
-	rollA > rollB ifTrue: [ loserShip := anotherShip ].
-
-	^ loserShip
-]
-
 { #category : 'accessing' }
 Ship >> boardPosition [
 
@@ -172,7 +155,6 @@ Ship >> throw: aCardName whenTurnOf: aShip [
 
 	cardsInHand remove: card.
 	
-
 	^ card class ownedBy: self
 ]
 
@@ -188,7 +170,6 @@ Ship >> throw: aCardName whenTurnOf: aShip to: aTargetShip [
 		Error signal: 'The ship is trying to use a permanent card out of its turn' ].
 
 	cardsInHand remove: card.
-	
 
 	^ card class ownedBy: self targetedTo: aTargetShip
 ]

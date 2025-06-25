@@ -25,6 +25,10 @@ AccelerationCard class >> withoutOwner [
 ]
 
 { #category : 'actions' }
+AccelerationCard >> applyMercenaryEffectFor: aShip in: aListMercenaries [
+]
+
+{ #category : 'actions' }
 AccelerationCard >> applyThrowEffectFor: aShip [
 
 	^ 1

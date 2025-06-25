@@ -20,47 +20,61 @@ ShipManager class >> withShips: aShipList andActiveCards: aActiveCardsList [
 	^ self new initializeWithShips: aShipList andActiveCards: aActiveCardsList 
 ]
 
-{ #category : 'as yet unclassified' }
-ShipManager >> battle:aShipWithMercenaries  with: anotherShipWithMercenaries on: aBoard [
+{ #category : 'actions' }
+ShipManager >> battle: aShipWithMercenaries with: anotherShipWithMercenaries on: aBoard [
 
-		| rollA rollB loserShip |
-		
+	| rollA rollB loserShip |
+	rollA := 0.
+	aShipWithMercenaries do: [ :aShip |
+		rollA := rollA + (aBoard rollDiceFor: aShip with: activeCards) ].
+	rollB := 0.
+	anotherShipWithMercenaries do: [ :aShip |
+		rollB := rollB + (aBoard rollDiceFor: aShip with: activeCards) ].
+
+	[ rollA = rollB ] whileTrue: [
 		rollA := 0.
-		aShipWithMercenaries do:[:aShip | rollA := rollA + (aBoard rollDiceFor: aShip with:activeCards)].
+		aShipWithMercenaries do: [ :aShip |
+			rollA := rollA + (aBoard rollDiceFor: aShip with: activeCards) ].
 		rollB := 0.
-		anotherShipWithMercenaries do:[:aShip | rollB := rollB + (aBoard rollDiceFor: aShip with:activeCards)].
-		
-		[ rollA = rollB ] whileTrue: [
-		 rollA := 0.
-		aShipWithMercenaries do:[:aShip | rollA := rollA + (aBoard rollDiceFor: aShip with:activeCards)].
-		rollB := 0.
-		anotherShipWithMercenaries do:[:aShip | rollB := rollB + (aBoard rollDiceFor: aShip with:activeCards)]. ].
+		anotherShipWithMercenaries do: [ :aShip |
+			rollB := rollB + (aBoard rollDiceFor: aShip with: activeCards) ] ].
 
 
-	loserShip := (aShipWithMercenaries at:1).
-	rollA > rollB ifTrue: [ loserShip := (anotherShipWithMercenaries at:1) ].
+	loserShip := aShipWithMercenaries at: 1.
+	rollA > rollB ifTrue: [
+		loserShip := anotherShipWithMercenaries at: 1 ].
 
 	^ loserShip
 ]
 
-{ #category : 'actions' }
+{ #category : 'checking' }
 ShipManager >> checkBattles: aShip on: aBoard [
 
 	| otherShips loserShip aShipWithMercenaries anotherShipWithMercenaries |
-	otherShips := gameShips reject: [ :ship | ship = aShip ].
+	aShipWithMercenaries := self getMercenariesOf: aShip.
+
+	otherShips := gameShips reject: [ :ship | aShipWithMercenaries includes: ship ].
+	otherShips := otherShips reject: [ :ship | aShipWithMercenaries includes: ship ].
 
 	otherShips do: [ :anotherShip |
-		(anotherShip isAtTheSameSquareAs: aShip) ifTrue: [
-			aShipWithMercenaries := self getMercenariesOf: aShip.
+		(self checkIfShouldFight: aShip with: anotherShip ) ifTrue: [
 			anotherShipWithMercenaries := self getMercenariesOf: anotherShip.
-			"loserShip := aShip battle: anotherShip on: aBoard."
-			loserShip := self battle: aShipWithMercenaries  with: anotherShipWithMercenaries on: aBoard. 
+			loserShip := self battle: aShipWithMercenaries with: anotherShipWithMercenaries on: aBoard.
 			loserShip breakAShield.
 			loserShip goToFirstSquare.
 			loserShip hasShields ifFalse: [ shipTurnSkips at: loserShip put: 2 ] ] ]
+
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'checking' }
+ShipManager >> checkIfShouldFight: aShip with: anotherShip [
+
+	| anotherShipWithMercenaries |
+	anotherShipWithMercenaries := self getMercenariesOf: anotherShip.
+	^ (anotherShip isAtTheSameSquareAs: aShip) and: (anotherShipWithMercenaries includes: aShip) not
+]
+
+{ #category : 'accessing' }
 ShipManager >> getMercenariesOf: aShip [
 	| shipWithMercenaries |
 	
