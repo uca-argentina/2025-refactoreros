@@ -29,7 +29,7 @@ Board class >> checkValidSquareCount: aSquareCount [
 ]
 
 { #category : 'instance creation' }
-Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTotalDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
+Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTotalDistanceOf: aDistance toBePlayedOnRolling: aDiceSet [
 
 	| aSetOfSquares |
 	aSetOfSquares := aSquareGenerator createSquares: aNumberOfSquares.
@@ -39,18 +39,18 @@ Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTo
 
 	^ self new
 		  initializePopulatedOf: aSetOfSquares
-		  withDistanceOf: aNumberOfParsecs
+		  withDistanceOf: aDistance toParsecs
 		  toBePlayedOnRolling: aDiceSet
 ]
 
 { #category : 'instance creation' }
-Board class >> populatedOf: aSetOfSquares withTotalDistanceOf: aNumberOfParsecs toBePlayedOnRolling: aDiceSet [
+Board class >> populatedOf: aSetOfSquares withTotalDistanceOf: aDistance toBePlayedOnRolling: aDiceSet [
 
 	self checkValidDice: aDiceSet.
 
 	^ self new
 		  initializePopulatedOf: aSetOfSquares
-		  withDistanceOf: aNumberOfParsecs
+		  withDistanceOf: aDistance toParsecs
 		  toBePlayedOnRolling: aDiceSet
 ]
 
@@ -80,7 +80,7 @@ Board >> rollDice [
 	^ ((dice collect: [ :die | die roll ]) sum) 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 Board >> rollDiceFor: aShip with: activeCards [
 	
 	| extraPointsForThrow diceResult |

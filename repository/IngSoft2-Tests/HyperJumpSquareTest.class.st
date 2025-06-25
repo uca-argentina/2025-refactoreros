@@ -20,7 +20,7 @@ HyperJumpSquareTest >> should: anErrorBlock raise: errorClass withMessageText: e
 HyperJumpSquareTest >> testB03WhenAHyperJumpSquareIsCreatedWithInvalidParsecsPerSquareThenFails [
 
 	self
-		should: [ HyperJumpSquare withParsecsRewards: #(  ) ]
+		should: [ HyperJumpSquare withRewards: #(  ) ]
 		raise: Error
 		withMessageText: 'Parsec rewards cannot be empty'
 ]

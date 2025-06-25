@@ -26,7 +26,7 @@ GameTest >> testA01WhenAShipReachesTheGoalAndWinsThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -48,7 +48,7 @@ GameTest >> testA02WhenAShipReachesTheGoalButTheOtherShipIsTheWinnerThenInvalid 
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 2' 'Player 1').
@@ -72,7 +72,7 @@ GameTest >> testA03WhenAShipSurpassesTheGoalYetItsPositionIsNotGreaterThanBoardL
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1').
@@ -94,7 +94,7 @@ GameTest >> testA04WhenAGameIsAskedForPositionOfInexistingShipThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1').
@@ -119,7 +119,7 @@ GameTest >> testA05WhenBoardGameIsCreatedWithDuplicatedShipNamesThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 1' ).
@@ -140,7 +140,7 @@ GameTest >> testA06WhenAGameIsCreatedWithNoShipsThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #(  ).
@@ -163,7 +163,7 @@ GameTest >> testA07WhenABoardIsCreatedWithZeroDieThenFails [
 		should: [ aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.]
 		raise: Error
 		withMessageText: 'At least one die is required'
@@ -182,7 +182,7 @@ GameTest >> testA08WhenBoardIsCreatedWithLessThanTwoSquaresThenFails [
 			Board
 				populatedBy: squareGenerator
 				anAmountOf: 1
-				withTotalDistanceOf: 50
+				withTotalDistanceOf: (Parsec amount: 50)
 				toBePlayedOnRolling: dice ]
 		raise: Error
 		withMessageText: 'Square count should be equal or higher than 2'
@@ -198,7 +198,7 @@ GameTest >> testA09WhenAShipWinsAndGameFinishesThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -220,7 +220,7 @@ GameTest >> testB01WhenLapsGoalIsNotReachedAndGameIsFinishedThenInvalid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -242,7 +242,7 @@ GameTest >> testB02WhenShipsLandsPastSquareCountAndLapsIncreasesThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -264,7 +264,7 @@ GameTest >> testB03WhenAShipLandsPastLapLimitAndItsPositionCirclesBackThenValid 
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -286,7 +286,7 @@ GameTest >> testB04WhenBoardIsCreatedWithInvalidLapCountThenFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -307,7 +307,7 @@ GameTest >> testB05WhenAShipIsBehindAnotherOneAndItIsRankedAsSecondThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: 10
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1' 'Player 2').
@@ -335,7 +335,7 @@ GameTest >> testB06WhenAShipLandsOnAtomicBombAndAllShipsGoBackToFirstSquareThenV
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -365,7 +365,7 @@ GameTest >> testB07WhenAShipLandsOnAtomicBombAndAllShipsLoseAShieldThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -396,7 +396,7 @@ GameTest >> testB08WhenAShipLandsOnBlackHoleAndGoesBack4SquaresThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -425,7 +425,7 @@ GameTest >> testB09WhenAShipLandsOnHyperSpaceJumpAndAdvances4SquaresThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -454,7 +454,7 @@ GameTest >> testB10WhenAShipLandsOnHyperSpaceJumpAndLoseAShieldThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -483,7 +483,7 @@ GameTest >> testB11WhenAShipLandsOnMoonWalkAndShipStaysInPositionButOtherShipsGo
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -516,7 +516,7 @@ GameTest >> testB12WhenAShipLandsOnWormHoleEntranceAndLandsOnExitThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -544,7 +544,7 @@ GameTest >> testB13WhenAShipLandsOnWormHoleExitAndLandsOnEntranceThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -569,7 +569,7 @@ GameTest >> testB14WhenAShipLandsOnASquareWithAnotherShipThenTheyBattleAndOnlyLo
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -596,7 +596,7 @@ GameTest >> testB15WhenAShipLandsOnASquareWithAnotherShipThenTheyBattleAndLoserG
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -624,7 +624,7 @@ GameTest >> testB16WhenAShipThatJustLostOneShieldDecidesToSkipItsTurnAndShieldsG
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -646,7 +646,7 @@ GameTest >> testB17WhenAShipLandsOnHyperJumpAndAdvancesAccordingToParsecsRewards
 	dice add: (LoadedDie withSetNumbers: #( 1 1 1 )).
 	aSetOfSquares := {
 		                 EmptySquare new.
-		                 (HyperJumpSquare withParsecsRewards: #( 18 12 6 )).
+		                 (HyperJumpSquare withRewards: { LightYear amount: 18 . LightYear amount: 12 . LightYear amount: 6 }).
 		                 EmptySquare new.
 		                 EmptySquare new.
 		                 EmptySquare new.
@@ -654,7 +654,7 @@ GameTest >> testB17WhenAShipLandsOnHyperJumpAndAdvancesAccordingToParsecsRewards
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 28
+		          withTotalDistanceOf: (LightYear amount: 30)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -676,9 +676,10 @@ GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecyc
 	| aGame dice aSetOfSquares shipNames aBoard |
 	dice := OrderedCollection new.
 	dice add: (LoadedDie withSetNumbers: #( 1 1 1 1 3 )).
+	
 	aSetOfSquares := {
 		                 EmptySquare new.
-		                 (HyperJumpSquare withParsecsRewards: #( 22 18 12 )).
+		                 (HyperJumpSquare withRewards: { LightYear amount: 22 . LightYear amount: 18 . LightYear amount: 12 }).
 		                 EmptySquare new.
 		                 EmptySquare new.
 		                 EmptySquare new.
@@ -686,7 +687,7 @@ GameTest >> testB18WhenAShipLandsOnExhaustedHyperJumpAndAdvancesAccordingToRecyc
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 28
+		          withTotalDistanceOf: (LightYear amount: 30)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -711,7 +712,7 @@ GameTest >> testC01WhenShipIsCreatedWithTwoCardsThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 		
 	shipNames := #( 'Player 1' ).
@@ -735,7 +736,7 @@ GameTest >> testC02WhenShipLandsOnDrawCardSquareAndObtainsANewCardThenValid [
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -757,7 +758,7 @@ GameTest >> testC03WhenAShipPlaysAccelerationCardAndAllShipsIncrementTheirDiceRo
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -796,7 +797,7 @@ GameTest >> testC04WhenShipPlaysACardThatDoesNotHaveInHandThenItFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -827,7 +828,7 @@ GameTest >> testC05WhenAShipPlaysAPermanentCardOutOfItsTurnThenItFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -864,7 +865,7 @@ GameTest >> testC06WhenAShipPlaysSpeedCardAndItIncrementItsDiceRollThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -903,7 +904,7 @@ GameTest >> testC07WhenACancellationCardIsPlayedAndThePermanentCardIsDeactivated
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -939,7 +940,7 @@ GameTest >> testC08WhenACancellationCardIsPlayedAndTheTargetCardIsNotActiveThenI
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -979,7 +980,7 @@ GameTest >> testC09WhenACancellationCardTargetsANonPermanentCardThenItFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -1019,7 +1020,7 @@ GameTest >> testC10WhenARedoCardIsPlayedAfterAPermanentCardAndHasTheSameEffectTh
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -1055,7 +1056,7 @@ GameTest >> testC11WhenARedoCardIsPlayedWithoutACardPlayedPreviouslyThenItFails 
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' ).
@@ -1086,7 +1087,7 @@ GameTest >> testC12WhenARedoCardIsPlayedByAShipAndItActivatesForAnotherPlayerThe
     aBoard := Board
                   populatedBy: squareGenerator
                   anAmountOf: aBoardSize
-                  withTotalDistanceOf: 50
+                  withTotalDistanceOf: (Parsec amount: 50)
                   toBePlayedOnRolling: dice.
 
     shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -1126,7 +1127,7 @@ GameTest >> testC13WhenRedoCardIsPlayedByAShipAfterAPermanentCardAndItsNotTheTur
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -1173,7 +1174,7 @@ GameTest >> testC14WhenARedoCardIsPlayedAfterAnInstantaneousCardAndHasTheSameEff
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -1227,7 +1228,7 @@ GameTest >> testC15WhenARedoIsPlayedAfterAnotherRedoAndHasTheSameEffectThenValid
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -1280,7 +1281,7 @@ GameTest >> testC16WhenAShipPlaysRepeatCardTargetedToItselfAndTheEffectOfTheLast
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 	shipNames := #( 'Player 1' 'Player 2' ).
 
@@ -1329,7 +1330,7 @@ GameTest >> testC17WhenAShipPlaysRepeatCardTargetedToOtherShipAndTheEffectOfTheL
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 	shipNames := #( 'Player 1' 'Player 2' ).
 
@@ -1371,7 +1372,7 @@ GameTest >> testC18WhenAShipPlaysRepeatCardOnAnEmptySquareAndTheCardHasNoEffectT
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 	shipNames := #( 'Player 1' 'Player 2' ).
 
@@ -1411,7 +1412,7 @@ GameTest >> testC19WhenARepeatCardIsPlayedBeforeAnyDiceAreRolledAndTheCardHasNoE
 
 	aBoard := Board
 		          populatedOf: aSetOfSquares
-		          withTotalDistanceOf: 15
+		          withTotalDistanceOf: (Parsec amount: 15)
 		          toBePlayedOnRolling: dice.
 	shipNames := #( 'Player 1').
 
@@ -1447,7 +1448,7 @@ GameTest >> testC20WhenAMercenaryCardIsPlayedAndTheMercenaryHelpsTheShipInBattle
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -1486,7 +1487,7 @@ GameTest >> testC21WhenAShipLandsOnTheSameSquareAsItsMercenaryAndDontBattleThenV
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -1521,7 +1522,7 @@ GameTest >> testC22WhenAMercenaryLandsOnTheSameSquareAsItsHirererAndDontBattleTh
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' ).
@@ -1556,7 +1557,7 @@ GameTest >> testC23WhenAMercenaryBattlesAndTheHirererDoesNotHelpThenValid [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3').
@@ -1595,7 +1596,7 @@ GameTest >> testC24WhenAShipHiresMoreThanOneMercenaryAndTheyHelpInBattleThenVali
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
@@ -1636,7 +1637,7 @@ GameTest >> testC25WhenAShipWithMercenariesLosesABattleAndAllBreakAShieldThenVal
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' 'Player 4' ).
@@ -1679,7 +1680,7 @@ GameTest >> testC26WhenAShipHiresAMercenaryAndItHasAlreadyBeenHiredThenItFails [
 	aBoard := Board
 		          populatedBy: squareGenerator
 		          anAmountOf: aBoardSize
-		          withTotalDistanceOf: 50
+		          withTotalDistanceOf: (Parsec amount: 50)
 		          toBePlayedOnRolling: dice.
 
 	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
@@ -1704,4 +1705,37 @@ GameTest >> testC26WhenAShipHiresAMercenaryAndItHasAlreadyBeenHiredThenItFails [
 		should: [ aGame throw: 'Mercenary Card' from: 'Player 2' to: (Target ship: 'Player 3') ]
 		raise: Error
 		withMessageText: 'Ship has already been hired as mercenary'
+]
+
+{ #category : 'tests' }
+GameTest >> testC27WhenAShipLandsOnHyperJumpAndAdvancesAccordingToLightYearRewardsThenValid [
+
+	| aGame dice aSetOfSquares shipNames aBoard |
+	dice := OrderedCollection new.
+	dice add: (LoadedDie withSetNumbers: #( 1 1 1 )).
+
+	aSetOfSquares := {
+		                 EmptySquare new.
+		                 (HyperJumpSquare withRewards: { LightYear amount: 18 . LightYear amount: 12 . LightYear amount: 6 }).
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new.
+		                 EmptySquare new } asOrderedCollection.
+
+	aBoard := Board
+		          populatedOf: aSetOfSquares
+		          withTotalDistanceOf: (LightYear amount: 30)
+		          toBePlayedOnRolling: dice.
+
+	shipNames := #( 'Player 1' 'Player 2' 'Player 3' ).
+
+	aGame := Game gamePlayedBy: shipNames on: aBoard toPlayFor: 2.
+
+	aGame play.
+	aGame play.
+	aGame play.
+
+	self assert: (aGame positionOf: 'Player 1') equals: 5.
+	self assert: (aGame positionOf: 'Player 2') equals: 4.
+	self assert: (aGame positionOf: 'Player 3') equals: 3
 ]
