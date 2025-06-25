@@ -1,3 +1,6 @@
+"
+A measure of distance for board
+"
 Class {
 	#name : 'LightYear',
 	#superclass : 'Object',
