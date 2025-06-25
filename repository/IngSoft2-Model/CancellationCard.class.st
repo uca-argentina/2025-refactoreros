@@ -25,6 +25,10 @@ CancellationCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new 
 ]
 
+{ #category : 'checking' }
+CancellationCard >> checkIfPresent [
+]
+
 { #category : 'initialization' }
 CancellationCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 

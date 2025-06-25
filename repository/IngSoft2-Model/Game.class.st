@@ -122,8 +122,9 @@ Game >> applyCancellationTo: aTarget [
 
 { #category : 'actions' }
 Game >> applyRedoTo: aTarget from: aShip [
+	
+	lastCardPlayed checkIfPresent.
 
-	lastCardPlayed ifNil: [ Error signal: 'No card has been played yet' ].
 
 	aShip drawCard: lastCardPlayed class withoutOwner.
 
@@ -175,6 +176,7 @@ Game >> initializeWith: aSetOfships on: aBoard toPlayFor: aNumberOfLaps [
 	shipManager := ShipManager withShips: ships andActiveCards: activeCards.
 	board := aBoard.	
 	nextSquare := EmptySquare new.
+	lastCardPlayed := NullCard new.
 ]
 
 { #category : 'accessing' }

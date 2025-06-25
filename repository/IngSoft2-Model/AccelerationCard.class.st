@@ -34,6 +34,10 @@ AccelerationCard >> applyThrowEffectFor: aShip [
 	^ 1
 ]
 
+{ #category : 'checking' }
+AccelerationCard >> checkIfPresent [
+]
+
 { #category : 'initialization' }
 AccelerationCard >> initializeOwnedBy: aShip [
 

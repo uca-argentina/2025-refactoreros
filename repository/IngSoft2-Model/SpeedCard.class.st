@@ -36,6 +36,10 @@ SpeedCard >> applyThrowEffectFor: aShip [
 	^ 0
 ]
 
+{ #category : 'checking' }
+SpeedCard >> checkIfPresent [
+]
+
 { #category : 'initialization' }
 SpeedCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 

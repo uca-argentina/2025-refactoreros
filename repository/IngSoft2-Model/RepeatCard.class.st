@@ -25,6 +25,10 @@ RepeatCard class >> withoutOwner [
 	^ self new initializeOwnedBy: NullShip new targetedTo: NullShip new
 ]
 
+{ #category : 'checking' }
+RepeatCard >> checkIfPresent [
+]
+
 { #category : 'initialization' }
 RepeatCard >> initializeOwnedBy: aShip targetedTo: anotherShip [
 	owner := aShip.

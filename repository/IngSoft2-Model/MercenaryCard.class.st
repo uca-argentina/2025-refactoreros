@@ -37,6 +37,10 @@ MercenaryCard >> applyThrowEffectFor: aShip [
 	^ 0
 ]
 
+{ #category : 'checking' }
+MercenaryCard >> checkIfPresent [
+]
+
 { #category : 'testing' }
 MercenaryCard >> hasTarget: aTarget [
 
