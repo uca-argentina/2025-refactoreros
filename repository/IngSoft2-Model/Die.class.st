@@ -14,6 +14,7 @@ Class {
 
 { #category : 'initialization' }
 Die class >> withFaces: aNumber [
+
 	^ self new initializeWithFaces: aNumber
 ]
 

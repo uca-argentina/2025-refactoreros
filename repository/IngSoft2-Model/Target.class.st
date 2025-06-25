@@ -24,13 +24,12 @@ Target class >> ship: aShipName [
 Target class >> ship: aShipName whoPlayed: aCardName [
 
 	^ self new initializeShip: aShipName whoPlayed: aCardName
-
 ]
 
 { #category : 'accessing' }
 Target >> cardName [
 
-	^ card ifEmpty: [ Error signal: 'Missing targeted card' ] 
+	^ card ifEmpty: [ Error signal: 'Missing targeted card' ]
 ]
 
 { #category : 'initialization' }
@@ -43,5 +42,5 @@ Target >> initializeShip: aShipName whoPlayed: aCardName [
 { #category : 'accessing' }
 Target >> shipName [
 
-	^ ship 
+	^ ship
 ]

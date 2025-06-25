@@ -35,5 +35,6 @@ Parsec >> initializeWithDistanceOf: aNumberOfParsecs [
 
 { #category : 'actions' }
 Parsec >> toParsecs [
-	^ distance 
+
+	^ distance
 ]

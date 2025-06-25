@@ -20,8 +20,7 @@ SquareGenerator class >> checkProbabilitiesAreLessThanOne: squaresAndProbability
 	probabilitySum := probabilities sum.
 
 	probabilitySum < 1 ifTrue: [
-			squaresAndProbability at: EmptySquare new put: (1 - probabilitySum)	
-		]
+		squaresAndProbability at: EmptySquare new put: 1 - probabilitySum ]
 ]
 
 { #category : 'validation' }
@@ -29,7 +28,7 @@ SquareGenerator class >> checkProbabilitiesAreMoreThanOne: squaresAndProbability
 
 	| probabilitySum probabilities |
 	probabilities := squaresAndProbability values.
-	probabilitySum := (probabilities sum ) asInteger.
+	probabilitySum := probabilities sum asInteger.
 
 	probabilitySum > 1 ifTrue: [
 		Error signal: 'Total Probability should not be larger than 1' ]
@@ -40,7 +39,7 @@ SquareGenerator class >> with: squaresAndProbability [
 
 	self checkProbabilitiesAreLessThanOne: squaresAndProbability.
 	self checkProbabilitiesAreMoreThanOne: squaresAndProbability.
-	
+
 	^ self new initializeWith: squaresAndProbability
 ]
 

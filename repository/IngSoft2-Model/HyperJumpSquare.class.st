@@ -25,7 +25,7 @@ HyperJumpSquare class >> withRewards: aSetOfDistances [
 
 	self checkRewards: aSetOfDistances.
 
-	^ self new initializeWithRewards: aSetOfDistances 
+	^ self new initializeWithRewards: aSetOfDistances
 ]
 
 { #category : 'actions' }

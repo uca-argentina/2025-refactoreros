@@ -17,7 +17,9 @@ Class {
 { #category : 'initialization' }
 ShipManager class >> withShips: aShipList andActiveCards: aActiveCardsList [
 
-	^ self new initializeWithShips: aShipList andActiveCards: aActiveCardsList 
+	^ self new
+		  initializeWithShips: aShipList
+		  andActiveCards: aActiveCardsList
 ]
 
 { #category : 'actions' }
@@ -71,18 +73,20 @@ ShipManager >> checkIfShouldFight: aShip with: anotherShip [
 
 	| anotherShipWithMercenaries |
 	anotherShipWithMercenaries := self getMercenariesOf: anotherShip.
-	^ (anotherShip isAtTheSameSquareAs: aShip) and: (anotherShipWithMercenaries includes: aShip) not
+	^ (anotherShip isAtTheSameSquareAs: aShip) and:
+		  (anotherShipWithMercenaries includes: aShip) not
 ]
 
 { #category : 'accessing' }
 ShipManager >> getMercenariesOf: aShip [
-	| shipWithMercenaries |
-	
-	shipWithMercenaries:= OrderedCollection new.
-	shipWithMercenaries add: aShip.
-	activeCards do: [:aCard | aCard applyMercenaryEffectFor: aShip in: shipWithMercenaries].
 
-	^ shipWithMercenaries 
+	| shipWithMercenaries |
+	shipWithMercenaries := OrderedCollection new.
+	shipWithMercenaries add: aShip.
+	activeCards do: [ :aCard |
+		aCard applyMercenaryEffectFor: aShip in: shipWithMercenaries ].
+
+	^ shipWithMercenaries
 ]
 
 { #category : 'testing' }

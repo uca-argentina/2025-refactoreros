@@ -16,7 +16,8 @@ Class {
 MoonWalkSquare class >> checkValidBackwardsPushNumber: squaresToPushBackwards [
 
 	squaresToPushBackwards >= 1 ifFalse: [
-		Error signal: 'Squares to push backwards must be equal or higher than 1' ]
+		Error signal:
+			'Squares to push backwards must be equal or higher than 1' ]
 ]
 
 { #category : 'accessing' }

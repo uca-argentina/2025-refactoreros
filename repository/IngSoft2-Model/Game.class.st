@@ -21,8 +21,8 @@ Class {
 { #category : 'validation' }
 Game class >> checkValidLapCount: aNumberOfLaps [
 
-    aNumberOfLaps >= 1 ifFalse: [
-        Error signal: 'Lap count must be equal or higher than 1' ]
+	aNumberOfLaps >= 1 ifFalse: [
+		Error signal: 'Lap count must be equal or higher than 1' ]
 ]
 
 { #category : 'validation' }
@@ -122,7 +122,7 @@ Game >> applyCancellationTo: aTarget [
 
 { #category : 'actions' }
 Game >> applyRedoTo: aTarget from: aShip [
-	
+
 	lastCardPlayed checkIfPresent.
 
 
@@ -130,7 +130,8 @@ Game >> applyRedoTo: aTarget from: aShip [
 
 	aTarget shipName
 		ifEmpty: [ self throw: lastCardPlayed name from: aShip playerName ]
-		ifNotEmpty: [ self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
+		ifNotEmpty: [
+		self throw: lastCardPlayed name from: aShip playerName to: aTarget ]
 ]
 
 { #category : 'actions' }
@@ -146,8 +147,6 @@ Game >> applyRepeatTo: aTarget [
 Game >> cardsInHandOf: aShipName [
 
 	| queriedShip |
-	
-
 	queriedShip := self searchShipByName: aShipName.
 
 	^ queriedShip cardsInHand
@@ -191,22 +190,23 @@ Game >> lapCountOf: aShipName [
 	| queriedShip |
 	queriedShip := self searchShipByName: aShipName.
 
-
 	^ queriedShip lapCount
 ]
 
 { #category : 'actions' }
 Game >> play [
 
-	| diceOutcome  aShip extraPointsForThrow |
+	| diceOutcome aShip extraPointsForThrow |
 	self checkForActiveGame.
 	aShip := ships addLast: ships removeFirst.
 	self checkIfAllowedToPlay: aShip.
 	diceOutcome := board rollDice.
 	extraPointsForThrow := 0.
-	activeCards do: [:aCard | extraPointsForThrow := extraPointsForThrow +( aCard applyThrowEffectFor: aShip) ].
-	
-	shipManager moveShip: aShip to: (diceOutcome + extraPointsForThrow).
+	activeCards do: [ :aCard |
+		extraPointsForThrow := extraPointsForThrow
+		                       + (aCard applyThrowEffectFor: aShip) ].
+
+	shipManager moveShip: aShip to: diceOutcome + extraPointsForThrow.
 	nextSquare := board squareAt: aShip boardPosition.
 	shipManager landShip: aShip atSquare: nextSquare on: board
 ]
@@ -273,7 +273,10 @@ Game >> throw: aCardName from: aShipName [
 
 	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1).
 
-	card playIn: self alongWith: activeCards targetedAt: (Target ship: '')
+	card
+		playIn: self
+		alongWith: activeCards
+		targetedAt: (Target ship: '')
 ]
 
 { #category : 'actions' }
@@ -283,7 +286,10 @@ Game >> throw: aCardName from: aShipName to: aTarget [
 	queriedShip := self searchShipByName: aShipName.
 	queriedTargetShip := self searchShipByName: aTarget shipName.
 
-	card := queriedShip throw: aCardName whenTurnOf: (ships at: 1) to: queriedTargetShip.
+	card := queriedShip
+		        throw: aCardName
+		        whenTurnOf: (ships at: 1)
+		        to: queriedTargetShip.
 
 	card playIn: self alongWith: activeCards targetedAt: aTarget
 ]

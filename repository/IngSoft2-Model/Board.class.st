@@ -24,8 +24,8 @@ Board class >> checkValidDice: aDiceCollection [
 { #category : 'validation' }
 Board class >> checkValidSquareCount: aSquareCount [
 
-    aSquareCount >= 2 ifFalse: [
-        Error signal: 'Square count should be equal or higher than 2' ]
+	aSquareCount >= 2 ifFalse: [
+		Error signal: 'Square count should be equal or higher than 2' ]
 ]
 
 { #category : 'instance creation' }
@@ -33,7 +33,7 @@ Board class >> populatedBy: aSquareGenerator anAmountOf: aNumberOfSquares withTo
 
 	| aSetOfSquares |
 	aSetOfSquares := aSquareGenerator createSquares: aNumberOfSquares.
-	
+
 	self checkValidDice: aDiceSet.
 	self checkValidSquareCount: aNumberOfSquares.
 
@@ -59,7 +59,7 @@ Board >> initializePopulatedOf: aSetOfSquares withDistanceOf: aNumberOfParsecs t
 
 	squares := aSetOfSquares deepCopy.
 	parsecs := aNumberOfParsecs.
-	dice := aDiceSet.
+	dice := aDiceSet
 ]
 
 { #category : 'accessing' }
@@ -70,32 +70,33 @@ Board >> numberOfSquares [
 
 { #category : 'accessing' }
 Board >> parsecsPerSquare [
-	
-	^ parsecs / (squares size)
+
+	^ parsecs / squares size
 ]
 
 { #category : 'actions' }
 Board >> rollDice [
 
-	^ ((dice collect: [ :die | die roll ]) sum) 
+	^ (dice collect: [ :die | die roll ]) sum
 ]
 
 { #category : 'actions' }
 Board >> rollDiceFor: aShip with: activeCards [
-	
+
 	| extraPointsForThrow diceResult |
-	
 	diceResult := (dice collect: [ :die | die roll ]) sum.
-	
-	
+
+
 	extraPointsForThrow := 0.
-	activeCards do: [:aCard | extraPointsForThrow := extraPointsForThrow +( aCard applyThrowEffectFor: aShip) ].
-	
-	^ diceResult + extraPointsForThrow 
+	activeCards do: [ :aCard |
+		extraPointsForThrow := extraPointsForThrow
+		                       + (aCard applyThrowEffectFor: aShip) ].
+
+	^ diceResult + extraPointsForThrow
 ]
 
 { #category : 'accessing' }
 Board >> squareAt: aPosition [
-	
-	^ squares at: aPosition 
+
+	^ squares at: aPosition
 ]

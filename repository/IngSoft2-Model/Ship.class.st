@@ -19,7 +19,11 @@ Class {
 { #category : 'accessing' }
 Ship class >> for: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields holding: cards [
 
-	^ self new initializeFor: aPlayerName startingAt: aPostion shieldedWith: aNumberOfShields holding: cards
+	^ self new
+		  initializeFor: aPlayerName
+		  startingAt: aPostion
+		  shieldedWith: aNumberOfShields
+		  holding: cards
 ]
 
 { #category : 'accessing' }
@@ -138,10 +142,11 @@ Ship >> throw: aCardName whenTurnOf: aShip [
 	card := cardsInHand detect: [ :aCard | aCard name = aCardName ].
 
 	(card isPermanent and: self playerName ~= aShip playerName) ifTrue: [
-		Error signal: 'The ship is trying to use a permanent card out of its turn' ].
+		Error signal:
+			'The ship is trying to use a permanent card out of its turn' ].
 
 	cardsInHand remove: card.
-	
+
 	^ card class ownedBy: self
 ]
 
@@ -154,7 +159,8 @@ Ship >> throw: aCardName whenTurnOf: aShip to: aTargetShip [
 	card := cardsInHand detect: [ :aCard | aCard name = aCardName ].
 
 	(card isPermanent and: self playerName ~= aShip playerName) ifTrue: [
-		Error signal: 'The ship is trying to use a permanent card out of its turn' ].
+		Error signal:
+			'The ship is trying to use a permanent card out of its turn' ].
 
 	cardsInHand remove: card.
 
