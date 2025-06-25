@@ -8,9 +8,9 @@ Class {
 		'owner',
 		'target'
 	],
-	#category : 'IngSoft2-Model-Card',
+	#category : 'IngSoft2-Model-Card-NonPermanent',
 	#package : 'IngSoft2-Model',
-	#tag : 'Card'
+	#tag : 'Card-NonPermanent'
 }
 
 { #category : 'instance creation' }

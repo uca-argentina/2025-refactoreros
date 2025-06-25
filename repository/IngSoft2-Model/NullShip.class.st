@@ -1,3 +1,6 @@
+"
+Represents missing Ship
+"
 Class {
 	#name : 'NullShip',
 	#superclass : 'Object',

@@ -8,9 +8,9 @@ Class {
 		'owner',
 		'target'
 	],
-	#category : 'IngSoft2-Model-Card',
+	#category : 'IngSoft2-Model-Card-Permanent',
 	#package : 'IngSoft2-Model',
-	#tag : 'Card'
+	#tag : 'Card-Permanent'
 }
 
 { #category : 'as yet unclassified' }
