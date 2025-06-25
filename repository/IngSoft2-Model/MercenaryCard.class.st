@@ -63,6 +63,12 @@ MercenaryCard >> name [
 ]
 
 { #category : 'accessing' }
+MercenaryCard >> ownerName [
+
+	^ owner playerName
+]
+
+{ #category : 'accessing' }
 MercenaryCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
 
 	| activeMercenaryCards |

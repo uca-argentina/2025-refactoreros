@@ -53,6 +53,12 @@ AccelerationCard >> name [
 ]
 
 { #category : 'accessing' }
+AccelerationCard >> ownerName [
+
+	^ owner playerName
+]
+
+{ #category : 'accessing' }
 AccelerationCard >> playIn: aGame alongWith: activeCards targetedAt: aTarget [
 
 	activeCards add: self.
